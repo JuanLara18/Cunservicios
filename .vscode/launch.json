@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "backend.app.main:app",
+                "--reload",
+                "--port",
+                "8000"
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
+        {
+            "name": "React App",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/frontend"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack",
+            "configurations": ["Python: FastAPI", "React App"]
+        }
+    ]
+}
