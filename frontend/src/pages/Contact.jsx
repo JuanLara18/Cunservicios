@@ -1,5 +1,5 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const ContactSchema = Yup.object().shape({
@@ -199,10 +199,17 @@ const Contact = () => {
         <div className="card">
           <h2 className="text-2xl font-semibold mb-4">Nuestra ubicación</h2>
           <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-            {/* Aquí iría un iframe de Google Maps */}
-            <div className="bg-gray-200 h-80 flex items-center justify-center">
-              <p className="text-gray-500">Mapa de ubicación</p>
-            </div>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.543337474814!2d-74.03452292414496!3d4.841950395803897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f87df23641441%3A0xece0e66eb42bb37a!2sCENTRO%20EMPRESARIAL%20TYFA!5e0!3m2!1ses!2sco!4v1710291288611!5m2!1ses!2sco" 
+              width="100%" 
+              height="600" 
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación de Cunservicios"
+              className="w-full h-full"
+            ></iframe>
           </div>
         </div>
       </div>
