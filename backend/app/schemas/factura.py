@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -17,10 +18,23 @@ class ConceptoFactura(ConceptoFacturaBase):
     class Config:
         from_attributes = True
 
-# Actualizar clase Factura
+# Clase base que faltaba
+class FacturaBase(BaseModel):
+    numero_factura: str
+    fecha_emision: date
+    fecha_vencimiento: date
+    valor_total: float
+    estado: str
+    cliente_id: int
+    observaciones: Optional[str] = None
+
+class FacturaCreate(FacturaBase):
+    pass
+
+# Actualizamos para usar from_attributes en lugar de orm_mode
 class Factura(FacturaBase):
     id: int
     conceptos: Optional[List[ConceptoFactura]] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
