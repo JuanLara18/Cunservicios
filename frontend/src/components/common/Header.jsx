@@ -36,27 +36,27 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
-            <div className="flex items-center">
-              <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center mr-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <span className="text-blue-600 font-bold text-2xl">CUNSERVICIOS</span>
+        <Link to="/" className="flex items-center">
+          <div className="flex items-center">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-600 to-teal-500 flex items-center justify-center mr-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
             </div>
-          </Link>
+            <span className="text-indigo-600 font-bold text-2xl">CUNSERVICIOS</span>
+          </div>
+        </Link>
 
           {/* Mobile menu button */}
           <button
@@ -167,8 +167,8 @@ const NavItem = ({ to, label }) => (
     to={to}
     className={({ isActive }) =>
       isActive
-        ? "relative px-3 py-2 text-blue-600 font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-blue-600 after:rounded-t-md"
-        : "px-3 py-2 text-gray-700 hover:text-blue-600 font-medium relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-transparent hover:after:bg-blue-200 after:rounded-t-md after:transition-colors"
+        ? "relative px-3 py-2 text-indigo-600 font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-indigo-600 after:rounded-t-md"
+        : "px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-transparent hover:after:bg-indigo-200 after:rounded-t-md after:transition-colors"
     }
     end={to === "/"}
   >
@@ -182,8 +182,8 @@ const MobileNavItem = ({ to, label, onClick }) => (
     to={to}
     className={({ isActive }) =>
       isActive
-        ? "text-blue-600 font-medium py-2 px-2 bg-blue-50 rounded-md"
-        : "text-gray-700 hover:text-blue-600 py-2 px-2 hover:bg-gray-100 rounded-md"
+        ? "text-indigo-600 font-medium py-2 px-2 bg-indigo-50 rounded-md"
+        : "text-gray-700 hover:text-indigo-600 py-2 px-2 hover:bg-gray-100 rounded-md"
     }
     onClick={onClick}
     end={to === "/"}
