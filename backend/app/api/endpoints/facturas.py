@@ -88,3 +88,19 @@ def pagar_factura(
     db.commit()
     db.refresh(factura)
     return factura
+
+@router.get("/cuenta/{numero_cuenta}", response_model=List[schemas.Factura])
+def read_facturas_by_numero_cuenta(
+    numero_cuenta: str,
+    db: Session = Depends(get_db)
+):
+    """Obtiene las facturas de un cliente por su número de cuenta (usado por el frontend)"""
+    cliente = db.query(Cliente).filter(Cliente.numero_cuenta == numero_cuenta).first()
+    if cliente is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Cliente no encontrado"
+        )
+    
+    facturas = db.query(Factura).filter(Factura.cliente_id == cliente.id).all()
+    return facturas
