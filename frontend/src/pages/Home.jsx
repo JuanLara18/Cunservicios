@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="pt-20">
+    <div>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-800 to-blue-600 text-white py-20 md:py-28 overflow-hidden">
         {/* Formas decorativas en el fondo */}
