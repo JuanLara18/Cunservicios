@@ -26,6 +26,7 @@ export const facturaService = {
   getFacturas: () => apiClient.get("/api/facturas"),
   getFacturaPorNumero: (numeroFactura) => apiClient.get(`/api/facturas/${numeroFactura}`),
   pagarFactura: (numeroFactura, datosPago) => apiClient.post(`/api/facturas/${numeroFactura}/pagar`, datosPago),
+  getFacturasPorCuenta: (numeroCuenta) => apiClient.get(`/api/facturas/cuenta/${numeroCuenta}`),
 };
 
 // Servicios para PQR

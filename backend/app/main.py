@@ -1,7 +1,9 @@
 from app.api.endpoints import auth, clientes, facturas, pqrs, users
 from app.db.database import Base, engine, get_db
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 # Crear las tablas en la base de datos
@@ -14,9 +16,14 @@ app = FastAPI(
 )
 
 # Configurar CORS
+origins = [
+    "http://localhost:3000",  # Frontend de desarrollo
+    "http://localhost:8080",  # Posible puerto alternativo
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción, limitar a dominio específico
+    allow_origins=origins,  # Reemplaza "*" con orígenes específicos
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,3 +51,10 @@ async def startup_event():
         print(f"Error al inicializar la base de datos: {e}")
     finally:
         db.close()
+        
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={"detail": exc.errors(), "body": exc.body},
+    )
