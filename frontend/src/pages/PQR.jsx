@@ -1,28 +1,8 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-const PQRSchema = Yup.object().shape({
-  tipoPQR: Yup.string().required("Seleccione un tipo de solicitud"),
-  numeroCuenta: Yup.string()
-    .required("El número de cuenta es requerido")
-    .matches(/^[0-9]+$/, "El número de cuenta debe contener solo números"),
-  nombre: Yup.string().required("El nombre es requerido"),
-  correo: Yup.string()
-    .email("Correo electrónico inválido")
-    .required("El correo electrónico es requerido"),
-  telefono: Yup.string()
-    .required("El teléfono es requerido")
-    .matches(/^[0-9]+$/, "El teléfono debe contener solo números"),
-  asunto: Yup.string().required("El asunto es requerido"),
-  descripcion: Yup.string()
-    .required("La descripción es requerida")
-    .min(20, "La descripción debe tener al menos 20 caracteres"),
-  aceptaTerminos: Yup.boolean().oneOf(
-    [true],
-    "Debe aceptar los términos y condiciones"
-  ),
-});
+import PQRForm from "../components/forms/PQRForm";
+import { clienteService, pqrService } from "../services/api";
 
 const ConsultaPQRSchema = Yup.object().shape({
   radicado: Yup.string().required("El número de radicado es requerido"),
@@ -33,51 +13,75 @@ const PQR = () => {
   const [radicado, setRadicado] = useState("");
   const [consultaError, setConsultaError] = useState("");
   const [consultaResult, setConsultaResult] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConsulting, setIsConsulting] = useState(false);
 
-  const handleSubmitPQR = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmitPQR = async (values) => {
     try {
-      // Simulación de envío a API
-      setTimeout(() => {
-        const nuevoRadicado = "PQR-" + Date.now().toString().slice(-8);
-        setRadicado(nuevoRadicado);
-        setSubmitSuccess(true);
-        setSubmitting(false);
-        resetForm();
-      }, 1000);
+      setIsSubmitting(true);
+      
+      // Primero consultamos el cliente por número de cuenta
+      const clienteResponse = await clienteService.getClientePorCuenta(values.numero_cuenta);
+      
+      // Preparamos los datos para enviar a la API
+      const pqrData = {
+        tipo: values.tipo,
+        asunto: values.asunto,
+        descripcion: values.descripcion,
+        cliente_id: clienteResponse.data.id
+      };
+      
+      // Enviamos la PQR al backend
+      const response = await pqrService.crearPQR(pqrData);
+      
+      // Guardamos el radicado y mostramos mensaje de éxito
+      setRadicado(response.data.radicado);
+      setSubmitSuccess(true);
     } catch (error) {
       console.error("Error al enviar PQR:", error);
-      setSubmitSuccess(false);
-      setSubmitting(false);
+      
+      // Si el error es que no existe el cliente
+      if (error.response && error.response.status === 404) {
+        alert("No se encontró un cliente con ese número de cuenta. Por favor, verifique su información.");
+      } else {
+        alert("Ocurrió un error al enviar su solicitud. Por favor intente nuevamente.");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleConsultaPQR = async (values, { setSubmitting }) => {
+  const handleConsultaPQR = async (values) => {
     try {
-      // Simulación de consulta a API
-      setTimeout(() => {
-        if (values.radicado.startsWith("PQR-")) {
-          setConsultaResult({
-            radicado: values.radicado,
-            tipo: "Petición",
-            estado: "En trámite",
-            fechaCreacion: "2024-02-15",
-            fechaEstimadaRespuesta: "2024-03-01",
-            asunto: "Solicitud de revisión de medidor",
-            descripcion:
-              "El medidor presenta lecturas irregulares en los últimos dos meses.",
-          });
-          setConsultaError("");
-        } else {
-          setConsultaError("No se encontró ningún PQR con el radicado ingresado");
-          setConsultaResult(null);
-        }
-        setSubmitting(false);
-      }, 1000);
+      setIsConsulting(true);
+      setConsultaError("");
+      setConsultaResult(null);
+      
+      // Consultamos la PQR en el backend
+      const response = await pqrService.getPQRPorRadicado(values.radicado);
+      
+      // Si la solicitud es exitosa, mostramos los datos
+      setConsultaResult({
+        radicado: response.data.radicado,
+        tipo: response.data.tipo,
+        estado: response.data.estado,
+        fechaCreacion: response.data.fecha_creacion,
+        fechaEstimadaRespuesta: 
+          response.data.fecha_creacion ? 
+          new Date(new Date(response.data.fecha_creacion).getTime() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : 
+          null,
+        asunto: response.data.asunto,
+        descripcion: response.data.descripcion,
+      });
     } catch (error) {
       console.error("Error al consultar PQR:", error);
-      setConsultaError("Ocurrió un error al consultar el PQR");
-      setConsultaResult(null);
-      setSubmitting(false);
+      if (error.response && error.response.status === 404) {
+        setConsultaError("No se encontró ningún PQR con el radicado ingresado");
+      } else {
+        setConsultaError("Ocurrió un error al consultar la PQR. Por favor intente nuevamente.");
+      }
+    } finally {
+      setIsConsulting(false);
     }
   };
 
@@ -116,9 +120,9 @@ const PQR = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isConsulting}
                   >
-                    {isSubmitting ? "Consultando..." : "Consultar"}
+                    {isConsulting ? "Consultando..." : "Consultar"}
                   </button>
                 </Form>
               )}
@@ -240,188 +244,7 @@ const PQR = () => {
           ) : (
             <div className="card">
               <h2 className="text-2xl font-semibold mb-4">Radica tu PQR</h2>
-              <Formik
-                initialValues={{
-                  tipoPQR: "",
-                  numeroCuenta: "",
-                  nombre: "",
-                  correo: "",
-                  telefono: "",
-                  asunto: "",
-                  descripcion: "",
-                  aceptaTerminos: false,
-                }}
-                validationSchema={PQRSchema}
-                onSubmit={handleSubmitPQR}
-              >
-                {({ isSubmitting }) => (
-                  <Form className="space-y-4">
-                    <div className="form-group">
-                      <label htmlFor="tipoPQR" className="form-label">
-                        Tipo de solicitud
-                      </label>
-                      <Field
-                        as="select"
-                        id="tipoPQR"
-                        name="tipoPQR"
-                        className="form-input"
-                      >
-                        <option value="">Seleccione una opción</option>
-                        <option value="peticion">Petición</option>
-                        <option value="queja">Queja</option>
-                        <option value="reclamo">Reclamo</option>
-                        <option value="sugerencia">Sugerencia</option>
-                        <option value="denuncia">Denuncia</option>
-                      </Field>
-                      <ErrorMessage
-                        name="tipoPQR"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="numeroCuenta" className="form-label">
-                        Número de cuenta
-                      </label>
-                      <Field
-                        type="text"
-                        id="numeroCuenta"
-                        name="numeroCuenta"
-                        className="form-input"
-                        placeholder="Ingresa tu número de cuenta"
-                      />
-                      <ErrorMessage
-                        name="numeroCuenta"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="nombre" className="form-label">
-                        Nombre completo
-                      </label>
-                      <Field
-                        type="text"
-                        id="nombre"
-                        name="nombre"
-                        className="form-input"
-                        placeholder="Ingresa tu nombre completo"
-                      />
-                      <ErrorMessage
-                        name="nombre"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="correo" className="form-label">
-                        Correo electrónico
-                      </label>
-                      <Field
-                        type="email"
-                        id="correo"
-                        name="correo"
-                        className="form-input"
-                        placeholder="Ingresa tu correo electrónico"
-                      />
-                      <ErrorMessage
-                        name="correo"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="telefono" className="form-label">
-                        Teléfono de contacto
-                      </label>
-                      <Field
-                        type="text"
-                        id="telefono"
-                        name="telefono"
-                        className="form-input"
-                        placeholder="Ingresa tu teléfono"
-                      />
-                      <ErrorMessage
-                        name="telefono"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="asunto" className="form-label">
-                        Asunto
-                      </label>
-                      <Field
-                        type="text"
-                        id="asunto"
-                        name="asunto"
-                        className="form-input"
-                        placeholder="Ingresa el asunto de tu solicitud"
-                      />
-                      <ErrorMessage
-                        name="asunto"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="descripcion" className="form-label">
-                        Descripción
-                      </label>
-                      <Field
-                        as="textarea"
-                        id="descripcion"
-                        name="descripcion"
-                        className="form-input h-32"
-                        placeholder="Describe detalladamente tu solicitud"
-                      />
-                      <ErrorMessage
-                        name="descripcion"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <div className="flex items-center">
-                        <Field
-                          type="checkbox"
-                          id="aceptaTerminos"
-                          name="aceptaTerminos"
-                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                        />
-                        <label
-                          htmlFor="aceptaTerminos"
-                          className="ml-2 block text-sm text-gray-700"
-                        >
-                          Acepto los términos y condiciones y autorizo el tratamiento de mis datos personales
-                        </label>
-                      </div>
-                      <ErrorMessage
-                        name="aceptaTerminos"
-                        component="div"
-                        className="form-error"
-                      />
-                    </div>
-
-                    <div className="pt-4">
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-full"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? "Enviando..." : "Enviar solicitud"}
-                      </button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
+              <PQRForm onSubmit={handleSubmitPQR} isLoading={isSubmitting} />
             </div>
           )}
         </div>

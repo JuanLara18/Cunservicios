@@ -33,12 +33,14 @@ export const pqrService = {
   getPQRs: () => apiClient.get("/api/pqrs"),
   getPQRPorRadicado: (radicado) => apiClient.get(`/api/pqrs/${radicado}`),
   crearPQR: (datosPQR) => apiClient.post("/api/pqrs", datosPQR),
+  actualizarEstadoPQR: (radicado, estado) => apiClient.patch(`/api/pqrs/${radicado}/estado?estado=${estado}`),
 };
 
 // Servicios para clientes
 export const clienteService = {
   getClientes: () => apiClient.get("/api/clientes"),
   getClientePorCuenta: (numeroCuenta) => apiClient.get(`/api/clientes/${numeroCuenta}`),
+  crearCliente: (datosCliente) => apiClient.post("/api/clientes", datosCliente),
 };
 
 // Servicios para tramites

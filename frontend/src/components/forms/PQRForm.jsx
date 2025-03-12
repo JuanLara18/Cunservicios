@@ -1,10 +1,10 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const PQRFormSchema = Yup.object().shape({
-  tipoPQR: Yup.string().required("Seleccione un tipo de solicitud"),
-  numeroCuenta: Yup.string()
+  tipo: Yup.string().required("Seleccione un tipo de solicitud"),
+  numero_cuenta: Yup.string()
     .required("El número de cuenta es requerido")
     .matches(/^[0-9]+$/, "El número de cuenta debe contener solo números"),
   nombre: Yup.string().required("El nombre es requerido"),
@@ -28,8 +28,8 @@ const PQRForm = ({ onSubmit, isLoading }) => {
   return (
     <Formik
       initialValues={{
-        tipoPQR: "",
-        numeroCuenta: "",
+        tipo: "",
+        numero_cuenta: "",
         nombre: "",
         correo: "",
         telefono: "",
@@ -43,42 +43,42 @@ const PQRForm = ({ onSubmit, isLoading }) => {
       {({ isSubmitting }) => (
         <Form className="space-y-4">
           <div className="form-group">
-            <label htmlFor="tipoPQR" className="form-label">
+            <label htmlFor="tipo" className="form-label">
               Tipo de solicitud
             </label>
             <Field
               as="select"
-              id="tipoPQR"
-              name="tipoPQR"
+              id="tipo"
+              name="tipo"
               className="form-input"
             >
               <option value="">Seleccione una opción</option>
-              <option value="peticion">Petición</option>
-              <option value="queja">Queja</option>
-              <option value="reclamo">Reclamo</option>
-              <option value="sugerencia">Sugerencia</option>
-              <option value="denuncia">Denuncia</option>
+              <option value="PETICION">Petición</option>
+              <option value="QUEJA">Queja</option>
+              <option value="RECLAMO">Reclamo</option>
+              <option value="SUGERENCIA">Sugerencia</option>
+              <option value="DENUNCIA">Denuncia</option>
             </Field>
             <ErrorMessage
-              name="tipoPQR"
+              name="tipo"
               component="div"
               className="form-error"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="numeroCuenta" className="form-label">
+            <label htmlFor="numero_cuenta" className="form-label">
               Número de cuenta
             </label>
             <Field
               type="text"
-              id="numeroCuenta"
-              name="numeroCuenta"
+              id="numero_cuenta"
+              name="numero_cuenta"
               className="form-input"
               placeholder="Ingresa tu número de cuenta"
             />
             <ErrorMessage
-              name="numeroCuenta"
+              name="numero_cuenta"
               component="div"
               className="form-error"
             />

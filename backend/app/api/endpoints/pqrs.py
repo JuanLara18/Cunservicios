@@ -1,6 +1,6 @@
 import random
 import string
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 
 from app.db.database import get_db
@@ -46,10 +46,13 @@ def read_pqr(
     """Obtiene un PQR por su número de radicado"""
     pqr = db.query(PQR).filter(PQR.radicado == radicado).first()
     if pqr is None:
-        raise HTTPException(status_code=404, detail="PQR no encontrado")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="PQR no encontrado"
+        )
     return pqr
 
-@router.post("/", response_model=schemas.PQR)
+@router.post("/", response_model=schemas.PQR, status_code=status.HTTP_201_CREATED)
 def create_pqr(
     pqr: schemas.PQRCreate,
     db: Session = Depends(get_db)
@@ -58,20 +61,30 @@ def create_pqr(
     # Verificar que el cliente existe
     cliente = db.query(Cliente).filter(Cliente.id == pqr.cliente_id).first()
     if not cliente:
-        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="Cliente no encontrado"
+        )
     
-    # Generar datos adicionales
-    nuevo_pqr = PQR(
-        **pqr.dict(),
-        fecha_creacion=datetime.now().date(),
-        estado=EstadoPQR.RECIBIDO,
-        radicado=generate_radicado()
-    )
-    
-    db.add(nuevo_pqr)
-    db.commit()
-    db.refresh(nuevo_pqr)
-    return nuevo_pqr
+    try:
+        # Generar datos adicionales
+        nuevo_pqr = PQR(
+            **pqr.dict(),
+            fecha_creacion=datetime.now().date(),
+            estado=EstadoPQR.RECIBIDO,
+            radicado=generate_radicado()
+        )
+        
+        db.add(nuevo_pqr)
+        db.commit()
+        db.refresh(nuevo_pqr)
+        return nuevo_pqr
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error al crear PQR: {str(e)}"
+        )
 
 @router.patch("/{radicado}/estado", response_model=schemas.PQR)
 def update_pqr_estado(
@@ -82,7 +95,10 @@ def update_pqr_estado(
     """Actualiza el estado de un PQR"""
     pqr = db.query(PQR).filter(PQR.radicado == radicado).first()
     if pqr is None:
-        raise HTTPException(status_code=404, detail="PQR no encontrado")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="PQR no encontrado"
+        )
     
     pqr.estado = estado
     # Si el estado es RESPONDIDO o CERRADO, registrar fecha de respuesta

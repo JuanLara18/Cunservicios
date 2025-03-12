@@ -1,18 +1,19 @@
-
-from sqlalchemy import Column, Integer, String, Text, Date, ForeignKey, Enum
-from sqlalchemy.orm import relationship
 import enum
-from app.db.database import Base
 from datetime import datetime
 
-class TipoPQR(enum.Enum):
+from app.db.database import Base
+from sqlalchemy import Column, Date, Enum, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
+
+
+class TipoPQR(str, enum.Enum):
     PETICION = "Petición"
     QUEJA = "Queja"
     RECLAMO = "Reclamo"
     SUGERENCIA = "Sugerencia"
     DENUNCIA = "Denuncia"
 
-class EstadoPQR(enum.Enum):
+class EstadoPQR(str, enum.Enum):
     RECIBIDO = "Recibido"
     EN_TRAMITE = "En trámite"
     RESPONDIDO = "Respondido"
@@ -32,4 +33,3 @@ class PQR(Base):
     
     cliente_id = Column(Integer, ForeignKey("clientes.id"))
     cliente = relationship("Cliente")
-
