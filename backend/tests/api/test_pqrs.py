@@ -73,7 +73,7 @@ def test_update_pqr_estado(client, admin_token_headers, test_pqr):
     nuevo_estado = EstadoPQR.EN_TRAMITE
     
     response = client.patch(
-        f"/api/pqrs/{test_pqr.radicado}/estado?estado={nuevo_estado}",
+        f"/api/pqrs/{test_pqr.radicado}/estado?estado={nuevo_estado.value}",
         headers=admin_token_headers
     )
     
@@ -86,7 +86,7 @@ def test_update_pqr_estado_a_respondido(client, admin_token_headers, test_pqr):
     nuevo_estado = EstadoPQR.RESPONDIDO
     
     response = client.patch(
-        f"/api/pqrs/{test_pqr.radicado}/estado?estado={nuevo_estado}",
+        f"/api/pqrs/{test_pqr.radicado}/estado?estado={nuevo_estado.value}",
         headers=admin_token_headers
     )
     
@@ -98,7 +98,7 @@ def test_update_pqr_estado_a_respondido(client, admin_token_headers, test_pqr):
 def test_filter_pqrs_by_tipo(client, admin_token_headers, test_pqr):
     """Prueba para filtrar PQRs por tipo"""
     response = client.get(
-        f"/api/pqrs/?tipo={test_pqr.tipo}",
+        f"/api/pqrs/?tipo={test_pqr.tipo.value}",
         headers=admin_token_headers
     )
     
@@ -110,7 +110,7 @@ def test_filter_pqrs_by_tipo(client, admin_token_headers, test_pqr):
 def test_filter_pqrs_by_estado(client, admin_token_headers, test_pqr):
     """Prueba para filtrar PQRs por estado"""
     response = client.get(
-        f"/api/pqrs/?estado={test_pqr.estado}",
+        f"/api/pqrs/?estado={test_pqr.estado.value}",
         headers=admin_token_headers
     )
     
