@@ -1,5 +1,7 @@
+// frontend/src/components/forms/BillingForm.jsx (ajuste parcial)
+// Modificamos para incluir el manejo de errores de la API
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const BillingFormSchema = Yup.object().shape({

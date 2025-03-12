@@ -1,6 +1,11 @@
-
+# backend/app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.db.database import Base, engine
+from app.api.endpoints import users, clientes, facturas, pqrs
+
+# Crear las tablas en la base de datos
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Cunservicios API",
@@ -21,8 +26,8 @@ app.add_middleware(
 async def root():
     return {"message": "Bienvenido a la API de Cunservicios"}
 
-
-# Importar routers
-# from app.api.endpoints import router_name
-# app.include_router(router_name.router)
-
+# Importar y registrar routers
+app.include_router(users.router, prefix="/api")
+app.include_router(clientes.router, prefix="/api")
+app.include_router(facturas.router, prefix="/api")
+app.include_router(pqrs.router, prefix="/api")
