@@ -1,5 +1,6 @@
 from app.api.endpoints import auth, clientes, facturas, pqrs, users
 from app.db.database import Base, engine, get_db
+from app.static import setup_static_files
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -67,3 +68,6 @@ if __name__ == "__main__":
     
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=False)
+    
+    if os.environ.get("ENV", "development") == "production":
+        setup_static_files(app)
