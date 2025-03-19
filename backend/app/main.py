@@ -17,12 +17,13 @@ app = FastAPI(
 )
 
 # Configurar CORS
-origins = [
-    "http://localhost:3000",  # Frontend de desarrollo
-    "http://localhost:8080",  # Posible puerto alternativo
-    "https://cunservicios-5873da3a4098.herokuapp.com",  # La URL de tu app en Heroku
-    "*"  # Permitir todos los orígenes (cuidado en producción)
-]
+origins = ["*"]
+# origins = [
+#     "http://localhost:3000",  # Frontend de desarrollo
+#     "http://localhost:8080",  # Posible puerto alternativo
+#     "https://cunservicios-5873da3a4098.herokuapp.com",  # La URL de tu app en Heroku
+#     "*"  # Permitir todos los orígenes (cuidado en producción)
+# ]
 
 app.add_middleware(
     CORSMiddleware,
