@@ -70,4 +70,7 @@ if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=False)
     
     if os.environ.get("ENV", "development") == "production":
-        setup_static_files(app)
+        from fastapi.staticfiles import StaticFiles
+
+        # Servir los archivos estáticos del frontend compilado
+        app.mount("/", StaticFiles(directory="../frontend/build", html=True), name="static")
