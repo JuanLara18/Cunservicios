@@ -21,6 +21,10 @@ class Settings(BaseSettings):
 
     # Database settings
     DATABASE_URL: str = "sqlite:///./sql_app.db"
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 10
+    DB_POOL_TIMEOUT: int = 30
+    DB_POOL_RECYCLE: int = 1800
 
     # JWT settings
     SECRET_KEY: str = "change-me-in-production"
@@ -66,6 +70,13 @@ class Settings(BaseSettings):
     def validate_expiration(cls, value: int) -> int:
         if value <= 0:
             raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES debe ser mayor que 0")
+        return value
+
+    @field_validator("DB_POOL_SIZE", "DB_MAX_OVERFLOW", "DB_POOL_TIMEOUT", "DB_POOL_RECYCLE")
+    @classmethod
+    def validate_db_pool_values(cls, value: int) -> int:
+        if value < 0:
+            raise ValueError("Los valores de pool de base de datos no pueden ser negativos")
         return value
 
     @field_validator("DEFAULT_TENANT_ID")

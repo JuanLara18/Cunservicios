@@ -273,8 +273,13 @@ A Dockerfile is included for containerized deployment:
 
 ```bash
 docker build -t cunservicios-frontend .
-docker run -p 80:80 cunservicios-frontend
+docker run -p 3000:8080 cunservicios-frontend
 ```
+
+For Cloud Run deployment, use:
+
+- `../infra/gcp/cloudbuild.frontend.yaml`
+- `../infra/gcp/README.md`
 
 ## 👍 Best Practices
 

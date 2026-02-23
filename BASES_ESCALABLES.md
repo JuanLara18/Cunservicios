@@ -31,6 +31,14 @@ Este documento define la base técnica mínima para continuar el desarrollo del 
   - `/privacidad`
   - `/transparencia`
 
+### Despliegue (GCP-ready)
+- Se removieron artefactos legacy de Heroku (`Procfile`, `runtime.txt`).
+- Dockerfiles listos para Cloud Run (frontend y backend).
+- Configuración Nginx SPA para frontend (`frontend/nginx/nginx.conf`).
+- Plantillas de Cloud Build para despliegue automatizable:
+  - `infra/gcp/cloudbuild.backend.yaml`
+  - `infra/gcp/cloudbuild.frontend.yaml`
+
 ## 2) Criterios de escalabilidad acordados
 
 1. **Separación por tenant desde el inicio**

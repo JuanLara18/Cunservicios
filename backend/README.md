@@ -343,11 +343,24 @@ A Dockerfile is included for containerized deployment:
 docker build -t cunservicios-backend .
 
 # Run the container
-docker run -p 8000:8000 \
+docker run -p 8000:8080 \
   -e DATABASE_URL=postgresql://user:password@host:port/dbname \
   -e SECRET_KEY=your-secret-key \
   cunservicios-backend
 ```
+
+### GCP Cloud Run (recommended)
+
+This service is ready to run on Cloud Run:
+
+- Container listens on `${PORT}` (default `8080`)
+- Gunicorn + Uvicorn workers for production
+- Environment-driven configuration
+
+Use:
+
+- `../infra/gcp/cloudbuild.backend.yaml`
+- `../infra/gcp/README.md`
 
 ### Production Considerations
 
@@ -362,6 +375,7 @@ For production deployment:
    - Generate a strong SECRET_KEY
    - Set BACKEND_CORS_ORIGINS to specific origins
    - Use a production-ready database
+   - Use Cloud SQL (PostgreSQL) for persistent production data
 
 3. Enable HTTPS:
    - Use a reverse proxy (Nginx, Traefik)

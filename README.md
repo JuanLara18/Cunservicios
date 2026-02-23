@@ -77,7 +77,7 @@ Cunservicios
 - JWT Authentication
 
 ### Development & DevOps
-- Docker & Docker Compose
+- Docker (backend/frontend containers)
 - Git & GitHub Actions
 - VS Code Integration
 
@@ -124,18 +124,19 @@ The repository includes a baseline architecture guide for continuing development
 
 ## 💻 Development Environment
 
-### Using Docker (Recommended)
+### Using Docker
 
-The easiest way to run the entire stack is with Docker Compose:
+Run services in separate containers:
 
 ```bash
-docker-compose up -d
-```
+# Backend
+docker build -t cunservicios-backend ./backend
+docker run --rm -p 8000:8080 --env-file ./backend/.env.example cunservicios-backend
 
-This will start:
-- Frontend on http://localhost:3000
-- Backend API on http://localhost:8000
-- PostgreSQL database on port 5432
+# Frontend
+docker build -t cunservicios-frontend ./frontend
+docker run --rm -p 3000:8080 cunservicios-frontend
+```
 
 ### Running Services Individually
 
@@ -157,6 +158,7 @@ npm start
 cunservicios/
 ├── .github/               # GitHub Actions workflows
 ├── .vscode/               # VS Code configuration
+├── infra/gcp/             # Cloud Run/Cloud Build deployment templates
 ├── backend/               # Python FastAPI backend
 │   ├── app/               # Application code
 │   │   ├── api/           # API endpoints
@@ -177,7 +179,6 @@ cunservicios/
 │   │   ├── services/      # API services
 │   │   └── styles/        # CSS and styling
 │   └── package.json       # npm dependencies
-├── docker-compose.yml     # Docker Compose configuration
 └── README.md              # This file
 ```
 
@@ -192,21 +193,17 @@ The project includes VS Code configuration for seamless development:
 
 ## 📦 Deployment
 
-### Production Deployment
+### Production deployment (GCP-first)
 
-For production deployment, we recommend:
+The repository is prepared for deployment on **Google Cloud Run** (backend + frontend) with **Cloud SQL** for production data and **GoDaddy** custom domain mapping.
 
-1. Building optimized containers:
-   ```bash
-   docker-compose -f docker-compose.prod.yml build
-   ```
+See:
 
-2. Deploying with appropriate environment variables:
-   ```bash
-   docker-compose -f docker-compose.prod.yml up -d
-   ```
+- [infra/gcp/README.md](infra/gcp/README.md)
+- [infra/gcp/cloudbuild.backend.yaml](infra/gcp/cloudbuild.backend.yaml)
+- [infra/gcp/cloudbuild.frontend.yaml](infra/gcp/cloudbuild.frontend.yaml)
 
-See deployment guides in each service's README for detailed instructions.
+> Legacy Heroku artifacts were removed from this repository.
 
 ## 🤝 Contributing
 
