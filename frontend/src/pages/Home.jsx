@@ -173,46 +173,84 @@ const Home = () => {
   );
 };
 
+const FEATURED_COLOR_STYLES = {
+  indigo: {
+    border: "hover:border-indigo-200",
+    icon: "text-indigo-600",
+  },
+  teal: {
+    border: "hover:border-teal-200",
+    icon: "text-teal-600",
+  },
+};
+
+const SERVICE_COLOR_STYLES = {
+  indigo: {
+    bar: "from-indigo-500 to-indigo-700",
+    iconBox: "bg-indigo-50 text-indigo-600",
+    link: "text-indigo-600 hover:text-indigo-800",
+  },
+  teal: {
+    bar: "from-teal-500 to-teal-700",
+    iconBox: "bg-teal-50 text-teal-600",
+    link: "text-teal-600 hover:text-teal-800",
+  },
+};
+
+const INFO_COLOR_STYLES = {
+  indigo: "text-indigo-600 bg-indigo-50",
+  teal: "text-teal-600 bg-teal-50",
+};
+
 // Componente de tarjeta de característica
-const FeaturedCard = ({ icon, title, description, color = "indigo" }) => (
-  <div className={`bg-white rounded-lg shadow-lg p-6 transform transition-transform hover:-translate-y-1 border border-gray-100 hover:border-${color}-200`}>
-    <div className={`text-${color}-600 mb-4`}>{icon}</div>
-    <h3 className="text-xl font-semibold mb-3">{title}</h3>
-    <p className="text-gray-600">{description}</p>
-  </div>
-);
+const FeaturedCard = ({ icon, title, description, color = "indigo" }) => {
+  const styles = FEATURED_COLOR_STYLES[color] || FEATURED_COLOR_STYLES.indigo;
+  return (
+    <div
+      className={`bg-white rounded-lg shadow-lg p-6 transform transition-transform hover:-translate-y-1 border border-gray-100 ${styles.border}`}
+    >
+      <div className={`${styles.icon} mb-4`}>{icon}</div>
+      <h3 className="text-xl font-semibold mb-3">{title}</h3>
+      <p className="text-gray-600">{description}</p>
+    </div>
+  );
+};
 
 // Componente de tarjeta de servicio
-const ServiceCard = ({ title, description, linkTo, icon, color = "indigo" }) => (
-  <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100 hover:border-gray-200 transform hover:-translate-y-1">
-    <div className={`h-2 bg-gradient-to-r from-${color}-500 to-${color}-700`}></div>
-    <div className="p-6">
-      <div className="flex items-center mb-3">
-        <div className={`mr-3 p-2 rounded-full bg-${color}-50 text-${color}-600`}>
-          {icon}
+const ServiceCard = ({ title, description, linkTo, icon, color = "indigo" }) => {
+  const styles = SERVICE_COLOR_STYLES[color] || SERVICE_COLOR_STYLES.indigo;
+  return (
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100 hover:border-gray-200 transform hover:-translate-y-1">
+      <div className={`h-2 bg-gradient-to-r ${styles.bar}`}></div>
+      <div className="p-6">
+        <div className="flex items-center mb-3">
+          <div className={`mr-3 p-2 rounded-full ${styles.iconBox}`}>{icon}</div>
+          <h3 className="text-xl font-semibold">{title}</h3>
         </div>
-        <h3 className="text-xl font-semibold">{title}</h3>
+        <p className="text-gray-600 mb-4">{description}</p>
+        <Link to={linkTo} className={`${styles.link} font-medium flex items-center`}>
+          Conocer más
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </Link>
       </div>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <Link to={linkTo} className={`text-${color}-600 hover:text-${color}-800 font-medium flex items-center`}>
-        Conocer más
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </Link>
     </div>
-  </div>
-);
+  );
+};
 
 // Componente de tarjeta de información
-const InfoCard = ({ icon, title, content, color = "indigo" }) => (
-  <div className="bg-white rounded-lg shadow-lg p-6 flex border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-xl">
-    <div className={`text-${color}-600 mr-4 flex-shrink-0 p-2 rounded-full bg-${color}-50`}>{icon}</div>
-    <div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{content}</p>
+const InfoCard = ({ icon, title, content, color = "indigo" }) => {
+  const styles = INFO_COLOR_STYLES[color] || INFO_COLOR_STYLES.indigo;
+  return (
+    <div className="bg-white rounded-lg shadow-lg p-6 flex border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-xl">
+      <div className={`${styles} mr-4 flex-shrink-0 p-2 rounded-full`}>{icon}</div>
+      <div>
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+        <p className="text-gray-600">{content}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Home;

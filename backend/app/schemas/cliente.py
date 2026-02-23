@@ -1,6 +1,6 @@
+from typing import List, Optional
 
-from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from .factura import Factura
 
 class ClienteBase(BaseModel):
@@ -16,8 +16,8 @@ class ClienteCreate(ClienteBase):
 
 class Cliente(ClienteBase):
     id: int
-    facturas: Optional[List[Factura]] = []
+    tenant_id: str
+    facturas: Optional[List[Factura]] = Field(default_factory=list)
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 

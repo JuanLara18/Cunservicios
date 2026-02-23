@@ -91,6 +91,13 @@ This is the frontend application for the Cunservicios platform. It provides a mo
 
 The application will be available at [http://localhost:3000](http://localhost:3000).
 
+### Environment variables
+
+```bash
+REACT_APP_API_URL=http://localhost:8000
+REACT_APP_TENANT_ID=public
+```
+
 ## 📁 Project Structure
 
 ```
@@ -224,6 +231,8 @@ const fetchFactura = async (numeroFactura) => {
   }
 };
 ```
+
+All API calls include the `X-Tenant-ID` header from `REACT_APP_TENANT_ID`.
 
 ## 🧪 Testing
 

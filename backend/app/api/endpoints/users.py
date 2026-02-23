@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from app.api.dependencies import get_admin_user, get_current_user, get_db
+from app.api.dependencies import get_admin_user, get_current_user
 from app.core.security import get_password_hash, verify_password
 from app.db.database import get_db
 from app.models.user import User
@@ -29,7 +29,7 @@ def read_users(
     - **limit**: Número máximo de registros a devolver
     - **is_active**: Filtrar por usuarios activos/inactivos
     """
-    query = db.query(User)
+    query = db.query(User).filter(User.tenant_id == current_user.tenant_id)
     
     # Aplicar filtros si están presentes
     if is_active is not None:
@@ -66,7 +66,11 @@ def read_user(
         )
     
     # Buscar el usuario
-    user = db.query(User).filter(User.id == user_id).first()
+    user = (
+        db.query(User)
+        .filter(User.id == user_id, User.tenant_id == current_user.tenant_id)
+        .first()
+    )
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -86,7 +90,11 @@ def create_user(
     Solo accesible por administradores.
     """
     # Verificar si el email ya está registrado
-    db_user = db.query(User).filter(User.email == user.email).first()
+    db_user = (
+        db.query(User)
+        .filter(User.email == user.email, User.tenant_id == current_user.tenant_id)
+        .first()
+    )
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -97,6 +105,7 @@ def create_user(
         # Crear el nuevo usuario
         hashed_password = get_password_hash(user.password)
         db_user = User(
+            tenant_id=current_user.tenant_id,
             email=user.email,
             hashed_password=hashed_password,
             is_active=True,
@@ -141,7 +150,11 @@ def update_user(
         )
     
     # Buscar el usuario
-    db_user = db.query(User).filter(User.id == user_id).first()
+    db_user = (
+        db.query(User)
+        .filter(User.id == user_id, User.tenant_id == current_user.tenant_id)
+        .first()
+    )
     if db_user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -151,7 +164,14 @@ def update_user(
     # Actualizar email si está presente y es diferente
     if user_update.email is not None and user_update.email != db_user.email:
         # Verificar que el nuevo email no esté en uso
-        existing_user = db.query(User).filter(User.email == user_update.email).first()
+        existing_user = (
+            db.query(User)
+            .filter(
+                User.email == user_update.email,
+                User.tenant_id == current_user.tenant_id,
+            )
+            .first()
+        )
         if existing_user and existing_user.id != user_id:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -214,7 +234,11 @@ def delete_user(
         )
     
     # Buscar el usuario
-    db_user = db.query(User).filter(User.id == user_id).first()
+    db_user = (
+        db.query(User)
+        .filter(User.id == user_id, User.tenant_id == current_user.tenant_id)
+        .first()
+    )
     if db_user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

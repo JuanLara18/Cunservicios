@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ConceptoFacturaBase(BaseModel):
@@ -14,9 +14,8 @@ class ConceptoFacturaCreate(ConceptoFacturaBase):
 class ConceptoFactura(ConceptoFacturaBase):
     id: int
     factura_id: int
-    
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 # Clase base que faltaba
 class FacturaBase(BaseModel):
@@ -34,7 +33,7 @@ class FacturaCreate(FacturaBase):
 # Actualizamos para usar from_attributes en lugar de orm_mode
 class Factura(FacturaBase):
     id: int
-    conceptos: Optional[List[ConceptoFactura]] = []
+    tenant_id: str
+    conceptos: Optional[List[ConceptoFactura]] = Field(default_factory=list)
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

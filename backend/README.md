@@ -240,6 +240,20 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return verify_token(token, credentials_exception)
 ```
 
+## 🏢 Multi-tenant foundation
+
+The API is prepared to isolate data by tenant using the `X-Tenant-ID` header.
+
+- If header is not provided, it defaults to `public`.
+- Main entities (`users`, `clientes`, `facturas`, `pqrs`) are filtered by tenant.
+- Tokens include tenant context to prevent cross-tenant access.
+
+Example:
+
+```bash
+curl -H "X-Tenant-ID: cliente-a" http://localhost:8000/api/clientes/
+```
+
 ## 💻 Development Workflow
 
 ### Adding a New Endpoint

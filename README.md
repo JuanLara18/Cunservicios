@@ -13,6 +13,7 @@ This repository contains the complete codebase for the Cunservicios web applicat
 - [Technology Stack](#technology-stack)
 - [Getting Started](#getting-started)
 - [Development Environment](#development-environment)
+- [Scalable Foundations](#scalable-foundations)
 - [Project Structure](#project-structure)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
@@ -79,6 +80,12 @@ Cunservicios
 - Docker & Docker Compose
 - Git & GitHub Actions
 - VS Code Integration
+
+## Scalable Foundations
+
+The repository includes a baseline architecture guide for continuing development in a scalable way (multi-tenant isolation, legal/compliance readiness, and phased roadmap):
+
+- [BASES_ESCALABLES.md](BASES_ESCALABLES.md)
 
 ## 🚀 Getting Started
 

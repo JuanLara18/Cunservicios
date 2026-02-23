@@ -7,3 +7,4 @@ class Token(BaseModel):
     user_id: int
     email: str
     is_admin: bool
+    tenant_id: str

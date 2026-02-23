@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import FacturaDetail from "../components/common/FacturaDetail";
 import BillingForm from "../components/forms/BillingForm";
+import { facturaService } from "../services/api";
+import { getLatestFactura, mapFacturaFromApi } from "../services/mappers";
 
 /**
  * Página de facturación que permite a los usuarios consultar y pagar sus facturas
@@ -40,34 +42,22 @@ const Billing = () => {
     setShowPaymentForm(false);
 
     try {
-      // En un entorno de producción, descomenta la siguiente línea:
-      // const response = await facturaService.getFacturaPorCuenta(values.numeroCuenta);
-      // setFactura(response.data);
-      
-      // Simulación para desarrollo y pruebas
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      if (values.numeroCuenta === "123456") {
-        setFactura({
-          numeroFactura: "F-2024-123456",
-          fechaEmision: "2024-02-15",
-          fechaVencimiento: "2024-03-15",
-          valorTotal: 75000,
-          estado: "Pendiente",
-          conceptos: [
-            { concepto: "Cargo fijo acueducto", valor: 25000 },
-            { concepto: "Consumo acueducto", valor: 30000 },
-            { concepto: "Cargo fijo alcantarillado", valor: 10000 },
-            { concepto: "Servicio alcantarillado", valor: 10000 },
-          ],
-        });
-      } else {
+      const response = await facturaService.getFacturasPorCuenta(values.numeroCuenta);
+      const latestFactura = getLatestFactura(response.data);
+
+      if (!latestFactura) {
         setError("No se encontró factura para el número de cuenta proporcionado");
+        return;
       }
+
+      setFactura(mapFacturaFromApi(latestFactura));
     } catch (err) {
       console.error("Error al consultar factura:", err);
+      const apiDetail = err?.response?.data?.detail;
       setError(
-        "Ocurrió un error al consultar la factura. Por favor intente nuevamente."
+        typeof apiDetail === "string"
+          ? apiDetail
+          : "Ocurrió un error al consultar la factura. Por favor intente nuevamente."
       );
     } finally {
       setLoading(false);
@@ -92,26 +82,21 @@ const Billing = () => {
     setError("");
     
     try {
-      // En producción, descomentar para usar API real:
-      // await facturaService.pagarFactura(factura.numeroFactura, {
-      //   paymentMethod,
-      //   // Otros detalles de pago que se recogerían del formulario
-      // });
-      
-      // Simulación para desarrollo
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Actualizar la factura para mostrar como pagada
-      setFactura({
-        ...factura,
-        estado: "Pagada"
+      const response = await facturaService.pagarFactura(factura.numeroFactura, {
+        paymentMethod,
       });
+      setFactura(mapFacturaFromApi(response.data));
       
       setSuccessMessage("¡Pago realizado con éxito! Se ha enviado el comprobante a su correo.");
       setShowPaymentForm(false);
     } catch (err) {
       console.error("Error al procesar pago:", err);
-      setError("Ocurrió un error al procesar el pago. Por favor intente nuevamente.");
+      const apiDetail = err?.response?.data?.detail;
+      setError(
+        typeof apiDetail === "string"
+          ? apiDetail
+          : "Ocurrió un error al procesar el pago. Por favor intente nuevamente."
+      );
     } finally {
       setIsPaying(false);
     }

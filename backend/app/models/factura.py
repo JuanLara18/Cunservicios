@@ -1,7 +1,16 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from app.db.database import Base
-from sqlalchemy import Column, Date, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import (
+    Column,
+    Date,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import relationship
 
 
@@ -30,10 +39,20 @@ class Factura(Base):
     Contiene información sobre la factura y se relaciona con un cliente.
     """
     __tablename__ = "facturas"
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "numero_factura", name="uq_facturas_tenant_numero"),
+    )
 
     id = Column(Integer, primary_key=True, index=True)
-    numero_factura = Column(String(50), index=True, unique=True, nullable=False)
-    fecha_emision = Column(Date, nullable=False, default=datetime.now().date())
+    tenant_id = Column(
+        String(64),
+        nullable=False,
+        index=True,
+        default="public",
+        server_default="public",
+    )
+    numero_factura = Column(String(50), index=True, nullable=False)
+    fecha_emision = Column(Date, nullable=False, default=date.today)
     fecha_vencimiento = Column(Date, nullable=False)
     valor_total = Column(Float, nullable=False)
     estado = Column(String(20), default="Pendiente")  # "Pagada", "Pendiente", "Vencida"

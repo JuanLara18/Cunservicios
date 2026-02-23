@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const TENANT_ID = process.env.REACT_APP_TENANT_ID || "public";
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -12,10 +13,12 @@ const apiClient = axios.create({
 // Interceptor para añadir token de autenticación
 apiClient.interceptors.request.use(
   (config) => {
+    config.headers = config.headers || {};
     const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    config.headers["X-Tenant-ID"] = TENANT_ID;
     return config;
   },
   (error) => Promise.reject(error)
@@ -25,8 +28,10 @@ apiClient.interceptors.request.use(
 export const facturaService = {
   getFacturas: () => apiClient.get("/api/facturas"),
   getFacturaPorNumero: (numeroFactura) => apiClient.get(`/api/facturas/${numeroFactura}`),
-  pagarFactura: (numeroFactura, datosPago) => apiClient.post(`/api/facturas/${numeroFactura}/pagar`, datosPago),
+  pagarFactura: (numeroFactura, datosPago = {}) =>
+    apiClient.patch(`/api/facturas/${numeroFactura}/pagar`, datosPago),
   getFacturasPorCuenta: (numeroCuenta) => apiClient.get(`/api/facturas/cuenta/${numeroCuenta}`),
+  getFacturaPorCuenta: (numeroCuenta) => apiClient.get(`/api/facturas/cuenta/${numeroCuenta}`),
 };
 
 // Servicios para PQR
@@ -53,6 +58,10 @@ export const tramiteService = {
 // Servicios para tarifas
 export const tarifaService = {
   getTarifas: () => apiClient.get("/api/tarifas"),
+};
+
+export const apiContext = {
+  tenantId: TENANT_ID,
 };
 
 export default apiClient;
