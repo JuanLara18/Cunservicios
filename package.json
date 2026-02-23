@@ -6,7 +6,7 @@
         "npm": "9.x"
     },
     "scripts": {
-        "build": "cd frontend && npm install && DISABLE_ESLINT_PLUGIN=true npx react-scripts build",
+        "build": "cd frontend && npm install && npm run build",
         "start": "cd backend && gunicorn -k uvicorn.workers.UvicornWorker app.main:app"
     },
     "cacheDirectories": [
