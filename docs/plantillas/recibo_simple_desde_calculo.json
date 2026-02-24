@@ -1,0 +1,85 @@
+{
+  "calculo": {
+    "municipio": "Alcaldia Ejemplo",
+    "periodo": "2026-01",
+    "anno_aplicacion": 2026,
+    "tasa_retorno": 0.118,
+    "ne_fraccion": 0.041,
+    "faom_n": 0.04,
+    "ambiente_marino": false,
+    "usar_formulacion_mixta_cee": true,
+    "energia_niveles": [
+      {
+        "nivel_tension": 1,
+        "tee": 500.0,
+        "cee_medido_kwh": 1000,
+        "aforos": []
+      },
+      {
+        "nivel_tension": 2,
+        "tee": 450.0,
+        "cee_medido_kwh": 0,
+        "aforos": [
+          {
+            "clase_iluminacion": 1,
+            "carga_kw": 50,
+            "horas_diarias": 12,
+            "dias_facturacion": 30
+          }
+        ]
+      }
+    ],
+    "inversion_niveles": [
+      {
+        "nivel_tension": 1,
+        "ucap": [
+          {
+            "cr_i": 100000000,
+            "cr_l_base": 80000000,
+            "eficacia_lm_w": 130,
+            "vida_util_anios": 15
+          }
+        ],
+        "terrenos": []
+      }
+    ],
+    "disponibilidad": {
+      "potencia_total_kw": 500,
+      "horas_periodo": 360,
+      "eventos": [
+        {
+          "potencia_kw": 10,
+          "horas_sin_servicio": 24
+        }
+      ]
+    },
+    "aom_niveles": [
+      {
+        "nivel_tension": 1,
+        "cra_n": 120000000,
+        "cral_n": 80000000,
+        "vceei_eventos": [
+          {
+            "potencia_kw": 2,
+            "horas_indisponibilidad": 10
+          }
+        ]
+      }
+    ],
+    "cotr": {
+      "interventoria": 10000000,
+      "costos_ambientales": 5000000,
+      "polizas": 3000000,
+      "tramites_impuestos": 1000000,
+      "otros": 0
+    }
+  },
+  "metadata": {
+    "entidad_facturadora": "Cunservicios",
+    "nit": "900000000-0",
+    "direccion": "Direccion de la entidad",
+    "contacto": "soporte@empresa.com",
+    "fuente_datos": "normalizacion_pdf_v1",
+    "observaciones": "Calculo generado desde datos normalizados"
+  }
+}

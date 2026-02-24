@@ -42,100 +42,102 @@ const PQRForm = ({ onSubmit, isLoading }) => {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-4">
-          <div className="form-group">
-            <label htmlFor="tipo" className="form-label">
-              Tipo de solicitud
-            </label>
-            <Field
-              as="select"
-              id="tipo"
-              name="tipo"
-              className="form-input"
-            >
-              <option value="">Seleccione una opción</option>
-              <option value="Petición">Petición</option>
-              <option value="Queja">Queja</option>
-              <option value="Reclamo">Reclamo</option>
-              <option value="Sugerencia">Sugerencia</option>
-              <option value="Denuncia">Denuncia</option>
-            </Field>
-            <ErrorMessage
-              name="tipo"
-              component="div"
-              className="form-error"
-            />
-          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="form-group">
+              <label htmlFor="tipo" className="form-label">
+                Tipo de solicitud
+              </label>
+              <Field
+                as="select"
+                id="tipo"
+                name="tipo"
+                className="form-input"
+              >
+                <option value="">Seleccione una opción</option>
+                <option value="Petición">Petición</option>
+                <option value="Queja">Queja</option>
+                <option value="Reclamo">Reclamo</option>
+                <option value="Sugerencia">Sugerencia</option>
+                <option value="Denuncia">Denuncia</option>
+              </Field>
+              <ErrorMessage
+                name="tipo"
+                component="div"
+                className="form-error"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="numero_cuenta" className="form-label">
-              Número de cuenta
-            </label>
-            <Field
-              type="text"
-              id="numero_cuenta"
-              name="numero_cuenta"
-              className="form-input"
-              placeholder="Ingresa tu número de cuenta"
-            />
-            <ErrorMessage
-              name="numero_cuenta"
-              component="div"
-              className="form-error"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="numero_cuenta" className="form-label">
+                Número de cuenta
+              </label>
+              <Field
+                type="text"
+                id="numero_cuenta"
+                name="numero_cuenta"
+                className="form-input"
+                placeholder="Ingresa tu número de cuenta"
+              />
+              <ErrorMessage
+                name="numero_cuenta"
+                component="div"
+                className="form-error"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="nombre" className="form-label">
-              Nombre completo
-            </label>
-            <Field
-              type="text"
-              id="nombre"
-              name="nombre"
-              className="form-input"
-              placeholder="Ingresa tu nombre completo"
-            />
-            <ErrorMessage
-              name="nombre"
-              component="div"
-              className="form-error"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="nombre" className="form-label">
+                Nombre completo
+              </label>
+              <Field
+                type="text"
+                id="nombre"
+                name="nombre"
+                className="form-input"
+                placeholder="Ingresa tu nombre completo"
+              />
+              <ErrorMessage
+                name="nombre"
+                component="div"
+                className="form-error"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="correo" className="form-label">
-              Correo electrónico
-            </label>
-            <Field
-              type="email"
-              id="correo"
-              name="correo"
-              className="form-input"
-              placeholder="Ingresa tu correo electrónico"
-            />
-            <ErrorMessage
-              name="correo"
-              component="div"
-              className="form-error"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="correo" className="form-label">
+                Correo electrónico
+              </label>
+              <Field
+                type="email"
+                id="correo"
+                name="correo"
+                className="form-input"
+                placeholder="Ingresa tu correo electrónico"
+              />
+              <ErrorMessage
+                name="correo"
+                component="div"
+                className="form-error"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="telefono" className="form-label">
-              Teléfono de contacto
-            </label>
-            <Field
-              type="text"
-              id="telefono"
-              name="telefono"
-              className="form-input"
-              placeholder="Ingresa tu teléfono"
-            />
-            <ErrorMessage
-              name="telefono"
-              component="div"
-              className="form-error"
-            />
+            <div className="form-group md:col-span-2">
+              <label htmlFor="telefono" className="form-label">
+                Teléfono de contacto
+              </label>
+              <Field
+                type="text"
+                id="telefono"
+                name="telefono"
+                className="form-input"
+                placeholder="Ingresa tu teléfono"
+              />
+              <ErrorMessage
+                name="telefono"
+                component="div"
+                className="form-error"
+              />
+            </div>
           </div>
 
           <div className="form-group">
@@ -199,7 +201,7 @@ const PQRForm = ({ onSubmit, isLoading }) => {
           <div className="pt-4">
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              className="btn btn-primary btn-mobile-full"
               disabled={isSubmitting || isLoading}
             >
               {isLoading ? "Enviando..." : "Enviar solicitud"}

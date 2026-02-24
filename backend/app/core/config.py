@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = "Cunservicios API"
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "testserver"]
     ENV: str = "development"
     DEBUG: bool = True
 
@@ -30,11 +31,22 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "change-me-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    AUTH_MAX_FAILED_ATTEMPTS: int = 5
+    AUTH_LOCKOUT_MINUTES: int = 15
 
     # Platform settings
     DEFAULT_TENANT_ID: str = "public"
     AUTO_CREATE_TABLES: bool = True
     ENABLE_SEED_DATA: bool = False
+    ENFORCE_AUTH_ON_DATA_ENDPOINTS: bool = True
+    ENABLE_HTTPS_REDIRECT: bool = False
+    ENABLE_SECURITY_HEADERS: bool = True
+    SECURITY_HSTS_SECONDS: int = 31536000
+    SECURITY_REFERRER_POLICY: str = "strict-origin-when-cross-origin"
+    SECURITY_FRAME_OPTIONS: str = "DENY"
+    SECURITY_CONTENT_SECURITY_POLICY: str = (
+        "default-src 'none'; frame-ancestors 'none'; base-uri 'none';"
+    )
 
     @field_validator("DATABASE_URL", mode="before")
     @classmethod
@@ -65,11 +77,43 @@ class Settings(BaseSettings):
 
         raise ValueError("BACKEND_CORS_ORIGINS debe ser una lista o string")
 
+    @field_validator("ALLOWED_HOSTS", mode="before")
+    @classmethod
+    def parse_allowed_hosts(cls, value: Any) -> list[str]:
+        if isinstance(value, list):
+            return [str(host).strip() for host in value if str(host).strip()]
+
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped:
+                return []
+            if stripped.startswith("["):
+                parsed = json.loads(stripped)
+                if isinstance(parsed, list):
+                    return [str(host).strip() for host in parsed if str(host).strip()]
+            return [host.strip() for host in stripped.split(",") if host.strip()]
+
+        raise ValueError("ALLOWED_HOSTS debe ser una lista o string")
+
     @field_validator("ACCESS_TOKEN_EXPIRE_MINUTES")
     @classmethod
     def validate_expiration(cls, value: int) -> int:
         if value <= 0:
             raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES debe ser mayor que 0")
+        return value
+
+    @field_validator("AUTH_MAX_FAILED_ATTEMPTS", "AUTH_LOCKOUT_MINUTES")
+    @classmethod
+    def validate_auth_limits(cls, value: int) -> int:
+        if value <= 0:
+            raise ValueError("Los parámetros de seguridad de autenticación deben ser mayores que 0")
+        return value
+
+    @field_validator("SECURITY_HSTS_SECONDS")
+    @classmethod
+    def validate_hsts_seconds(cls, value: int) -> int:
+        if value < 0:
+            raise ValueError("SECURITY_HSTS_SECONDS no puede ser negativo")
         return value
 
     @field_validator("DB_POOL_SIZE", "DB_MAX_OVERFLOW", "DB_POOL_TIMEOUT", "DB_POOL_RECYCLE")
@@ -94,6 +138,18 @@ class Settings(BaseSettings):
                 raise ValueError("Configura un SECRET_KEY seguro en producción")
             if "*" in self.BACKEND_CORS_ORIGINS:
                 raise ValueError("No uses CORS wildcard en producción")
+            if self.DEBUG:
+                raise ValueError("DEBUG debe estar deshabilitado en producción")
+            if self.DATABASE_URL.startswith("sqlite"):
+                raise ValueError("Usa PostgreSQL (Cloud SQL) en producción")
+            if not self.ENABLE_HTTPS_REDIRECT:
+                raise ValueError("ENABLE_HTTPS_REDIRECT debe estar activo en producción")
+            if not self.ENABLE_SECURITY_HEADERS:
+                raise ValueError("ENABLE_SECURITY_HEADERS debe estar activo en producción")
+            if not self.ENFORCE_AUTH_ON_DATA_ENDPOINTS:
+                raise ValueError("ENFORCE_AUTH_ON_DATA_ENDPOINTS debe estar activo en producción")
+            if not self.ALLOWED_HOSTS:
+                raise ValueError("Configura ALLOWED_HOSTS en producción")
         return self
 
     @property

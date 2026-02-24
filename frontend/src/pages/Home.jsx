@@ -5,32 +5,38 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-indigo-800 to-teal-600 text-white py-20 md:py-28 overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-r from-indigo-800 to-teal-600 py-16 text-white md:py-24">
         {/* Formas decorativas en el fondo */}
         <div className="absolute -top-24 -right-24 w-80 h-80 bg-indigo-500 rounded-full opacity-20"></div>
         <div className="absolute bottom-12 -left-16 w-64 h-64 bg-teal-400 rounded-full opacity-30"></div>
         <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white rounded-full opacity-10"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="mb-5 text-3xl font-bold leading-tight md:text-5xl lg:text-6xl">
               Servicios de calidad para su bienestar
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-teal-100">
+            <p className="mb-8 text-base text-teal-100 md:text-xl">
               Suministro de agua potable y gestión de aguas residuales con los más altos estándares de calidad y compromiso con el medio ambiente.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/facturacion"
-                className="btn-hero bg-white text-indigo-700 hover:bg-indigo-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                className="btn-hero btn-mobile-full bg-white text-indigo-700 hover:bg-indigo-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
                 Consultar factura
               </Link>
               <Link
                 to="/pqr"
-                className="btn-hero bg-teal-600 hover:bg-teal-700 border border-teal-400 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                className="btn-hero btn-mobile-full bg-teal-600 hover:bg-teal-700 border border-teal-400 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
                 Radicar PQR
+              </Link>
+              <Link
+                to="/portal"
+                className="btn-hero btn-mobile-full border border-white/40 bg-transparent hover:bg-white/10"
+              >
+                Portal clientes
               </Link>
             </div>
           </div>
@@ -38,8 +44,8 @@ const Home = () => {
       </section>
 
       {/* Características principales */}
-      <section className="py-16 -mt-10">
-        <div className="container mx-auto px-4">
+      <section className="-mt-8 py-14">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeaturedCard 
               icon={
@@ -76,9 +82,9 @@ const Home = () => {
       </section>
 
       {/* Servicios principales */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 after:content-[''] after:block after:w-16 after:h-1 after:bg-gradient-to-r after:from-indigo-600 after:to-teal-500 after:mx-auto after:mt-4">
+      <section className="bg-gray-50 py-14">
+        <div className="container">
+          <h2 className="mb-10 text-center text-2xl font-bold md:text-3xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gradient-to-r after:from-indigo-600 after:to-teal-500 after:mx-auto after:mt-4">
             Nuestros servicios
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -120,9 +126,9 @@ const Home = () => {
       </section>
 
       {/* Información importante y noticias */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 after:content-[''] after:block after:w-16 after:h-1 after:bg-gradient-to-r after:from-indigo-600 after:to-teal-500 after:mx-auto after:mt-4">
+      <section className="py-14">
+        <div className="container">
+          <h2 className="mb-10 text-center text-2xl font-bold md:text-3xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gradient-to-r after:from-indigo-600 after:to-teal-500 after:mx-auto after:mt-4">
             Información importante
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -151,19 +157,19 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-teal-600 text-white py-16 relative overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-teal-600 py-14 text-white">
         {/* Decorativos */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white to-transparent opacity-20"></div>
         <div className="absolute -right-24 -bottom-24 w-80 h-80 bg-white rounded-full opacity-10"></div>
         
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl font-bold mb-6">¿Necesitas ayuda?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+        <div className="container relative z-10 text-center">
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">¿Necesitas ayuda?</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-base md:text-xl">
             Nuestro equipo de atención al cliente está disponible para resolver todas tus dudas y solicitudes.
           </p>
           <Link
             to="/contacto"
-            className="inline-block px-8 py-3 bg-white text-indigo-600 rounded-md font-medium hover:bg-indigo-50 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+            className="btn-hero bg-white text-indigo-700 hover:bg-indigo-50"
           >
             Contáctanos
           </Link>

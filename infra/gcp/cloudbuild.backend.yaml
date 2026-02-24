@@ -2,11 +2,16 @@ substitutions:
   _REGION: us-central1
   _REPOSITORY: cunservicios
   _BACKEND_SERVICE: cunservicios-backend
-  _DATABASE_URL: sqlite:///./sql_app.db
-  _SECRET_KEY: change-me-in-production
+  _DATABASE_URL_SECRET: cunservicios-database-url
+  _SECRET_KEY_SECRET: cunservicios-secret-key
   _BACKEND_CORS_ORIGINS: https://app.example.com
   _DEFAULT_TENANT_ID: public
+  _ALLOWED_HOSTS: api.example.com
   _WEB_CONCURRENCY: "2"
+  _MIN_INSTANCES: "0"
+  _MAX_INSTANCES: "20"
+  _CPU: "1"
+  _MEMORY: "512Mi"
 
 steps:
   - id: Build backend image
@@ -37,9 +42,25 @@ steps:
       - ${_REGION}
       - --platform
       - managed
+      - --port
+      - "8080"
+      - --execution-environment
+      - gen2
+      - --cpu
+      - ${_CPU}
+      - --memory
+      - ${_MEMORY}
+      - --timeout
+      - "300"
+      - --min-instances
+      - ${_MIN_INSTANCES}
+      - --max-instances
+      - ${_MAX_INSTANCES}
       - --allow-unauthenticated
+      - --set-secrets
+      - DATABASE_URL=${_DATABASE_URL_SECRET}:latest,SECRET_KEY=${_SECRET_KEY_SECRET}:latest
       - --set-env-vars
-      - ENV=production,AUTO_CREATE_TABLES=false,ENABLE_SEED_DATA=false,DATABASE_URL=${_DATABASE_URL},SECRET_KEY=${_SECRET_KEY},BACKEND_CORS_ORIGINS=${_BACKEND_CORS_ORIGINS},DEFAULT_TENANT_ID=${_DEFAULT_TENANT_ID},WEB_CONCURRENCY=${_WEB_CONCURRENCY}
+      - ENV=production,DEBUG=false,AUTO_CREATE_TABLES=false,ENABLE_SEED_DATA=false,BACKEND_CORS_ORIGINS=${_BACKEND_CORS_ORIGINS},DEFAULT_TENANT_ID=${_DEFAULT_TENANT_ID},ALLOWED_HOSTS=${_ALLOWED_HOSTS},WEB_CONCURRENCY=${_WEB_CONCURRENCY},ENFORCE_AUTH_ON_DATA_ENDPOINTS=true,ENABLE_SECURITY_HEADERS=true,ENABLE_HTTPS_REDIRECT=true
 
 images:
   - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/backend:$SHORT_SHA

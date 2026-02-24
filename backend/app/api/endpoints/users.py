@@ -89,10 +89,11 @@ def create_user(
     
     Solo accesible por administradores.
     """
+    normalized_email = user.email.lower()
     # Verificar si el email ya está registrado
     db_user = (
         db.query(User)
-        .filter(User.email == user.email, User.tenant_id == current_user.tenant_id)
+        .filter(User.email == normalized_email, User.tenant_id == current_user.tenant_id)
         .first()
     )
     if db_user:
@@ -106,7 +107,7 @@ def create_user(
         hashed_password = get_password_hash(user.password)
         db_user = User(
             tenant_id=current_user.tenant_id,
-            email=user.email,
+            email=normalized_email,
             hashed_password=hashed_password,
             is_active=True,
             is_admin=False  # Por defecto, los nuevos usuarios no son administradores
@@ -162,12 +163,13 @@ def update_user(
         )
     
     # Actualizar email si está presente y es diferente
-    if user_update.email is not None and user_update.email != db_user.email:
+    if user_update.email is not None and user_update.email.lower() != db_user.email:
+        normalized_email = user_update.email.lower()
         # Verificar que el nuevo email no esté en uso
         existing_user = (
             db.query(User)
             .filter(
-                User.email == user_update.email,
+                User.email == normalized_email,
                 User.tenant_id == current_user.tenant_id,
             )
             .first()
@@ -177,7 +179,7 @@ def update_user(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Email ya registrado por otro usuario"
             )
-        db_user.email = user_update.email
+        db_user.email = normalized_email
     
     # Actualizar contraseña si está presente
     if user_update.password:
