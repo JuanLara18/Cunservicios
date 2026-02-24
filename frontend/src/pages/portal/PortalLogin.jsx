@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { usePortalSession } from "../../context/PortalSessionContext";
+import { isValidTenantId, TENANT_VALIDATION_HINT } from "../../utils/tenant";
 
 const PortalLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, login } = usePortalSession();
+  const { authNotice, clearAuthNotice, isAuthenticated, login } = usePortalSession();
   const [formData, setFormData] = useState({
     entidad: "",
     tenantId: "",
@@ -14,6 +15,7 @@ const PortalLogin = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -21,20 +23,40 @@ const PortalLogin = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const validateLoginForm = () => {
+    if (!isValidTenantId(formData.tenantId)) {
+      return `Tenant inválido. ${TENANT_VALIDATION_HINT}`;
+    }
+    if (!formData.email.trim()) {
+      return "Debes ingresar un correo de usuario.";
+    }
+    if (!formData.password) {
+      return "Debes ingresar tu contraseña.";
+    }
+    return "";
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
+    clearAuthNotice();
     setError("");
     setFormData((current) => ({ ...current, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const validationError = validateLoginForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
     setError("");
     try {
       await login({
         displayName: formData.entidad,
-        tenantId: formData.tenantId,
+        tenantId: formData.tenantId.trim().toLowerCase(),
         email: formData.email,
         password: formData.password,
       });
@@ -60,6 +82,11 @@ const PortalLogin = () => {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <form onSubmit={handleSubmit} className="card">
             <h2 className="mb-4 text-xl font-semibold">Acceso inicial</h2>
+            {authNotice && (
+              <div className="alert alert-warning">
+                <p>{authNotice}</p>
+              </div>
+            )}
             {error && (
               <div className="alert alert-error">
                 <p>{error}</p>
@@ -77,7 +104,6 @@ const PortalLogin = () => {
                   placeholder="Alcaldía de ..."
                   value={formData.entidad}
                   onChange={handleChange}
-                  required
                 />
               </div>
               <div className="form-group">
@@ -93,6 +119,7 @@ const PortalLogin = () => {
                   onChange={handleChange}
                   required
                 />
+                <p className="form-hint">{TENANT_VALIDATION_HINT}</p>
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="email">
@@ -116,13 +143,21 @@ const PortalLogin = () => {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   className="form-input"
                   placeholder="Tu contraseña"
                   value={formData.password}
                   onChange={handleChange}
                   required
                 />
+                <label className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={(event) => setShowPassword(event.target.checked)}
+                  />
+                  Mostrar contraseña
+                </label>
               </div>
             </div>
             <button type="submit" className="btn btn-primary mt-4" disabled={loading}>

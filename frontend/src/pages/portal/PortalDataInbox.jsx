@@ -1,15 +1,30 @@
 import React, { useMemo, useState } from "react";
 import { usePortalSession } from "../../context/PortalSessionContext";
 
+const safeReadJson = (storageKey) => {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    return raw ? JSON.parse(raw) : [];
+  } catch (error) {
+    return [];
+  }
+};
+
 const PortalDataInbox = () => {
   const { session } = usePortalSession();
   const [draft, setDraft] = useState({
     origen: "pdf",
+    estado: "recibido",
+    prioridad: "media",
     nombreArchivo: "",
     descripcion: "",
     contenidoCrudo: "",
   });
-  const [saved, setSaved] = useState(false);
+  const [savedMessage, setSavedMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterOrigin, setFilterOrigin] = useState("todos");
+  const [filterStatus, setFilterStatus] = useState("todos");
+  const [historyVersion, setHistoryVersion] = useState(0);
 
   const storageKey = useMemo(
     () => `portal.data_inbox.v1:${session?.tenantId || "public"}`,
@@ -17,27 +32,35 @@ const PortalDataInbox = () => {
   );
 
   const drafts = useMemo(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      return raw ? JSON.parse(raw) : [];
-    } catch (error) {
-      return [];
-    }
-  }, [storageKey, saved]);
+    return safeReadJson(storageKey);
+  }, [historyVersion, storageKey]);
+
+  const filteredDrafts = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return drafts.filter((item) => {
+      const originMatch = filterOrigin === "todos" || item.origen === filterOrigin;
+      const statusMatch = filterStatus === "todos" || item.estado === filterStatus;
+      if (!originMatch || !statusMatch) return false;
+      if (!term) return true;
+
+      return [item.nombreArchivo, item.descripcion, item.contenidoCrudo]
+        .filter(Boolean)
+        .some((part) => String(part).toLowerCase().includes(term));
+    });
+  }, [drafts, filterOrigin, filterStatus, searchTerm]);
 
   const onChange = (field, value) => {
-    setSaved(false);
+    setSavedMessage("");
     setDraft((current) => ({ ...current, [field]: value }));
   };
 
   const saveDraft = () => {
-    let parsed = [];
-    try {
-      const current = localStorage.getItem(storageKey);
-      parsed = current ? JSON.parse(current) : [];
-    } catch (error) {
-      parsed = [];
+    if (!draft.nombreArchivo.trim() && !draft.contenidoCrudo.trim()) {
+      setSavedMessage("Agrega al menos una referencia de archivo o contenido crudo.");
+      return;
     }
+
+    const parsed = safeReadJson(storageKey);
     const record = {
       ...draft,
       id: `${Date.now()}`,
@@ -45,13 +68,33 @@ const PortalDataInbox = () => {
     };
     const updated = [record, ...parsed].slice(0, 30);
     localStorage.setItem(storageKey, JSON.stringify(updated));
-    setSaved(true);
+    setHistoryVersion((current) => current + 1);
+    setSavedMessage("Borrador guardado correctamente.");
     setDraft({
       origen: "pdf",
+      estado: "recibido",
+      prioridad: "media",
       nombreArchivo: "",
       descripcion: "",
       contenidoCrudo: "",
     });
+  };
+
+  const updateDraftStatus = (id, estado) => {
+    const updated = drafts.map((item) => (item.id === id ? { ...item, estado } : item));
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+    setHistoryVersion((current) => current + 1);
+    setSavedMessage("Estado actualizado.");
+  };
+
+  const removeDraft = (id) => {
+    const confirmed = window.confirm("¿Eliminar este borrador?");
+    if (!confirmed) return;
+
+    const updated = drafts.filter((item) => item.id !== id);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+    setHistoryVersion((current) => current + 1);
+    setSavedMessage("Borrador eliminado.");
   };
 
   return (
@@ -77,6 +120,31 @@ const PortalDataInbox = () => {
               <option value="excel">Excel/CSV</option>
               <option value="correo">Correo/Oficio</option>
               <option value="manual">Manual</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Estado del insumo</label>
+            <select
+              className="form-input"
+              value={draft.estado}
+              onChange={(event) => onChange("estado", event.target.value)}
+            >
+              <option value="recibido">Recibido</option>
+              <option value="en_revision">En revisión</option>
+              <option value="normalizado">Normalizado</option>
+              <option value="listo_calculo">Listo para cálculo</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Prioridad</label>
+            <select
+              className="form-input"
+              value={draft.prioridad}
+              onChange={(event) => onChange("prioridad", event.target.value)}
+            >
+              <option value="baja">Baja</option>
+              <option value="media">Media</option>
+              <option value="alta">Alta</option>
             </select>
           </div>
           <div className="form-group">
@@ -113,22 +181,91 @@ const PortalDataInbox = () => {
         <button type="button" className="btn btn-primary" onClick={saveDraft}>
           Guardar borrador local
         </button>
-        {saved && <p className="text-sm text-green-700">Borrador guardado correctamente.</p>}
+        {savedMessage && <p className="text-sm text-green-700">{savedMessage}</p>}
       </div>
 
       <div className="card">
-        <h3 className="text-lg font-semibold">Borradores recientes</h3>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <h3 className="text-lg font-semibold">Borradores recientes</h3>
+          <div className="flex flex-wrap gap-2">
+            <input
+              className="form-input w-56"
+              placeholder="Buscar borradores"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+            <select
+              className="form-input w-40"
+              value={filterOrigin}
+              onChange={(event) => setFilterOrigin(event.target.value)}
+            >
+              <option value="todos">Origen: todos</option>
+              <option value="pdf">PDF</option>
+              <option value="excel">Excel/CSV</option>
+              <option value="correo">Correo/Oficio</option>
+              <option value="manual">Manual</option>
+            </select>
+            <select
+              className="form-input w-48"
+              value={filterStatus}
+              onChange={(event) => setFilterStatus(event.target.value)}
+            >
+              <option value="todos">Estado: todos</option>
+              <option value="recibido">Recibido</option>
+              <option value="en_revision">En revisión</option>
+              <option value="normalizado">Normalizado</option>
+              <option value="listo_calculo">Listo para cálculo</option>
+            </select>
+          </div>
+        </div>
+
         {drafts.length === 0 ? (
           <p className="mt-2 text-sm text-slate-600">Sin borradores registrados.</p>
+        ) : filteredDrafts.length === 0 ? (
+          <p className="mt-2 text-sm text-slate-600">No hay resultados para el filtro actual.</p>
         ) : (
           <div className="mt-3 space-y-2">
-            {drafts.map((item) => (
+            {filteredDrafts.map((item) => (
               <div key={item.id} className="rounded-md border border-slate-200 p-3">
                 <p className="text-sm font-medium">
                   {item.nombreArchivo || "Sin referencia"} - {item.origen.toUpperCase()}
                 </p>
                 <p className="text-xs text-slate-600">{item.descripcion || "Sin descripción"}</p>
+                <p className="text-xs text-slate-600">
+                  Estado: <span className="font-medium">{item.estado || "recibido"}</span> | Prioridad:{" "}
+                  <span className="font-medium">{item.prioridad || "media"}</span>
+                </p>
                 <p className="text-xs text-slate-500">{new Date(item.fecha).toLocaleString()}</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-outline"
+                    onClick={() => updateDraftStatus(item.id, "en_revision")}
+                  >
+                    En revisión
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-outline"
+                    onClick={() => updateDraftStatus(item.id, "normalizado")}
+                  >
+                    Normalizado
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => updateDraftStatus(item.id, "listo_calculo")}
+                  >
+                    Listo para cálculo
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-danger"
+                    onClick={() => removeDraft(item.id)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             ))}
           </div>

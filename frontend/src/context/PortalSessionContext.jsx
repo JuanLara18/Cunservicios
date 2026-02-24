@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import {
+  AUTH_EVENTS,
   authService,
   clearAuthToken,
   getAuthToken,
@@ -44,6 +45,7 @@ const persistSession = (session) => {
 export const PortalSessionProvider = ({ children }) => {
   const [session, setSession] = useState(() => readStoredSession());
   const [isBootstrapping, setIsBootstrapping] = useState(true);
+  const [authNotice, setAuthNotice] = useState("");
 
   useEffect(() => {
     let mounted = true;
@@ -57,10 +59,14 @@ export const PortalSessionProvider = ({ children }) => {
       const storedSession = readStoredSession();
       const storedToken = getAuthToken();
       if (!storedSession || !storedToken) {
-        if (storedToken && !storedSession) {
+        if (!mounted) return;
+        if (!storedSession) {
           clearAuthToken();
+        } else {
+          setSession(null);
+          localStorage.removeItem(SESSION_KEY);
         }
-        if (mounted) setIsBootstrapping(false);
+        setIsBootstrapping(false);
         return;
       }
 
@@ -78,6 +84,7 @@ export const PortalSessionProvider = ({ children }) => {
         });
         setSession(nextSession);
         persistSession(nextSession);
+        setAuthNotice("");
       } catch (error) {
         if (!mounted) return;
         setSession(null);
@@ -95,7 +102,23 @@ export const PortalSessionProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const handleSessionExpired = () => {
+      setSession(null);
+      localStorage.removeItem(SESSION_KEY);
+      setAuthNotice("Tu sesión expiró o ya no es válida. Ingresa nuevamente.");
+    };
+
+    window.addEventListener(AUTH_EVENTS.SESSION_EXPIRED, handleSessionExpired);
+    return () => {
+      window.removeEventListener(AUTH_EVENTS.SESSION_EXPIRED, handleSessionExpired);
+    };
+  }, []);
+
   const login = async ({ tenantId, displayName, email, password }) => {
+    setAuthNotice("");
     const normalizedTenant = (tenantId || "public").trim().toLowerCase();
     setActiveTenantId(normalizedTenant);
     try {
@@ -113,6 +136,7 @@ export const PortalSessionProvider = ({ children }) => {
       setSession(nextSession);
       persistSession(nextSession);
       setActiveTenantId(nextSession.tenantId);
+      setAuthNotice("");
       return nextSession;
     } catch (error) {
       clearAuthToken();
@@ -139,7 +163,12 @@ export const PortalSessionProvider = ({ children }) => {
     if (typeof window !== "undefined") {
       localStorage.removeItem(SESSION_KEY);
     }
+    setAuthNotice("");
     authService.logout();
+  };
+
+  const clearAuthNotice = () => {
+    setAuthNotice("");
   };
 
   const value = useMemo(
@@ -147,11 +176,13 @@ export const PortalSessionProvider = ({ children }) => {
       session,
       isAuthenticated: Boolean(session),
       isBootstrapping,
+      authNotice,
       login,
       logout,
       updateSession,
+      clearAuthNotice,
     }),
-    [isBootstrapping, session]
+    [authNotice, isBootstrapping, session]
   );
 
   return <PortalSessionContext.Provider value={value}>{children}</PortalSessionContext.Provider>;

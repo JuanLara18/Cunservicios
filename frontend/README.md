@@ -59,6 +59,14 @@ Se añadió una estructura inicial de portal en `/portal` para clientes instituc
 Esta base está diseñada para crecer por módulos sin romper rutas existentes.
 Para producción, se recomienda revisar `docs/security-production.md`.
 
+Mejoras recientes de componentes del portal:
+
+- Validación de tenant en login/configuración.
+- Manejo de sesión expirada desde interceptor de API.
+- Recibos con descarga TXT/Markdown, copia al portapapeles y filtros de histórico.
+- Bandeja de datos con estado/prioridad, filtros y acciones de seguimiento.
+- Configuración con cambio de contraseña conectado al backend.
+
 ## Referencias
 
 - Arquitectura general: `../docs/architecture.md`

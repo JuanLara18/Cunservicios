@@ -19,6 +19,17 @@ const PortalLayout = () => {
               <p className="text-sm text-slate-600">
                 Usuario: <span className="font-medium">{session?.email}</span>
               </p>
+              <p className="text-sm text-slate-600">
+                Rol:{" "}
+                <span className="font-medium">
+                  {session?.isAdmin ? "Administrador" : "Usuario portal"}
+                </span>
+              </p>
+              {session?.lastLoginAt && (
+                <p className="text-xs text-slate-500">
+                  Último acceso: {new Date(session.lastLoginAt).toLocaleString()}
+                </p>
+              )}
             </div>
             <div className="flex items-center gap-2">
               <Link to="/" className="btn btn-outline">

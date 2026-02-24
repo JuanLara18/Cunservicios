@@ -1,6 +1,38 @@
 import React, { useMemo, useState } from "react";
-import { alumbradoPortalService } from "../../services/api";
 import { usePortalSession } from "../../context/PortalSessionContext";
+import { alumbradoPortalService } from "../../services/api";
+
+const HISTORY_LIMIT = 40;
+
+const safeReadJson = (storageKey) => {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    return raw ? JSON.parse(raw) : [];
+  } catch (error) {
+    return [];
+  }
+};
+
+const parseApiError = (requestError) => {
+  const detail = requestError?.response?.data?.detail;
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail) && detail.length > 0) return "Datos inválidos. Revisa los campos.";
+  return "Ocurrió un error en la generación del recibo.";
+};
+
+const formatMoney = (value) => `$${Number(value || 0).toLocaleString()}`;
+
+const downloadFile = (filename, content, mimeType = "text/plain;charset=utf-8") => {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
 
 const PortalRecibos = () => {
   const { session } = usePortalSession();
@@ -26,20 +58,29 @@ const PortalRecibos = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [generatedReceipt, setGeneratedReceipt] = useState(null);
+  const [historySearch, setHistorySearch] = useState("");
+  const [copyStatus, setCopyStatus] = useState("");
+  const [historyVersion, setHistoryVersion] = useState(0);
 
   const storageKey = useMemo(
     () => `portal.receipts.v1:${session?.tenantId || "public"}`,
     [session?.tenantId]
   );
 
-  const receiptHistory = useMemo(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      return raw ? JSON.parse(raw) : [];
-    } catch (error) {
-      return [];
-    }
-  }, [storageKey, generatedReceipt]);
+  const receiptHistory = useMemo(
+    () => safeReadJson(storageKey),
+    [historyVersion, storageKey]
+  );
+
+  const filteredHistory = useMemo(() => {
+    const term = historySearch.trim().toLowerCase();
+    if (!term) return receiptHistory;
+    return receiptHistory.filter((item) =>
+      [item.numero_recibo, item.periodo, item.municipio, item.fuente_datos]
+        .filter(Boolean)
+        .some((part) => String(part).toLowerCase().includes(term))
+    );
+  }, [historySearch, receiptHistory]);
 
   const updateField = (path, value) => {
     setFormData((current) => {
@@ -55,6 +96,14 @@ const PortalRecibos = () => {
       }
       return next;
     });
+  };
+
+  const saveReceiptInHistory = (receipt) => {
+    const currentHistory = safeReadJson(storageKey);
+    const dedupedHistory = currentHistory.filter((item) => item.numero_recibo !== receipt.numero_recibo);
+    const updatedHistory = [receipt, ...dedupedHistory].slice(0, HISTORY_LIMIT);
+    localStorage.setItem(storageKey, JSON.stringify(updatedHistory));
+    setHistoryVersion((current) => current + 1);
   };
 
   const loadTemplate = async () => {
@@ -76,7 +125,7 @@ const PortalRecibos = () => {
         },
       }));
     } catch (requestError) {
-      setError("No fue posible cargar la plantilla base.");
+      setError(parseApiError(requestError));
     } finally {
       setLoading(false);
     }
@@ -86,27 +135,38 @@ const PortalRecibos = () => {
     event.preventDefault();
     setLoading(true);
     setError("");
-    setGeneratedReceipt(null);
+    setCopyStatus("");
 
     try {
       const response = await alumbradoPortalService.createSimpleReceiptFromTemplate(formData);
-      const receipt = response.data;
+      const receipt = {
+        ...response.data,
+        generated_at: new Date().toISOString(),
+      };
       setGeneratedReceipt(receipt);
-
-      let parsedHistory = [];
-      try {
-        const currentHistory = localStorage.getItem(storageKey);
-        parsedHistory = currentHistory ? JSON.parse(currentHistory) : [];
-      } catch (error) {
-        parsedHistory = [];
-      }
-      const updatedHistory = [receipt, ...parsedHistory].slice(0, 20);
-      localStorage.setItem(storageKey, JSON.stringify(updatedHistory));
+      saveReceiptInHistory(receipt);
     } catch (requestError) {
-      setError(requestError?.response?.data?.detail || "Error al generar recibo.");
+      setError(parseApiError(requestError));
     } finally {
       setLoading(false);
     }
+  };
+
+  const copyReceiptContent = async (content, label) => {
+    try {
+      await navigator.clipboard.writeText(content || "");
+      setCopyStatus(`Contenido ${label} copiado.`);
+    } catch (copyError) {
+      setCopyStatus("No fue posible copiar automáticamente.");
+    }
+  };
+
+  const clearHistory = () => {
+    const confirmed = window.confirm("¿Deseas limpiar el historial local de recibos para este tenant?");
+    if (!confirmed) return;
+    localStorage.removeItem(storageKey);
+    setHistoryVersion((current) => current + 1);
+    setGeneratedReceipt(null);
   };
 
   return (
@@ -128,6 +188,12 @@ const PortalRecibos = () => {
       {error && (
         <div className="alert alert-error">
           <p>{error}</p>
+        </div>
+      )}
+
+      {copyStatus && (
+        <div className="alert alert-info">
+          <p>{copyStatus}</p>
         </div>
       )}
 
@@ -224,8 +290,50 @@ const PortalRecibos = () => {
               Número: <span className="font-medium">{generatedReceipt.numero_recibo}</span>
             </p>
             <p className="text-sm text-slate-600">
-              Total: <span className="font-medium">${generatedReceipt.total.toLocaleString()}</span>
+              Total: <span className="font-medium">{formatMoney(generatedReceipt.total)}</span>
             </p>
+            <p className="text-sm text-slate-600">
+              Fecha:{" "}
+              <span className="font-medium">
+                {generatedReceipt.generated_at
+                  ? new Date(generatedReceipt.generated_at).toLocaleString()
+                  : "N/D"}
+              </span>
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="btn btn-sm btn-outline"
+                onClick={() =>
+                  downloadFile(
+                    `${generatedReceipt.numero_recibo || "recibo"}.txt`,
+                    generatedReceipt.contenido_texto || ""
+                  )
+                }
+              >
+                Descargar TXT
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline"
+                onClick={() =>
+                  downloadFile(
+                    `${generatedReceipt.numero_recibo || "recibo"}.md`,
+                    generatedReceipt.contenido_markdown || "",
+                    "text/markdown;charset=utf-8"
+                  )
+                }
+              >
+                Descargar MD
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-secondary"
+                onClick={() => copyReceiptContent(generatedReceipt.contenido_texto, "texto")}
+              >
+                Copiar texto
+              </button>
+            </div>
             <textarea
               className="form-input mt-3 h-64 font-mono text-xs"
               readOnly
@@ -234,6 +342,13 @@ const PortalRecibos = () => {
           </div>
           <div className="card">
             <h3 className="text-lg font-semibold">Vista markdown</h3>
+            <button
+              type="button"
+              className="btn btn-sm btn-secondary mt-3"
+              onClick={() => copyReceiptContent(generatedReceipt.contenido_markdown, "markdown")}
+            >
+              Copiar markdown
+            </button>
             <textarea
               className="form-input mt-3 h-80 font-mono text-xs"
               readOnly
@@ -244,9 +359,29 @@ const PortalRecibos = () => {
       )}
 
       <div className="card">
-        <h3 className="text-lg font-semibold">Histórico local de recibos</h3>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <h3 className="text-lg font-semibold">Histórico local de recibos</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <input
+              className="form-input w-64"
+              placeholder="Buscar por número, período o fuente"
+              value={historySearch}
+              onChange={(event) => setHistorySearch(event.target.value)}
+            />
+            <button
+              type="button"
+              className="btn btn-sm btn-danger"
+              onClick={clearHistory}
+              disabled={receiptHistory.length === 0}
+            >
+              Limpiar historial
+            </button>
+          </div>
+        </div>
         {receiptHistory.length === 0 ? (
           <p className="mt-2 text-sm text-slate-600">No hay recibos guardados para este tenant.</p>
+        ) : filteredHistory.length === 0 ? (
+          <p className="mt-2 text-sm text-slate-600">No hay resultados para el filtro actual.</p>
         ) : (
           <div className="table-responsive mt-3">
             <table className="table">
@@ -256,15 +391,41 @@ const PortalRecibos = () => {
                   <th>Período</th>
                   <th>Total</th>
                   <th>Fuente</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {receiptHistory.map((item) => (
+                {filteredHistory.map((item) => (
                   <tr key={item.numero_recibo}>
                     <td>{item.numero_recibo}</td>
                     <td>{item.periodo}</td>
-                    <td>${Number(item.total).toLocaleString()}</td>
+                    <td>{formatMoney(item.total)}</td>
                     <td>{item.fuente_datos}</td>
+                    <td>{item.generated_at ? new Date(item.generated_at).toLocaleString() : "N/D"}</td>
+                    <td>
+                      <div className="flex gap-1">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline"
+                          onClick={() => setGeneratedReceipt(item)}
+                        >
+                          Ver
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline"
+                          onClick={() =>
+                            downloadFile(
+                              `${item.numero_recibo || "recibo"}.txt`,
+                              item.contenido_texto || ""
+                            )
+                          }
+                        >
+                          TXT
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
