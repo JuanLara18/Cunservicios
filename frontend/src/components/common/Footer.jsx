@@ -24,7 +24,7 @@ const Footer = () => {
               <FooterLink to="/facturacion" label="Facturación" />
               <FooterLink to="/pqr" label="PQR" />
               <FooterLink to="/contacto" label="Contacto" />
-              <FooterLink to="/portal" label="Portal clientes" />
+              <FooterLink to="/portal/login" label="Portal clientes" />
             </ul>
           </div>
 

@@ -14,29 +14,30 @@ const Home = () => {
         <div className="container relative z-10">
           <div className="max-w-3xl">
             <h1 className="mb-5 text-3xl font-bold leading-tight md:text-5xl lg:text-6xl">
-              Servicios de calidad para su bienestar
+              Gestión clara para servicios públicos
             </h1>
             <p className="mb-8 text-base text-teal-100 md:text-xl">
-              Suministro de agua potable y gestión de aguas residuales con los más altos estándares de calidad y compromiso con el medio ambiente.
+              Operación institucional con enfoque en continuidad del servicio, atención al usuario y
+              trazabilidad digital.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
-                to="/facturacion"
+                to="/portal/login"
                 className="btn-hero btn-mobile-full bg-white text-indigo-700 hover:bg-indigo-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
-                Consultar factura
+                Ingresar al portal
               </Link>
               <Link
-                to="/pqr"
+                to="/servicios"
                 className="btn-hero btn-mobile-full bg-teal-600 hover:bg-teal-700 border border-teal-400 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
-                Radicar PQR
+                Ver servicios
               </Link>
               <Link
-                to="/portal"
+                to="/contacto"
                 className="btn-hero btn-mobile-full border border-white/40 bg-transparent hover:bg-white/10"
               >
-                Portal clientes
+                Canales de atención
               </Link>
             </div>
           </div>

@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { to: "/facturacion", label: "Facturación" },
   { to: "/pqr", label: "PQR" },
   { to: "/contacto", label: "Contacto" },
-  { to: "/portal", label: "Portal clientes" },
+  { to: "/portal/login", label: "Portal clientes" },
 ];
 
 const Header = () => {
@@ -108,7 +108,7 @@ const Header = () => {
               <a href="tel:+6011234567" className="btn btn-outline btn-sm">
                 Emergencias 116
               </a>
-              <Link to="/portal" className="btn btn-primary btn-sm">
+              <Link to="/portal/login" className="btn btn-primary btn-sm">
                 Portal clientes
               </Link>
             </div>
@@ -197,7 +197,7 @@ const Header = () => {
               <a href="tel:+6011234567" className="btn btn-outline btn-mobile-full">
                 Emergencias 116
               </a>
-              <Link to="/portal" className="btn btn-primary btn-mobile-full">
+              <Link to="/portal/login" className="btn btn-primary btn-mobile-full">
                 Ingresar al portal
               </Link>
             </div>
