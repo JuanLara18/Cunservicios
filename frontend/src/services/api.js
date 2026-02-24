@@ -1,7 +1,29 @@
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
-const TENANT_ID = process.env.REACT_APP_TENANT_ID || "public";
+const DEFAULT_TENANT_ID = process.env.REACT_APP_TENANT_ID || "public";
+const TENANT_STORAGE_KEY = "portal.tenantId";
+
+const normalizeTenantId = (tenantId) => {
+  if (!tenantId || typeof tenantId !== "string") return DEFAULT_TENANT_ID;
+  return tenantId.trim().toLowerCase() || DEFAULT_TENANT_ID;
+};
+
+export const getActiveTenantId = () => {
+  if (typeof window === "undefined") {
+    return DEFAULT_TENANT_ID;
+  }
+
+  return normalizeTenantId(localStorage.getItem(TENANT_STORAGE_KEY));
+};
+
+export const setActiveTenantId = (tenantId) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  localStorage.setItem(TENANT_STORAGE_KEY, normalizeTenantId(tenantId));
+};
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -14,11 +36,11 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     config.headers = config.headers || {};
-    const token = localStorage.getItem("token");
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    config.headers["X-Tenant-ID"] = TENANT_ID;
+    config.headers["X-Tenant-ID"] = getActiveTenantId();
     return config;
   },
   (error) => Promise.reject(error)
@@ -61,7 +83,16 @@ export const tarifaService = {
 };
 
 export const apiContext = {
-  tenantId: TENANT_ID,
+  tenantId: getActiveTenantId(),
+};
+
+export const alumbradoPortalService = {
+  getParametros: (anno) => apiClient.get(`/api/alumbrado/parametros?anno=${anno}`),
+  getReceiptTemplate: () => apiClient.get("/api/alumbrado/recibo/plantilla"),
+  createSimpleReceiptFromTemplate: (payload) =>
+    apiClient.post("/api/alumbrado/recibo/simple/desde-plantilla", payload),
+  createSimpleReceiptFromCalculation: (payload) =>
+    apiClient.post("/api/alumbrado/recibo/simple/desde-calculo", payload),
 };
 
 export default apiClient;

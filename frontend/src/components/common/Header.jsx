@@ -96,6 +96,7 @@ const Header = () => {
             <NavItem to="/facturacion" label="Facturación" />
             <NavItem to="/pqr" label="PQR" />
             <NavItem to="/contacto" label="Contacto" />
+            <NavItem to="/portal" label="Portal clientes" />
             
             <div className="ml-4 pl-4 border-l border-gray-200">
               <a
@@ -132,6 +133,7 @@ const Header = () => {
               <MobileNavItem to="/facturacion" label="Facturación" onClick={toggleMenu} />
               <MobileNavItem to="/pqr" label="PQR" onClick={toggleMenu} />
               <MobileNavItem to="/contacto" label="Contacto" onClick={toggleMenu} />
+              <MobileNavItem to="/portal" label="Portal clientes" onClick={toggleMenu} />
               
               <a
                 href="tel:+6011234567"

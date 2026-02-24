@@ -88,6 +88,11 @@ const Footer = () => {
                   Contacto
                 </Link>
               </li>
+              <li>
+                <Link to="/portal" className="text-gray-300 hover:text-white">
+                  Portal clientes
+                </Link>
+              </li>
             </ul>
           </div>
           

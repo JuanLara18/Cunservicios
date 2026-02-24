@@ -36,6 +36,27 @@ flowchart TB
 3. **Contratos explícitos**: integración frontend vía capa `services`.
 4. **Configuración por entorno**: sin secretos en código fuente.
 
+## Portal cliente (fase base)
+
+```mermaid
+flowchart LR
+    Login["/portal/login"]
+    Dashboard["/portal"]
+    Recibos["/portal/recibos"]
+    Datos["/portal/datos"]
+    Config["/portal/configuracion"]
+    API["/api/alumbrado/..."]
+
+    Login --> Dashboard
+    Dashboard --> Recibos
+    Dashboard --> Datos
+    Dashboard --> Config
+    Recibos --> API
+```
+
+- El portal usa una sesión inicial en frontend y permite seleccionar tenant activo.
+- Los módulos se diseñaron por rutas y componentes independientes para crecer por iteraciones.
+
 ## Multi-tenant
 
 ```mermaid
