@@ -16,8 +16,8 @@ const safeReadJson = (storageKey) => {
 const parseApiError = (requestError) => {
   const detail = requestError?.response?.data?.detail;
   if (typeof detail === "string") return detail;
-  if (Array.isArray(detail) && detail.length > 0) return "Datos inválidos. Revisa los campos.";
-  return "Ocurrió un error en la generación del recibo.";
+  if (Array.isArray(detail) && detail.length > 0) return "Datos invalidos. Revisa los campos.";
+  return "Ocurrio un error en la generacion del recibo.";
 };
 
 const formatMoney = (value) => `$${Number(value || 0).toLocaleString()}`;
@@ -67,10 +67,7 @@ const PortalRecibos = () => {
     [session?.tenantId]
   );
 
-  const receiptHistory = useMemo(
-    () => safeReadJson(storageKey),
-    [historyVersion, storageKey]
-  );
+  const receiptHistory = useMemo(() => safeReadJson(storageKey), [historyVersion, storageKey]);
 
   const filteredHistory = useMemo(() => {
     const term = historySearch.trim().toLowerCase();
@@ -81,6 +78,11 @@ const PortalRecibos = () => {
         .some((part) => String(part).toLowerCase().includes(term))
     );
   }, [historySearch, receiptHistory]);
+
+  const previewTotal = useMemo(() => {
+    const values = Object.values(formData.componentes || {});
+    return values.reduce((acc, value) => acc + (Number(value) || 0), 0);
+  }, [formData.componentes]);
 
   const updateField = (path, value) => {
     setFormData((current) => {
@@ -157,7 +159,7 @@ const PortalRecibos = () => {
       await navigator.clipboard.writeText(content || "");
       setCopyStatus(`Contenido ${label} copiado.`);
     } catch (copyError) {
-      setCopyStatus("No fue posible copiar automáticamente.");
+      setCopyStatus("No fue posible copiar automaticamente.");
     }
   };
 
@@ -171,12 +173,12 @@ const PortalRecibos = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card">
+      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-xl font-semibold">Generación de recibos</h2>
+            <h2 className="text-xl font-semibold">Generacion de recibos</h2>
             <p className="mt-1 text-sm text-slate-600">
-              Flujo inicial para construir recibos desde una plantilla simple.
+              Flujo guiado para construir recibos desde plantilla simple, sin sobrecargar al usuario.
             </p>
           </div>
           <button type="button" className="btn btn-outline" onClick={loadTemplate} disabled={loading}>
@@ -197,97 +199,136 @@ const PortalRecibos = () => {
         </div>
       )}
 
-      <form className="card space-y-4" onSubmit={createReceipt}>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <InputField
-            label="Municipio"
-            value={formData.municipio}
-            onChange={(value) => updateField("municipio", value)}
-            required
-          />
-          <InputField
-            label="Período"
-            value={formData.periodo}
-            onChange={(value) => updateField("periodo", value)}
-            required
-          />
-          <InputField
-            label="Metodología"
-            value={formData.metodologia}
-            onChange={(value) => updateField("metodologia", value)}
-            required
-          />
+      <form className="grid grid-cols-1 gap-4 xl:grid-cols-[1.2fr_0.8fr]" onSubmit={createReceipt}>
+        <div className="card space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="portal-step-index">1</span>
+            <h3 className="text-lg font-semibold">Datos base</h3>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <InputField
+              label="Municipio"
+              value={formData.municipio}
+              onChange={(value) => updateField("municipio", value)}
+              required
+            />
+            <InputField
+              label="Periodo"
+              value={formData.periodo}
+              onChange={(value) => updateField("periodo", value)}
+              required
+            />
+            <InputField
+              label="Metodologia"
+              value={formData.metodologia}
+              onChange={(value) => updateField("metodologia", value)}
+              required
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="portal-step-index">2</span>
+            <h3 className="text-lg font-semibold">Componentes CAP</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <NumberField
+              label="CSEE"
+              value={formData.componentes.csee}
+              onChange={(value) => updateField("componentes.csee", value)}
+            />
+            <NumberField
+              label="CINV"
+              value={formData.componentes.cinv}
+              onChange={(value) => updateField("componentes.cinv", value)}
+            />
+            <NumberField
+              label="CAOM"
+              value={formData.componentes.caom}
+              onChange={(value) => updateField("componentes.caom", value)}
+            />
+            <NumberField
+              label="COTR"
+              value={formData.componentes.cotr}
+              onChange={(value) => updateField("componentes.cotr", value)}
+            />
+          </div>
+
+          <details className="rounded-xl border border-slate-200 p-3">
+            <summary className="cursor-pointer text-sm font-semibold text-slate-900">
+              Metadatos avanzados (opcional)
+            </summary>
+            <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <InputField
+                label="Entidad facturadora"
+                value={formData.metadata.entidad_facturadora}
+                onChange={(value) => updateField("metadata.entidad_facturadora", value)}
+              />
+              <InputField
+                label="Fuente de datos"
+                value={formData.metadata.fuente_datos}
+                onChange={(value) => updateField("metadata.fuente_datos", value)}
+              />
+              <InputField
+                label="NIT"
+                value={formData.metadata.nit}
+                onChange={(value) => updateField("metadata.nit", value)}
+              />
+              <InputField
+                label="Contacto"
+                value={formData.metadata.contacto}
+                onChange={(value) => updateField("metadata.contacto", value)}
+              />
+              <InputField
+                label="Direccion"
+                value={formData.metadata.direccion}
+                onChange={(value) => updateField("metadata.direccion", value)}
+              />
+              <InputField
+                label="Observaciones"
+                value={formData.metadata.observaciones}
+                onChange={(value) => updateField("metadata.observaciones", value)}
+              />
+            </div>
+          </details>
+
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Generando..." : "Generar recibo simple"}
+          </button>
         </div>
 
-        <h3 className="text-lg font-semibold">Componentes CAP</h3>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-          <NumberField
-            label="CSEE"
-            value={formData.componentes.csee}
-            onChange={(value) => updateField("componentes.csee", value)}
-          />
-          <NumberField
-            label="CINV"
-            value={formData.componentes.cinv}
-            onChange={(value) => updateField("componentes.cinv", value)}
-          />
-          <NumberField
-            label="CAOM"
-            value={formData.componentes.caom}
-            onChange={(value) => updateField("componentes.caom", value)}
-          />
-          <NumberField
-            label="COTR"
-            value={formData.componentes.cotr}
-            onChange={(value) => updateField("componentes.cotr", value)}
-          />
-        </div>
+        <div className="space-y-4">
+          <div className="portal-step-card">
+            <div className="flex items-center gap-2">
+              <span className="portal-step-index">3</span>
+              <h3 className="text-lg font-semibold">Vista previa</h3>
+            </div>
+            <p className="mt-2 text-sm text-slate-600">Total estimado con base en los componentes cargados.</p>
+            <p className="mt-3 text-3xl font-semibold text-indigo-700">{formatMoney(previewTotal)}</p>
+            <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+              <p>• Revisa municipio y periodo antes de generar.</p>
+              <p>• Usa metadatos avanzados solo si la entidad los requiere.</p>
+            </div>
+          </div>
 
-        <h3 className="text-lg font-semibold">Metadatos</h3>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <InputField
-            label="Entidad facturadora"
-            value={formData.metadata.entidad_facturadora}
-            onChange={(value) => updateField("metadata.entidad_facturadora", value)}
-          />
-          <InputField
-            label="Fuente de datos"
-            value={formData.metadata.fuente_datos}
-            onChange={(value) => updateField("metadata.fuente_datos", value)}
-          />
-          <InputField
-            label="NIT"
-            value={formData.metadata.nit}
-            onChange={(value) => updateField("metadata.nit", value)}
-          />
-          <InputField
-            label="Contacto"
-            value={formData.metadata.contacto}
-            onChange={(value) => updateField("metadata.contacto", value)}
-          />
-          <InputField
-            label="Dirección"
-            value={formData.metadata.direccion}
-            onChange={(value) => updateField("metadata.direccion", value)}
-          />
-          <InputField
-            label="Observaciones"
-            value={formData.metadata.observaciones}
-            onChange={(value) => updateField("metadata.observaciones", value)}
-          />
+          <div className="portal-step-card">
+            <h3 className="text-lg font-semibold">Flujo recomendado</h3>
+            <ol className="mt-3 space-y-2 text-sm text-slate-600">
+              <li>1. Carga plantilla base.</li>
+              <li>2. Ajusta componentes CAP.</li>
+              <li>3. Genera y valida el recibo.</li>
+              <li>4. Guarda evidencia en historial.</li>
+            </ol>
+          </div>
         </div>
-
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Generando..." : "Generar recibo simple"}
-        </button>
       </form>
 
       {generatedReceipt && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           <div className="card">
             <h3 className="text-lg font-semibold">Recibo generado</h3>
             <p className="mt-2 text-sm text-slate-600">
-              Número: <span className="font-medium">{generatedReceipt.numero_recibo}</span>
+              Numero: <span className="font-medium">{generatedReceipt.numero_recibo}</span>
             </p>
             <p className="text-sm text-slate-600">
               Total: <span className="font-medium">{formatMoney(generatedReceipt.total)}</span>
@@ -360,11 +401,14 @@ const PortalRecibos = () => {
 
       <div className="card">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <h3 className="text-lg font-semibold">Histórico local de recibos</h3>
+          <div>
+            <h3 className="text-lg font-semibold">Historico local de recibos</h3>
+            <p className="text-sm text-slate-600">Registros guardados en este navegador por tenant.</p>
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <input
               className="form-input w-64"
-              placeholder="Buscar por número, período o fuente"
+              placeholder="Buscar por numero, periodo o fuente"
               value={historySearch}
               onChange={(event) => setHistorySearch(event.target.value)}
             />
@@ -387,8 +431,8 @@ const PortalRecibos = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Número</th>
-                  <th>Período</th>
+                  <th>Numero</th>
+                  <th>Periodo</th>
                   <th>Total</th>
                   <th>Fuente</th>
                   <th>Fecha</th>
@@ -464,4 +508,3 @@ const NumberField = ({ label, value, onChange }) => (
 );
 
 export default PortalRecibos;
-

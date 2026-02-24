@@ -1,57 +1,126 @@
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { FiFileText, FiGrid, FiInbox, FiLogOut, FiSettings } from "react-icons/fi";
 import { usePortalSession } from "../../context/PortalSessionContext";
+
+const NAV_ITEMS = [
+  {
+    to: "/portal",
+    label: "Resumen",
+    description: "Vista rápida de operación",
+    icon: FiGrid,
+    end: true,
+  },
+  {
+    to: "/portal/recibos",
+    label: "Recibos",
+    description: "Generación y consulta",
+    icon: FiFileText,
+  },
+  {
+    to: "/portal/datos",
+    label: "Datos de entrada",
+    description: "Insumos y normalización",
+    icon: FiInbox,
+  },
+  {
+    to: "/portal/configuracion",
+    label: "Configuración",
+    description: "Perfil y seguridad",
+    icon: FiSettings,
+  },
+];
 
 const PortalLayout = () => {
   const { session, logout } = usePortalSession();
+  const location = useLocation();
+
+  const currentSection = NAV_ITEMS.find((item) =>
+    item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
+  );
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="portal-shell">
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
-        <div className="mb-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="portal-header-card mb-4">
+          <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wider text-slate-500">Portal cliente</p>
-              <h1 className="text-xl font-semibold">Espacio de gestión para alcaldías</h1>
-              <p className="text-sm text-slate-600">
-                Tenant activo: <span className="font-medium">{session?.tenantId}</span>
+              <p className="text-xs uppercase tracking-wider text-indigo-100">Portal cliente</p>
+              <h1 className="mt-1 text-2xl font-semibold md:text-3xl">
+                Gestión institucional de alumbrado público
+              </h1>
+              <p className="mt-2 max-w-3xl text-sm text-indigo-100">
+                Navegación simplificada para consultar estado operativo, preparar información y
+                generar recibos con claridad.
               </p>
-              <p className="text-sm text-slate-600">
-                Usuario: <span className="font-medium">{session?.email}</span>
-              </p>
-              <p className="text-sm text-slate-600">
-                Rol:{" "}
-                <span className="font-medium">
-                  {session?.isAdmin ? "Administrador" : "Usuario portal"}
+              <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                <span className="rounded-full bg-white/15 px-3 py-1">
+                  Tenant: <strong className="font-semibold">{session?.tenantId}</strong>
                 </span>
-              </p>
+                <span className="rounded-full bg-white/15 px-3 py-1">
+                  Usuario: <strong className="font-semibold">{session?.email}</strong>
+                </span>
+                <span className="rounded-full bg-white/15 px-3 py-1">
+                  Rol:{" "}
+                  <strong className="font-semibold">
+                    {session?.isAdmin ? "Administrador" : "Usuario portal"}
+                  </strong>
+                </span>
+              </div>
               {session?.lastLoginAt && (
-                <p className="text-xs text-slate-500">
+                <p className="mt-3 text-xs text-indigo-100">
                   Último acceso: {new Date(session.lastLoginAt).toLocaleString()}
                 </p>
               )}
             </div>
-            <div className="flex items-center gap-2">
-              <Link to="/" className="btn btn-outline">
+
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                to="/"
+                className="btn btn-outline border-white/40 bg-white/5 text-white hover:bg-white/10"
+              >
                 Sitio público
               </Link>
-              <button onClick={logout} className="btn btn-secondary">
+              <button onClick={logout} className="btn bg-white text-indigo-700 hover:bg-indigo-50">
+                <FiLogOut className="mr-2 text-base" />
                 Cerrar sesión
               </button>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[240px_1fr]">
-          <aside className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
-            <nav className="flex gap-2 overflow-x-auto lg:block lg:space-y-1">
-              <PortalNavItem to="/portal" label="Resumen" end />
-              <PortalNavItem to="/portal/recibos" label="Recibos" />
-              <PortalNavItem to="/portal/datos" label="Datos de entrada" />
-              <PortalNavItem to="/portal/configuracion" label="Configuración" />
-            </nav>
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
+          <span className="font-medium text-slate-900">Sección actual:</span>{" "}
+          {currentSection?.label || "Portal"} ·{" "}
+          <span className="text-slate-500">
+            {currentSection?.description || "Operación central del cliente"}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_1fr]">
+          <aside className="space-y-4">
+            <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+              <p className="px-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Navegación
+              </p>
+              <nav className="mt-2 flex gap-2 overflow-x-auto lg:block lg:space-y-1">
+                {NAV_ITEMS.map((item) => (
+                  <PortalNavItem key={item.to} {...item} />
+                ))}
+              </nav>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <h3 className="text-sm font-semibold text-slate-900">Recomendación de uso</h3>
+              <ol className="mt-3 space-y-2 text-xs text-slate-600">
+                <li>1. Revisa el resumen para validar estado general.</li>
+                <li>2. Organiza insumos en Datos de entrada.</li>
+                <li>3. Genera el recibo y verifica histórico.</li>
+              </ol>
+            </div>
           </aside>
-          <section className="space-y-4">
+
+          <section className="space-y-4 fade-in">
             <Outlet />
           </section>
         </div>
@@ -60,17 +129,23 @@ const PortalLayout = () => {
   );
 };
 
-const PortalNavItem = ({ to, label, end = false }) => (
+const PortalNavItem = ({ to, label, description, icon: Icon, end = false }) => (
   <NavLink
     to={to}
     end={end}
     className={({ isActive }) =>
       isActive
-        ? "whitespace-nowrap rounded-md bg-indigo-100 px-3 py-2 text-sm font-medium text-indigo-700"
-        : "whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+        ? "min-w-[14rem] whitespace-nowrap rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-700 lg:min-w-0"
+        : "min-w-[14rem] whitespace-nowrap rounded-lg border border-transparent px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 lg:min-w-0"
     }
   >
-    {label}
+    <div className="flex items-start gap-2">
+      <Icon className="mt-0.5 text-base" />
+      <div>
+        <p className="font-medium">{label}</p>
+        <p className="text-xs text-slate-500">{description}</p>
+      </div>
+    </div>
   </NavLink>
 );
 

@@ -54,7 +54,7 @@ Con este perfil:
 
 - se crean tablas automaticamente (`AUTO_CREATE_TABLES=true`)
 - se inyectan datos semilla (`ENABLE_SEED_DATA=true`)
-- se habilita lockout por intentos fallidos
+- se habilita lockout por intentos fallidos (perfil local: `10` intentos, `2` minutos)
 - se activan headers de seguridad
 
 ## 2) Preparar frontend (React)
@@ -123,3 +123,13 @@ Si quieres resetear datos y volver a un estado limpio:
 - vuelve a levantar backend con el mismo `.env`
 
 Al arrancar, el seed recrea usuarios y datos base del tenant local.
+
+## 6) Si el usuario portal no entra pero admin si entra
+
+1. Verifica que el correo sea:
+   - `portal.dev@cunservicios-demo.com`
+2. Reinicia backend para limpiar bloqueos en memoria.
+3. Borra sesion local del navegador:
+   - `token`
+   - `portal.session.v1`
+   - `portal.tenantId`

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { usePortalSession } from "../../context/PortalSessionContext";
 import { authService } from "../../services/api";
+import { usePortalSession } from "../../context/PortalSessionContext";
 import { isValidTenantId, TENANT_VALIDATION_HINT } from "../../utils/tenant";
 
 const PortalSettings = () => {
@@ -35,7 +35,7 @@ const PortalSettings = () => {
     if (!isValidTenantId(normalizedTenant)) {
       setProfileState({
         saved: false,
-        error: `Tenant inválido. ${TENANT_VALIDATION_HINT}`,
+        error: `Tenant invalido. ${TENANT_VALIDATION_HINT}`,
       });
       return;
     }
@@ -74,7 +74,7 @@ const PortalSettings = () => {
       setPasswordState({
         loading: false,
         saved: false,
-        error: "La confirmación no coincide con la nueva contraseña.",
+        error: "La confirmacion no coincide con la nueva contraseña.",
       });
       return;
     }
@@ -107,44 +107,73 @@ const PortalSettings = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card">
-        <h2 className="text-xl font-semibold">Configuración del portal</h2>
+      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
+        <h2 className="text-xl font-semibold">Configuracion del portal</h2>
         <p className="mt-2 text-sm text-slate-600">
-          Ajustes básicos del espacio cliente. Esta sección evolucionará para gestionar usuarios,
-          permisos y branding institucional.
+          Personaliza datos visibles del entorno y administra la seguridad de acceso.
         </p>
       </div>
 
-      <form className="card space-y-4" onSubmit={onSubmit}>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Field
-            label="Nombre visible"
-            value={formData.displayName}
-            onChange={(value) => onChange("displayName", value)}
-          />
-          <Field
-            label="Tenant ID"
-            value={formData.tenantId}
-            onChange={(value) => onChange("tenantId", value)}
-          />
-          <ReadOnlyField label="Correo de usuario" value={session?.email || "-"} />
-        </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <form className="card space-y-4" onSubmit={onSubmit}>
+          <h3 className="text-lg font-semibold">Perfil operativo</h3>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field
+              label="Nombre visible"
+              value={formData.displayName}
+              onChange={(value) => onChange("displayName", value)}
+            />
+            <Field
+              label="Tenant ID"
+              value={formData.tenantId}
+              onChange={(value) => onChange("tenantId", value)}
+            />
+            <ReadOnlyField label="Correo de usuario" value={session?.email || "-"} />
+            <ReadOnlyField
+              label="Rol de acceso"
+              value={session?.isAdmin ? "Administrador" : "Usuario portal"}
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary">
-          Guardar cambios
-        </button>
-        {profileState.error && <p className="text-sm text-red-700">{profileState.error}</p>}
-        {!profileState.error && <p className="form-hint">{TENANT_VALIDATION_HINT}</p>}
-        {profileState.saved && <p className="text-sm text-green-700">Configuración actualizada.</p>}
-      </form>
+          <button type="submit" className="btn btn-primary">
+            Guardar cambios
+          </button>
+          {profileState.error && <p className="text-sm text-red-700">{profileState.error}</p>}
+          {!profileState.error && <p className="form-hint">{TENANT_VALIDATION_HINT}</p>}
+          {profileState.saved && <p className="text-sm text-green-700">Configuracion actualizada.</p>}
+        </form>
+
+        <div className="space-y-4">
+          <div className="portal-step-card">
+            <h3 className="text-lg font-semibold">Recomendaciones de seguridad</h3>
+            <ul className="mt-3 space-y-2 text-sm text-slate-600">
+              <li>• Cambia contraseña periodicamente.</li>
+              <li>• Usa combinaciones largas con simbolos.</li>
+              <li>• Evita compartir usuarios entre personas del equipo.</li>
+            </ul>
+          </div>
+          <div className="portal-step-card">
+            <h3 className="text-lg font-semibold">Estado de sesion</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Tenant activo: <strong>{session?.tenantId || "public"}</strong>
+            </p>
+            <p className="mt-1 text-sm text-slate-600">
+              Ultimo acceso registrado:{" "}
+              <strong>
+                {session?.lastLoginAt ? new Date(session.lastLoginAt).toLocaleString() : "N/D"}
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
 
       <form className="card space-y-4" onSubmit={onSubmitPassword}>
         <h3 className="text-lg font-semibold">Seguridad de la cuenta</h3>
         <p className="text-sm text-slate-600">
-          Cambia la contraseña de acceso del usuario autenticado del portal.
+          Cambia la contraseña del usuario autenticado para mantener acceso controlado.
         </p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <PasswordField
             label="Contraseña actual"
             value={passwordData.currentPassword}
@@ -201,4 +230,3 @@ const PasswordField = ({ label, value, onChange }) => (
 );
 
 export default PortalSettings;
-
