@@ -47,7 +47,7 @@ const PortalDashboard = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
+      <div className="card portal-accent-surface">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs uppercase tracking-wide text-indigo-600">Resumen operativo</p>

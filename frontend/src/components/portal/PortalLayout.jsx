@@ -43,14 +43,16 @@ const PortalLayout = () => {
     <div className="portal-shell">
       <div className="mx-auto max-w-[1500px] px-4 py-6 md:px-6 lg:px-8">
         <div className="portal-header-card mb-4">
+          <div className="pointer-events-none absolute -right-20 -top-16 h-44 w-44 rounded-full bg-white/10" />
+          <div className="pointer-events-none absolute -left-16 bottom-0 h-32 w-32 rounded-full bg-teal-300/20" />
           <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wider text-indigo-100">Portal cliente</p>
+              <p className="text-xs uppercase tracking-wider text-indigo-100">CUNSERVICIOS · Portal cliente</p>
               <h1 className="mt-1 text-2xl font-semibold md:text-3xl">
                 Portal de gestión institucional
               </h1>
-              <p className="mt-2 max-w-3xl text-sm text-indigo-100">
-                Consulta estado, organiza información y genera recibos en un solo flujo.
+              <p className="mt-2 max-w-3xl text-sm text-teal-50">
+                Un solo espacio para seguimiento operativo y facturación clara.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs">
                 <span className="rounded-full bg-white/15 px-3 py-1">
@@ -80,7 +82,7 @@ const PortalLayout = () => {
               </Link>
               <button
                 onClick={logout}
-                className="btn border border-white/35 bg-indigo-900/40 text-white hover:bg-indigo-900/55"
+                className="btn border border-teal-200/60 bg-teal-500/90 text-white hover:bg-teal-400"
               >
                 <FiLogOut className="mr-2 text-base" />
                 Cerrar sesión
@@ -136,11 +138,11 @@ const PortalNavItem = ({ to, label, description, icon: Icon, end = false }) => (
     className={({ isActive }) =>
       isActive
         ? "group block w-full rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-700 shadow-sm transition-colors"
-        : "group block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
+        : "group block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-indigo-200 hover:bg-indigo-50/50"
     }
   >
     <div className="flex items-start gap-2">
-      <Icon className="mt-0.5 text-base" />
+      <Icon className="mt-0.5 text-base text-indigo-500" />
       <div>
         <p className="font-medium leading-tight">{label}</p>
         <p className="mt-0.5 text-xs text-slate-500">{description}</p>

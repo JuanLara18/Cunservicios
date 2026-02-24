@@ -107,7 +107,7 @@ const PortalSettings = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
+      <div className="card portal-accent-surface">
         <h2 className="text-xl font-semibold">Configuracion del portal</h2>
         <p className="mt-2 text-sm text-slate-600">
           Personaliza datos visibles del entorno y administra la seguridad de acceso.

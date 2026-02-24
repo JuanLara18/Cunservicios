@@ -91,14 +91,14 @@ const PortalLogin = () => {
 
   return (
     <div className="portal-shell">
-      <div className="mx-auto grid min-h-screen w-full max-w-6xl grid-cols-1 gap-6 px-4 py-8 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-12">
+      <div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-6 px-4 py-8 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-12">
         <section className="space-y-4">
           <div className="portal-header-card">
-            <p className="text-xs uppercase tracking-wide text-indigo-100">Portal cliente</p>
+            <p className="text-xs uppercase tracking-wide text-indigo-100">CUNSERVICIOS · Portal cliente</p>
             <h1 className="mt-2 text-3xl font-semibold md:text-4xl">
               Acceso seguro para alcaldias y equipos operativos
             </h1>
-            <p className="mt-3 max-w-2xl text-sm text-indigo-100">
+            <p className="mt-3 max-w-2xl text-sm text-teal-50">
               Diseñado para que el equipo pueda trabajar con claridad: organizar insumos, revisar
               estado y emitir recibos de forma sencilla.
             </p>
@@ -225,7 +225,7 @@ const PortalLogin = () => {
 };
 
 const InfoCard = ({ title, description }) => (
-  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-indigo-200">
     <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
     <p className="mt-1 text-sm text-slate-600">{description}</p>
   </div>

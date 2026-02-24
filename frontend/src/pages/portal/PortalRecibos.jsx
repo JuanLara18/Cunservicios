@@ -173,7 +173,7 @@ const PortalRecibos = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
+      <div className="card portal-accent-surface">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-xl font-semibold">Generacion de recibos</h2>

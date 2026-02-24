@@ -121,7 +121,7 @@ const PortalDataInbox = () => {
 
   return (
     <div className="space-y-4">
-      <div className="card border-indigo-100 bg-gradient-to-br from-white to-indigo-50">
+      <div className="card portal-accent-surface">
         <h2 className="text-xl font-semibold">Datos de entrada</h2>
         <p className="mt-2 text-sm text-slate-600">
           Registra insumos de manera simple y conviertelos en un flujo ordenado para calculo y
