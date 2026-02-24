@@ -41,7 +41,7 @@ const PortalLayout = () => {
 
   return (
     <div className="portal-shell">
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1500px] px-4 py-6 md:px-6 lg:px-8">
         <div className="portal-header-card mb-4">
           <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
             <div>
@@ -97,13 +97,13 @@ const PortalLayout = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_1fr]">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[320px_1fr]">
           <aside className="space-y-4">
             <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
               <p className="px-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
                 Navegación
               </p>
-              <nav className="mt-2 flex gap-2 overflow-x-auto lg:block lg:space-y-1">
+              <nav className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 {NAV_ITEMS.map((item) => (
                   <PortalNavItem key={item.to} {...item} />
                 ))}
@@ -120,7 +120,7 @@ const PortalLayout = () => {
             </div>
           </aside>
 
-          <section className="space-y-4 fade-in">
+          <section className="space-y-4">
             <Outlet />
           </section>
         </div>
@@ -135,15 +135,15 @@ const PortalNavItem = ({ to, label, description, icon: Icon, end = false }) => (
     end={end}
     className={({ isActive }) =>
       isActive
-        ? "min-w-[14rem] whitespace-nowrap rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-700 lg:min-w-0"
-        : "min-w-[14rem] whitespace-nowrap rounded-lg border border-transparent px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 lg:min-w-0"
+        ? "group block w-full rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-700 shadow-sm transition-colors"
+        : "group block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
     }
   >
     <div className="flex items-start gap-2">
       <Icon className="mt-0.5 text-base" />
       <div>
-        <p className="font-medium">{label}</p>
-        <p className="text-xs text-slate-500">{description}</p>
+        <p className="font-medium leading-tight">{label}</p>
+        <p className="mt-0.5 text-xs text-slate-500">{description}</p>
       </div>
     </div>
   </NavLink>
