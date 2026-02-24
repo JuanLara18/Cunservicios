@@ -1,0 +1,2567 @@
+% Incluir archivo de encabezado con todas las configuraciones
+\input{header.tex}
+
+\begin{document}
+
+% Configuración de la primera página sin encabezado
+\thispagestyle{empty}
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    \vspace{1.5cm}
+    
+    {\huge\bfseries \textcolor{azultitulo}{Guía Metodológica para el\\Cálculo de Costos del\\Servicio de Alumbrado Público}\par}
+    \vspace{1cm}
+    
+    {\Large\itshape Según Resolución CREG 101 013 de 2022\par}
+    \vspace{1.5cm}
+    
+    \begin{mdframed}[
+        linecolor=azultitulo,
+        backgroundcolor=azulclaro,
+        roundcorner=10pt,
+        linewidth=1.5pt
+    ]
+        \centering
+        \vspace{0.5cm}
+        {\large\textbf{Documento Técnico Oficial}}
+        \vspace{0.3cm}
+        
+        {\large Comisión de Regulación de Energía y Gas}
+        \vspace{0.3cm}
+        
+        {\large República de Colombia}
+        \vspace{0.5cm}
+    \end{mdframed}
+    
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Esta guía metodológica proporciona las directrices detalladas para el cálculo de los costos máximos del servicio de alumbrado público en Colombia, en conformidad con la Resolución CREG 101 013 de 2022. El documento está diseñado como una herramienta integral para que los municipios y distritos puedan determinar con precisión los costos asociados a este servicio público esencial, garantizando la transparencia, eficiencia y calidad en su prestación.
+
+El alumbrado público es un servicio fundamental que contribuye a la seguridad, movilidad y calidad de vida de los ciudadanos. Una metodología clara y precisa para el cálculo de sus costos es esencial para asegurar la sostenibilidad financiera del servicio y el cumplimiento de estándares técnicos y ambientales.
+
+\begin{notacaja}
+Esta guía debe ser utilizada por los municipios y distritos como una herramienta de referencia para la toma de decisiones relacionadas con la prestación del servicio de alumbrado público, la determinación de tarifas y la planificación de inversiones.
+\end{notacaja}
+
+\subsection{Objetivos de la Guía}
+
+\begin{itemize}[leftmargin=*]
+    \item Facilitar la comprensión y aplicación de la metodología establecida en la Resolución CREG 101 013 de 2022
+    \item Proporcionar herramientas prácticas para el cálculo preciso de cada componente de costo
+    \item Establecer criterios uniformes para la elaboración del Estudio Técnico de Referencia (ETR)
+    \item Promover la eficiencia y transparencia en la gestión del servicio de alumbrado público
+    \item Garantizar el cumplimiento de las obligaciones regulatorias y técnicas aplicables
+\end{itemize}
+
+\subsection{Alcance y Aplicación}
+
+Esta metodología aplica a todos los responsables de la prestación del Servicio de Alumbrado Público señalados en el artículo 2.2.3.6.1.2 del Decreto 1073 de 2015, incluyendo:
+
+\begin{itemize}[leftmargin=*]
+    \item Municipios y distritos como responsables directos del servicio
+    \item Empresas de servicios públicos domiciliarios prestadoras del servicio
+    \item Otros prestadores que demuestren idoneidad en la prestación del servicio
+    \item Interventores y supervisores de contratos de alumbrado público
+\end{itemize}
+
+\section{Marco Normativo}
+
+La presente metodología se fundamenta en un conjunto de normas y regulaciones que establecen el marco legal para la prestación del servicio de alumbrado público en Colombia:
+
+\subsection{Normatividad Principal}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Constitución Política de Colombia, Artículo 365}: Establece que los servicios públicos son inherentes a la finalidad del Estado.
+    
+    \item \textbf{Leyes 142 y 143 de 1994}: Marco general de los servicios públicos domiciliarios y régimen de servicios públicos de electricidad.
+    
+    \item \textbf{Decreto 1073 de 2015}: Decreto Único Reglamentario del Sector Administrativo de Minas y Energía.
+    
+    \item \textbf{Decreto 943 de 2018}: Modifica y adiciona disposiciones relacionadas con la prestación del servicio de alumbrado público.
+    
+    \item \textbf{Ley 1819 de 2016, Artículo 351}: Establece el marco fiscal para la financiación del servicio de alumbrado público.
+    
+    \item \textbf{Resolución CREG 101 013 de 2022}: Define la metodología para determinar los costos máximos por la prestación del servicio de alumbrado público.
+\end{itemize}
+
+\subsection{Reglamentación Técnica}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reglamento Técnico de Iluminación y Alumbrado Público (RETILAP)}: Establece los requisitos y medidas que deben cumplir los sistemas de iluminación y alumbrado público.
+    
+    \item \textbf{Reglamento Técnico de Instalaciones Eléctricas (RETIE)}: Define los requisitos de seguridad para las instalaciones eléctricas.
+    
+    \item \textbf{Resolución CREG 015 de 2018}: Metodología para la remuneración de la actividad de distribución de energía eléctrica.
+    
+    \item \textbf{Resolución CREG 174 de 2021}: Regulación de la autogeneración a pequeña escala.
+\end{itemize}
+
+\subsection{Normatividad Ambiental}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Ley 697 de 2001}: Uso racional y eficiente de la energía y energías alternativas.
+    
+    \item \textbf{Ley 1715 de 2014}: Integración de las energías renovables no convencionales al Sistema Energético Nacional.
+    
+    \item \textbf{Ley 1672 de 2013}: Gestión integral de residuos de aparatos eléctricos y electrónicos (RAEE).
+\end{itemize}
+
+\section{Definiciones y Conceptos Fundamentales}
+
+Para la correcta aplicación de esta metodología, es fundamental comprender los siguientes conceptos:
+
+\subsection{Definiciones Técnicas}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Servicio de Alumbrado Público}: Servicio público no domiciliario de iluminación, inherente al servicio de energía eléctrica, que se presta para dar visibilidad al espacio público y demás espacios de libre circulación.
+    
+    \item \textbf{Sistema de Alumbrado Público (SALP)}: Conjunto de luminarias, redes eléctricas, transformadores, postes de uso exclusivo, desarrollos tecnológicos asociados y todos los equipos necesarios para la prestación del servicio.
+    
+    \item \textbf{Unidad Constructiva de Alumbrado Público (UCAP)}: Conjunto de elementos que conforman una unidad típica de un Sistema de Alumbrado Público.
+    
+    \item \textbf{Activos del Sistema de Alumbrado Público}: Conjunto de UCAP conectados a un sistema de distribución de energía eléctrica, debidamente registrados en el SIAP.
+\end{itemize}
+
+\subsection{Definiciones Económicas}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Costo Anual Equivalente}: Valor presente de todos los costos de un activo distribuido uniformemente durante su vida útil.
+    
+    \item \textbf{Tasa de Retorno}: Tasa de descuento utilizada para calcular el valor presente de los flujos de caja futuros.
+    
+    \item \textbf{Vida Útil}: Período de tiempo durante el cual se espera que un activo esté en servicio en condiciones garantizadas por el fabricante.
+    
+    \item \textbf{Costo de Reposición a Nuevo}: Costo actual de adquirir un activo nuevo con características similares al existente.
+\end{itemize}
+
+\subsection{Definiciones Operativas}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Índice de Disponibilidad}: Indicador que cuantifica el tiempo durante el cual los activos del SALP están disponibles para su uso normal.
+    
+    \item \textbf{Administración, Operación y Mantenimiento (AOM)}: Conjunto de actividades necesarias para mantener el SALP en condiciones adecuadas de funcionamiento.
+    
+    \item \textbf{Sistema de Información de Alumbrado Público (SIAP)}: Sistema que incluye el registro de quejas, reclamos, inventario georreferenciado y demás información del servicio.
+\end{itemize}
+
+\section{Fórmula General para el Cálculo de Costos}
+
+El costo máximo por la prestación del Servicio de Alumbrado Público (CAP) se determina mediante la siguiente fórmula integral:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Fórmula General]
+\begin{equation}
+\text{CAP} = \text{CSEE} + \text{CINV} + \text{CAOM} + \text{COTR}
+\end{equation}
+\end{tcolorbox}
+
+Donde cada componente representa:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CAP}: Costos máximos por la prestación del Servicio de Alumbrado Público, expresados en pesos colombianos correspondientes a la fecha de referencia.
+    
+    \item \textbf{CSEE}: Costo del suministro de energía eléctrica para el funcionamiento del sistema.
+    
+    \item \textbf{CINV}: Costo de la Inversión del Sistema de Alumbrado Público, incluyendo infraestructura, equipos y demás activos.
+    
+    \item \textbf{CAOM}: Costo de la actividad de Administración, Operación y Mantenimiento del sistema.
+    
+    \item \textbf{COTR}: Otros costos asociados, como interventoría, costos ambientales, pólizas, trámites e impuestos.
+\end{itemize}
+
+\subsection{Criterios Generales de Aplicación}
+
+\begin{enumerate}[leftmargin=*]
+    \item Todos los costos deben estar expresados en pesos colombianos correspondientes a la fecha de referencia (31 de diciembre del año inmediatamente anterior al año de realización del ETR).
+    
+    \item Los costos deben considerar únicamente aquellos relacionados directamente con la prestación del servicio de alumbrado público.
+    
+    \item La metodología debe aplicarse considerando criterios de eficiencia económica, calidad del servicio y sostenibilidad ambiental.
+    
+    \item Los cálculos deben estar debidamente soportados y documentados en el Estudio Técnico de Referencia.
+\end{enumerate}
+
+\section{Costo del Suministro de Energía Eléctrica (CSEE)}
+
+\subsection{Fórmula de Cálculo del CSEE}
+
+El costo del suministro de energía eléctrica se calcula considerando las tarifas aplicables y el consumo en cada nivel de tensión:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del CSEE]
+\begin{equation}
+\text{CSEE} = \sum_{n=1}^{2} (\text{TEE}_n \times \text{CEE}_n)
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$TEE_n$}: Tarifa del suministro de energía eléctrica en el nivel de tensión $n$, expresada en $/kWh$.
+    \item \textbf{$CEE_n$}: Consumo de energía eléctrica en el nivel de tensión $n$, expresado en $kWh$.
+    \item \textbf{$n$}: Nivel de tensión, que puede ser 1 o 2 según la Resolución CREG 015 de 2018.
+\end{itemize}
+
+\subsection{Componentes de la Tarifa de Energía Eléctrica}
+
+La tarifa total de energía eléctrica para alumbrado público está compuesta por:
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Componente}} & \textcolor{white}{\textbf{Régimen Tarifario}} \\
+\hline
+\rowcolor{azulclaro} Generación & Libre negociación entre comercializador y municipio/distrito \\
+\hline
+Comercialización & Libre negociación entre comercializador y municipio/distrito \\
+\hline
+\rowcolor{azulclaro} Transmisión Nacional & Tarifa regulada por la CREG (obligatoria para todos los usuarios del SIN) \\
+\hline
+Transmisión Regional & Tarifa regulada por la CREG (obligatoria para todos los usuarios del SIN) \\
+\hline
+\rowcolor{azulclaro} Distribución & Tarifa regulada según criterios específicos del alumbrado público \\
+\hline
+\end{tabularx}
+\caption{Componentes de la tarifa de energía eléctrica}
+\end{table}
+
+\subsection{Determinación de la Tarifa de Distribución}
+
+La tarifa de distribución para el servicio de alumbrado público se determina según los siguientes criterios:
+
+\subsubsection{Criterio 1: Con Redes Exclusivas y Medición}
+
+Cuando existan redes exclusivas para el servicio con medición grupal o individual de las luminarias:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Tarifa con Redes Exclusivas]
+\textbf{Tarifa aplicable}: Usuario regulado del sector oficial en el nivel de tensión donde se encuentre la medida
+\end{tcolorbox}
+
+\subsubsection{Criterio 2: Sin Redes Exclusivas}
+
+Cuando no existan redes exclusivas para el servicio, con o sin medición:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Tarifa sin Redes Exclusivas]
+\textbf{Tarifa aplicable}: Usuario regulado del sector oficial en el nivel de tensión 2
+\end{tcolorbox}
+
+\subsubsection{Criterio 3: Zonas No Interconectadas (ZNI)}
+
+Para sistemas de alumbrado público ubicados en las Zonas No Interconectadas:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Tarifa en ZNI]
+\textbf{Tarifa aplicable}: Tarifa de distribución del nivel de tensión al cual estén conectados los equipos de alumbrado público
+\end{tcolorbox}
+
+\subsection{Determinación del Consumo de Energía Eléctrica}
+
+El consumo de energía eléctrica puede determinarse mediante dos métodos:
+
+\subsubsection{Método 1: Consumo Medido}
+
+Cuando existe sistema de medición, se aplica el consumo registrado según la Resolución CREG 038 de 2014:
+
+\begin{itemize}[leftmargin=*]
+    \item Se debe utilizar equipos de medida certificados y calibrados
+    \item La lectura debe realizarse según los procedimientos establecidos
+    \item Se deben aplicar las correcciones por pérdidas técnicas cuando corresponda
+    \item El consumo facturado corresponde al registrado por el medidor
+\end{itemize}
+
+\subsubsection{Método 2: Consumo por Aforo}
+
+Cuando no existe medición, el consumo se calcula mediante aforo:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del Consumo por Aforo]
+\begin{equation}
+\text{CEE}_n = \sum_{i=1}^{3} (Q_{n,i} \times T_{n,i} \times \text{DPF}_n)
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$Q_{n,i}$}: Carga instalada en $kW$ de las luminarias en funcionamiento en el nivel de tensión $n$ y clase de iluminación $i$. Incluye la potencia de la fuente luminosa y elementos auxiliares.
+    
+    \item \textbf{$T_{n,i}$}: Número de horas de funcionamiento durante el período de facturación:
+    \begin{itemize}
+        \item Vías vehiculares y peatonales: 12 horas/día (6:00 PM a 6:00 AM)
+        \item Otras áreas públicas: Según acuerdo con el comercializador
+    \end{itemize}
+    
+    \item \textbf{$DPF_n$}: Número de días del período de facturación (normalmente 30 días).
+    
+    \item \textbf{$i$}: Clase de iluminación:
+    \begin{itemize}
+        \item 1: Vías vehiculares
+        \item 2: Vías para tráfico peatonal y ciclistas
+        \item 3: Otras áreas del espacio público (parques, plazas, monumentos)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Procedimiento Detallado para el Cálculo por Aforo}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Inventario de luminarias}: Identificar todas las luminarias en funcionamiento, clasificadas por:
+    \begin{itemize}
+        \item Nivel de tensión de conexión
+        \item Clase de iluminación
+        \item Potencia nominal (incluir balasto o driver)
+        \item Estado de funcionamiento
+    \end{itemize}
+    
+    \item \textbf{Determinación de la carga instalada ($Q_{n,i}$)}:
+    \begin{itemize}
+        \item Sumar la potencia de todas las luminarias de la misma clasificación
+        \item Incluir pérdidas en elementos auxiliares (fotocontroles, sistemas de control)
+        \item Verificar que las luminarias estén efectivamente en funcionamiento
+    \end{itemize}
+    
+    \item \textbf{Establecimiento del horario de funcionamiento ($T_{n,i}$)}:
+    \begin{itemize}
+        \item Horario estándar: 12 horas diarias para vías vehiculares y peatonales
+        \item Horarios especiales: Según las características específicas del área
+        \item Descontar horas de interrupción por falta de suministro eléctrico
+    \end{itemize}
+    
+    \item \textbf{Período de facturación ($DPF_n$)}:
+    \begin{itemize}
+        \item Generalmente 30 días calendario
+        \item Puede variar según acuerdo con el comercializador
+        \item Debe ser consistente con los períodos de otros servicios públicos
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Actualización del Inventario de Carga Instalada}
+
+Los municipios y distritos deben establecer procedimientos para:
+
+\begin{itemize}[leftmargin=*]
+    \item Actualización permanente del inventario con periodicidad máxima anual
+    \item Registro inmediato de nuevas instalaciones o modificaciones
+    \item Comunicación oportuna de cambios al comercializador de energía
+    \item Mantenimiento actualizado del SIAP con toda la información técnica
+\end{itemize}
+
+\subsection{Compensaciones por Calidad del Suministro}
+
+Los usuarios de alumbrado público tienen derecho a compensaciones por deficiencias en la calidad del suministro:
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tipo de Evento}} & \textcolor{white}{\textbf{Compensación}} \\
+\hline
+\rowcolor{azulclaro} Interrupciones no programadas que excedan los límites regulatorios & Según metodología de la Resolución CREG 015 de 2018 \\
+\hline
+Variaciones de tensión fuera de los rangos permitidos & Compensación por daños en equipos y pérdida de servicio \\
+\hline
+\rowcolor{azulclaro} Frecuencia de interrupciones superior a los límites establecidos & Compensación por indisponibilidad del servicio \\
+\hline
+\end{tabularx}
+\caption{Compensaciones por calidad del suministro}
+\end{table}
+
+\subsection{Autogeneración en Sistemas de Alumbrado Público}
+
+En las redes exclusivas del SALP se permite la autogeneración a pequeña escala:
+
+\begin{itemize}[leftmargin=*]
+    \item Debe cumplir con la Resolución CREG 174 de 2021
+    \item El punto de conexión debe coincidir con el punto de medición
+    \item Se requiere medición bidireccional para registrar excedentes
+    \item Los excedentes pueden ser entregados a la red de distribución
+    \item Se debe mantener respaldo de red para garantizar continuidad del servicio
+\end{itemize}
+
+\subsection{Contratos de Suministro de Energía}
+
+El contrato de suministro debe incluir obligatoriamente:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Elementos Obligatorios del Contrato}} \\
+\hline
+\rowcolor{azulclaro} 1. Objeto del contrato y descripción detallada del servicio \\
+\hline
+2. Obligaciones específicas de cada parte contratante \\
+\hline
+\rowcolor{azulclaro} 3. Inventario inicial de infraestructura con actualización anual \\
+\hline
+4. Metodología de lectura y estimación del consumo \\
+\hline
+\rowcolor{azulclaro} 5. Estructura tarifaria detallada y mecanismos de actualización \\
+\hline
+6. Periodicidad de facturación y forma de pago \\
+\hline
+\rowcolor{azulclaro} 7. Intereses moratorios y procedimientos de cobro \\
+\hline
+8. Causales de revisión, modificación y terminación del contrato \\
+\hline
+\rowcolor{azulclaro} 9. Duración del contrato y mecanismos de prórroga \\
+\hline
+10. Cláusulas de ajuste por cambios regulatorios \\
+\hline
+\rowcolor{azulclaro} 11. Niveles mínimos de calidad del servicio \\
+\hline
+12. Procedimientos para atención de emergencias \\
+\hline
+\rowcolor{azulclaro} 13. Mecanismos de solución de controversias \\
+\hline
+\end{tabularx}
+\caption{Contenido mínimo obligatorio del contrato de suministro}
+\end{table}
+
+\section{Costo de la Inversión (CINV)}
+
+\subsection{Conceptos Fundamentales}
+
+El costo de inversión reconoce la remuneración del capital invertido en los activos del Sistema de Alumbrado Público, considerando:
+
+\begin{itemize}[leftmargin=*]
+    \item Modernización tecnológica del sistema
+    \item Expansión para atender nuevo desarrollo urbano
+    \item Reposición de activos que han cumplido su vida útil
+    \item Incorporación de desarrollos tecnológicos avanzados
+    \item Mejoramiento de la eficiencia energética
+\end{itemize}
+
+\subsection{Fórmula de Cálculo del CINV}
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del CINV]
+\begin{equation}
+\text{CINV} = \sum_{n=1}^{2} (\text{CAA}_n \times \text{ID})
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$CAA_n$}: Costo anual equivalente de los activos del nivel de tensión $n$, expresado en pesos.
+    \item \textbf{$ID$}: Índice de disponibilidad de las luminarias, valor adimensional entre 0 y 1.
+    \item \textbf{$n$}: Nivel de tensión (1 o 2 según Resolución CREG 015 de 2018).
+\end{itemize}
+
+\subsection{Costo Anual Equivalente de Activos ($CAA_n$)}
+
+El costo anual equivalente se compone de tres elementos principales:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Componentes del $CAA_n$]
+\begin{equation}
+\text{CAA}_n = \text{CAAE}_n + \text{CAT}_n + \text{CAANE}_n
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$CAAE_n$}: Costo anual equivalente de activos eléctricos en el nivel $n$.
+    \item \textbf{$CAT_n$}: Costo anual de terrenos de subestaciones en el nivel $n$.
+    \item \textbf{$CAANE_n$}: Costo anual equivalente de activos no eléctricos en el nivel $n$.
+\end{itemize}
+
+\subsection{Costo Anual Equivalente de Activos Eléctricos ($CAAE_n$)}
+
+Este costo reconoce la inversión en toda la infraestructura eléctrica del sistema:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del $CAAE_n$]
+\begin{equation}
+\text{CAAE}_n = \sum_{i=1}^{\text{NR}_n} \left( (CR_i + CR_{i,L}) \times \frac{r}{1-(1+r)^{-v_i}} \right)
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$NR_n$}: Número total de UCAP instaladas y en operación en el nivel de tensión $n$.
+    
+    \item \textbf{$CR_i$}: Costo de reposición a nuevo de la UCAP $i$ para activos diferentes a luminarias, en pesos.
+    
+    \item \textbf{$CR_{i,L}$}: Costo de reposición a nuevo de la UCAP $i$ para luminarias, ajustado por eficacia luminosa, en pesos.
+    
+    \item \textbf{$r$}: Tasa de retorno establecida por la CREG para la actividad de distribución de energía eléctrica.
+    
+    \item \textbf{$v_i$}: Vida útil en años de la UCAP $i$, según RETILAP o especificaciones del fabricante.
+\end{itemize}
+
+\subsection{Clasificación de las Unidades Constructivas de Alumbrado Público (UCAP)}
+
+Las UCAP se clasifican en los siguientes grupos principales:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Grupo de UCAP}} & \textcolor{white}{\textbf{Descripción y Componentes}} \\
+\hline
+\rowcolor{azulclaro} Luminarias HID & Luminarias para fuentes de alta intensidad (HPS, LPS, MH). Válidas hasta nueva disposición RETILAP \\
+\hline
+Luminarias LED & Luminarias con diodos emisores de luz, incluyendo driver y sistemas de control \\
+\hline
+\rowcolor{azulclaro} Fuentes Luminosas & Bombillas de descarga, LED modules, y fuentes de reemplazo \\
+\hline
+Fotocontroles & Sistemas de control de encendido/apagado individual o múltiple \\
+\hline
+\rowcolor{azulclaro} Puntos de Conexión & Brazos, soportes, acometidas, conectores para conexión a red \\
+\hline
+Transformadores & Transformadores de distribución (poste, pedestal, subterráneo) \\
+\hline
+\rowcolor{azulclaro} Postes y Mástiles & Estructuras de concreto, metálicas, fibra de vidrio, ornamentales \\
+\hline
+Redes Eléctricas & Conductores aéreos y subterráneos exclusivos del SALP \\
+\hline
+\rowcolor{azulclaro} Sistemas de Medición & Medidores individuales o grupales con accesorios y software \\
+\hline
+Telemonitoreo & Sistemas de telegestión, ciberseguridad e interoperabilidad \\
+\hline
+\rowcolor{azulclaro} Fuentes Alternativas & Sistemas solares, eólicos u otras fuentes no convencionales \\
+\hline
+\end{tabularx}
+\caption{Clasificación de UCAP del Sistema de Alumbrado Público}
+\end{table}
+
+\subsection{Determinación del Costo de Reposición ($CR_i$ y $CR_{i,L}$)}
+
+\subsubsection{Metodología General}
+
+El costo de reposición a nuevo debe incluir todos los elementos necesarios:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Componentes del Costo de Reposición}} \\
+\hline
+\rowcolor{azulclaro} 1. Costo del suministro de equipos y materiales en sitio de instalación \\
+\hline
+2. Costo de obra civil necesaria para la instalación \\
+\hline
+\rowcolor{azulclaro} 3. Costo de montaje e instalación especializada \\
+\hline
+4. Costos de ingeniería, diseño y supervisión técnica \\
+\hline
+\rowcolor{azulclaro} 5. Costo de administración de la obra \\
+\hline
+6. Costo de inspectores de obra y control de calidad \\
+\hline
+\rowcolor{azulclaro} 7. Costo de interventoría especializada \\
+\hline
+8. Certificaciones RETIE y RETILAP obligatorias \\
+\hline
+\rowcolor{azulclaro} 9. Costos financieros del proyecto \\
+\hline
+10. Costos ambientales por disposición de residuos \\
+\hline
+\end{tabularx}
+\caption{Componentes incluidos en el costo de reposición}
+\end{table}
+
+\subsubsection{Fuentes de Información para Costos}
+
+\begin{itemize}[leftmargin=*]
+    \item Procesos de compra efectuados por el municipio o distrito
+    \item Procesos de compra del prestador del servicio
+    \item Estudios de mercado actualizados
+    \item Bases de datos especializadas del sector
+    \item Cotizaciones de proveedores certificados
+\end{itemize}
+
+\subsection{Ajuste por Eficacia Luminosa para Luminarias}
+
+Para promover la eficiencia energética, las luminarias tienen un ajuste basado en su eficacia luminosa:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Ajuste por Eficacia Luminosa]
+\begin{equation}
+\text{CR}_{i,L} = k \times \text{CR}_L
+\end{equation}
+
+\begin{equation}
+k = \frac{\text{EF}}{130}
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$CR_L$}: Costo de reposición base de la luminaria sin ajuste, en pesos.
+    
+    \item \textbf{$k$}: Factor de ajuste por eficacia luminosa (adimensional).
+    
+    \item \textbf{$EF$}: Eficacia luminosa de la fuente a instalar, en lúmenes por vatio (lm/W).
+    
+    \item \textbf{130}: Eficacia luminosa de referencia establecida por Resolución UPME 196 de 2020, en lm/W.
+\end{itemize}
+
+\subsubsection{Procedimiento para Validar la Eficacia Luminosa}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Certificación obligatoria}: El producto debe tener certificado de conformidad expedido por organismo acreditado por ONAC.
+    
+    \item \textbf{Documentación técnica}: La ficha técnica debe reportar:
+    \begin{itemize}
+        \item Potencia consumida bajo condiciones nominales
+        \item Flujo luminoso producido
+        \item Temperatura de color
+        \item Factor de potencia y THD
+    \end{itemize}
+    
+    \item \textbf{Validación por interventoría}: El interventor debe:
+    \begin{itemize}
+        \item Calcular y avalar el valor de eficacia luminosa
+        \item Definir período de reemplazo basado en curva de degradación
+        \item Verificar cumplimiento RETIE y RETILAP
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Tasa de Retorno ($r$)}
+
+La tasa de retorno utilizada es la aprobada por la CREG para la actividad de distribución de energía eléctrica:
+
+\begin{itemize}[leftmargin=*]
+    \item Se actualiza automáticamente cuando la CREG la modifique
+    \item Actualmente se encuentra definida en la Resolución CREG 015 de 2018
+    \item Debe utilizarse la tasa vigente al momento del cálculo
+    \item Se expresa como valor decimal (ejemplo: 11.8\% = 0.118)
+\end{itemize}
+
+\subsection{Vida Útil de los Activos ($v_i$)}
+
+La vida útil se determina según el siguiente orden de prioridad:
+
+\begin{enumerate}[leftmargin=*]
+    \item Valores establecidos en el RETILAP vigente
+    \item Estudios técnicos del Ministerio de Minas y Energía
+    \item Especificaciones del fabricante (cuando sean más exigentes)
+    \item Para activos de distribución: Resolución CREG 015 de 2018
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tipo de Activo}} & \textcolor{white}{\textbf{Vida Útil (años)}} \\
+\hline
+\rowcolor{azulclaro} Luminarias LED & 15-20 \\
+\hline
+Luminarias HID & 10-15 \\
+\hline
+\rowcolor{azulclaro} Postes de concreto & 30 \\
+\hline
+Postes metálicos & 25 \\
+\hline
+\rowcolor{azulclaro} Transformadores & 30 \\
+\hline
+Conductores aéreos & 25 \\
+\hline
+\rowcolor{azulclaro} Conductores subterráneos & 30 \\
+\hline
+Sistemas de control & 10 \\
+\hline
+\end{tabularx}
+\caption{Vidas útiles típicas de activos del SALP}
+\end{table}
+
+\subsection{Costo Anual de Terrenos ($CAT_n$)}
+
+Para subestaciones que requieren terrenos específicos:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del $CAT_n$]
+\begin{equation}
+\text{CAT}_n = R \times \sum_{i=1}^{\text{NS}_n} (AT_i \times VCT_i)
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$R$}: Porcentaje anual reconocido = 6.9\% = 0.069.
+    
+    \item \textbf{$NS_n$}: Número de subestaciones en el nivel de tensión $n$ que requieren terreno.
+    
+    \item \textbf{$AT_i$}: Área del terreno de la subestación $i$, en metros cuadrados ($m^2$).
+    
+    \item \textbf{$VCT_i$}: Valor catastral del terreno de la subestación $i$, en pesos/m².
+\end{itemize}
+
+\begin{notacaja}
+Para subestaciones en poste, tipo pedestal o subterráneas instaladas en espacio público, $R = 0$, ya que no se asocia costo de terreno.
+\end{notacaja}
+
+\subsection{Costo Anual Equivalente de Activos No Eléctricos ($CAANE_n$)}
+
+Representa el costo de activos auxiliares necesarios para la operación:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del $CAANE_n$]
+\begin{equation}
+\text{CAANE}_n = \text{NE} \times \text{CAAE}_n
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$NE$}: Fracción reconocida = 0.041 (4.1\%).
+    \item \textbf{$CAAE_n$}: Costo anual equivalente de activos eléctricos calculado previamente.
+\end{itemize}
+
+\subsection{Índice de Disponibilidad ($ID$)}
+
+El índice de disponibilidad penaliza las deficiencias en el servicio:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del Índice de Disponibilidad]
+\begin{equation}
+\text{ID} = 1 - \sum_{i=1}^{m} \left( \frac{W_i \times HSS_i}{WT \times T} \right)
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$W_i$}: Potencia de la luminaria $i$ reportada con indisponibilidad, en kW.
+    
+    \item \textbf{$HSS_i$}: Horas sin servicio de la luminaria $i$ durante el período.
+    
+    \item \textbf{$m$}: Número de luminarias reportadas con indisponibilidad.
+    
+    \item \textbf{$WT$}: Potencia total instalada del sistema, en kW.
+    
+    \item \textbf{$T$}: Horas totales del período de facturación.
+\end{itemize}
+
+\subsubsection{Criterios de Indisponibilidad}
+
+Una luminaria se considera indisponible cuando:
+
+\begin{itemize}[leftmargin=*]
+    \item Está apagada cuando debe estar encendida según programa operativo
+    \item Funciona de manera intermitente afectando la calidad del servicio
+    \item Su flujo luminoso es inferior al 70\% del valor nominal
+    \item Presenta fallas que comprometen la seguridad o funcionalidad
+\end{itemize}
+
+\subsubsection{Exclusiones del Cálculo de Indisponibilidad}
+
+No se consideran para el cálculo de penalizaciones:
+
+\begin{itemize}[leftmargin=*]
+    \item Interrupciones en STN, STR o SDL previstas como exclusiones en CREG 015/2018
+    \item Actos de vandalismo reportados al SIAP (5 días calendario posteriores)
+    \item Daños por choques vehiculares (5 días calendario posteriores)
+    \item Hurto de componentes (5 días calendario posteriores)
+    \item Eventos de fuerza mayor debidamente documentados
+\end{itemize}
+
+\subsection{Evaluación Económica de Proyectos}
+
+Las inversiones en alumbrado público deben evaluarse mediante modelos financieros que incorporen:
+
+\begin{itemize}[leftmargin=*]
+    \item Flujo de caja del proyecto durante la vida útil
+    \item Inversión inicial y inversiones adicionales programadas
+    \item Costos de operación y mantenimiento
+    \item Valor de salvamento al final del período
+    \item Beneficios económicos y sociales del proyecto
+    \item Análisis de sensibilidad ante variaciones en parámetros clave
+\end{itemize}
+
+\subsubsection{Criterios de Evaluación}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Valor Presente Neto (VPN)}: Debe ser positivo
+    \item \textbf{Tasa Interna de Retorno (TIR)}: Debe superar la tasa de descuento
+    \item \textbf{Relación Beneficio/Costo}: Debe ser superior a 1.0
+    \item \textbf{Período de Recuperación}: Debe ser inferior a la vida útil del proyecto
+\end{itemize}
+
+\section{Costo de Administración, Operación y Mantenimiento (CAOM)}
+
+\subsection{Conceptos Fundamentales}
+
+El CAOM reconoce todos los gastos necesarios para mantener el sistema de alumbrado público en condiciones adecuadas de funcionamiento, incluyendo:
+
+\begin{itemize}[leftmargin=*]
+    \item Administración del sistema y gestión contractual
+    \item Operación técnica y supervisión del funcionamiento
+    \item Mantenimiento preventivo y correctivo
+    \item Reposición menor de componentes
+    \item Gestión de la calidad del servicio
+    \item Atención de peticiones, quejas y reclamos
+\end{itemize}
+
+\subsection{Fórmula de Cálculo del CAOM}
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del CAOM]
+\begin{equation}
+\begin{split}
+\text{CAOM} = \sum_{n=1}^{2} [ & ((CRA_n \times FAOM_n) + (CRAL \times FAOML) + \\
+& (CRTA_n \times FAOMS)) \times \text{ID} - \text{VCEEI}_n ]
+\end{split}
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$CRA_n$}: Costo de reposición a nuevo de activos diferentes a luminarias en nivel $n$.
+    
+    \item \textbf{$CRAL$}: Costo de reposición a nuevo de todas las luminarias del sistema.
+    
+    \item \textbf{$CRTA_n$}: Costo de reposición a nuevo de todos los activos en nivel $n$.
+    
+    \item \textbf{$FAOM_n$}: Fracción para AOM de activos no luminarias = 0.04 (4\%).
+    
+    \item \textbf{$FAOML$}: Fracción para AOM de luminarias (variable por año).
+    
+    \item \textbf{$FAOMS$}: Fracción adicional por condiciones ambientales = 0.005 (0.5\%).
+    
+    \item \textbf{$ID$}: Índice de disponibilidad del sistema.
+    
+    \item \textbf{$VCEEI_n$}: Valor del consumo por indisponibilidad en nivel $n$.
+\end{itemize}
+
+\subsection{Fracciones de AOM por Tipo de Activo}
+
+\subsubsection{Fracción para Activos No Luminarias ($FAOM_n$)}
+
+Para todos los activos diferentes a luminarias (postes, transformadores, redes, etc.):
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=FAOM para Activos No Luminarias]
+\textbf{$FAOM_n$} = 0.04 \text{ (4\% del costo de reposición)}
+\end{tcolorbox}
+
+\subsubsection{Fracción para Luminarias ($FAOML$)}
+
+La fracción para luminarias disminuye progresivamente para incentivar la eficiencia:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Año}} & \textcolor{white}{\textbf{FAOML}} & \textcolor{white}{\textbf{Porcentaje}} \\
+\hline
+\rowcolor{azulclaro} 2022 & 0.097 & 9.7\% \\
+\hline
+2023 & 0.092 & 9.2\% \\
+\hline
+\rowcolor{azulclaro} 2024 & 0.086 & 8.6\% \\
+\hline
+2025 & 0.080 & 8.0\% \\
+\hline
+\rowcolor{azulclaro} 2026 & 0.074 & 7.4\% \\
+\hline
+2027 & 0.069 & 6.9\% \\
+\hline
+\rowcolor{azulclaro} 2028 en adelante & 0.063 & 6.3\% \\
+\hline
+\end{tabular}
+\caption{Evolución de FAOML por año}
+\end{table}
+
+\begin{notacaja}
+La reducción progresiva de FAOML refleja la expectativa de mayor eficiencia operativa con tecnologías LED y sistemas de telegestión.
+\end{notacaja}
+
+\subsubsection{Fracción por Condiciones Ambientales Especiales ($FAOMS$)}
+
+Para sistemas ubicados a menos de 30 km de la orilla del mar:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=FAOMS por Ambiente Marino]
+\textbf{FAOMS} = 0.005 \text{ (0.5\% adicional del costo de reposición)}
+\end{tcolorbox}
+
+Esta fracción reconoce los mayores costos de mantenimiento por:
+\begin{itemize}[leftmargin=*]
+    \item Corrosión acelerada por salinidad
+    \item Mayor frecuencia de limpieza de luminarias
+    \item Protecciones adicionales contra la corrosión
+    \item Materiales especiales resistentes al ambiente marino
+\end{itemize}
+
+\subsection{Determinación de los Costos de Reposición}
+
+\subsubsection{Costo de Reposición de Activos No Luminarias ($CRA_n$)}
+
+Incluye todos los activos del nivel de tensión $n$ excepto luminarias:
+
+\begin{itemize}[leftmargin=*]
+    \item Postes y estructuras de soporte
+    \item Transformadores de distribución
+    \item Redes eléctricas (aéreas y subterráneas)
+    \item Sistemas de protección y control
+    \item Sistemas de medición
+    \item Accesorios y herrajes
+    \item Sistemas de comunicación y telegestión
+\end{itemize}
+
+\subsubsection{Costo de Reposición de Luminarias ($CRAL$)}
+
+Incluye todas las luminarias del sistema sin distinción de nivel de tensión:
+
+\begin{itemize}[leftmargin=*]
+    \item Luminarias LED y sus componentes
+    \item Luminarias HID (mientras estén permitidas)
+    \item Sistemas de control individual (fotocontroles)
+    \item Accesorios de montaje específicos de luminarias
+    \item Elementos de protección contra sobretensiones
+\end{itemize}
+
+\subsubsection{Costo de Reposición Total ($CRTA_n$)}
+
+Es la suma de todos los activos en el nivel de tensión correspondiente:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=CRTA Calculation]
+\begin{equation}
+\text{CRTA}_n = \text{CRA}_n + \text{CRAL}_n
+\end{equation}
+\end{tcolorbox}
+
+Donde $CRAL_n$ son las luminarias específicamente conectadas al nivel de tensión $n$.
+
+\subsection{Aplicación del Índice de Disponibilidad}
+
+El producto $(\text{Costos AOM}) \times \text{ID}$ representa la penalización por indisponibilidad:
+
+\begin{itemize}[leftmargin=*]
+    \item $ID = 1.0$: Sistema con disponibilidad perfecta, no hay penalización
+    \item $ID < 1.0$: Se reduce el reconocimiento de costos AOM proporcionalmente
+    \item La penalización incentiva el mantenimiento preventivo y la calidad del servicio
+\end{itemize}
+
+\subsection{Valor del Consumo por Indisponibilidad ($VCEEI_n$)}
+
+Este componente descuenta el costo de energía consumida por luminarias mal controladas:
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Cálculo del $VCEEI_n$]
+\begin{equation}
+\text{VCEEI}_n = \text{TEE}_n \times \sum_{j=1}^{m} (QI_{j,n} \times TI_{j,n})
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$TEE_n$}: Tarifa de energía en nivel de tensión $n$, en $/kWh$.
+    
+    \item \textbf{$QI_{j,n}$}: Potencia de luminaria $j$ con indisponibilidad, en kW.
+    
+    \item \textbf{$TI_{j,n}$}: Horas de indisponibilidad de luminaria $j$.
+    
+    \item \textbf{$m$}: Número de luminarias reportadas con indisponibilidad.
+\end{itemize}
+
+\subsubsection{Casos de Indisponibilidad Penalizables}
+
+Se considera indisponibilidad penalizable cuando:
+
+\begin{itemize}[leftmargin=*]
+    \item Luminarias encendidas durante horarios no permitidos
+    \item Consumo de energía por mal funcionamiento de fotocontroles
+    \item Funcionamiento fuera del programa operativo establecido
+    \item Luminarias que consumen energía sin generar iluminación útil
+\end{itemize}
+
+\subsection{Actividades Incluidas en el AOM}
+
+\subsubsection{Administración del Sistema}
+
+\begin{itemize}[leftmargin=*]
+    \item Gestión contractual y supervisión
+    \item Administración del SIAP
+    \item Atención de peticiones, quejas y reclamos
+    \item Gestión de inventarios y repuestos
+    \item Coordinación con entidades municipales
+    \item Elaboración de informes y reportes regulatorios
+    \item Gestión de la seguridad y salud en el trabajo
+\end{itemize}
+
+\subsubsection{Operación del Sistema}
+
+\begin{itemize}[leftmargin=*]
+    \item Supervisión del funcionamiento diario
+    \item Monitoreo de parámetros eléctricos
+    \item Control de encendido y apagado
+    \item Operación de sistemas de telegestión
+    \item Coordinación con el operador de red
+    \item Gestión de interrupciones programadas
+    \item Control de calidad de la iluminación
+\end{itemize}
+
+\subsubsection{Mantenimiento del Sistema}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Mantenimiento Preventivo}} & \textcolor{white}{\textbf{Mantenimiento Correctivo}} \\
+\hline
+\rowcolor{azulclaro} Limpieza de luminarias y ópticas & Reparación de luminarias dañadas \\
+\hline
+Verificación de conexiones eléctricas & Reemplazo de componentes fallados \\
+\hline
+\rowcolor{azulclaro} Revisión de sistemas de control & Atención de reportes de usuarios \\
+\hline
+Medición de parámetros fotométricos & Reparación de redes y acometidas \\
+\hline
+\rowcolor{azulclaro} Inspección de estructuras & Reemplazo de postes dañados \\
+\hline
+Mantenimiento de transformadores & Reparación de sistemas de control \\
+\hline
+\rowcolor{azulclaro} Poda de vegetación interfiriente & Restauración del servicio por emergencias \\
+\hline
+Actualización del inventario SIAP & Reposición por vandalismo o hurto \\
+\hline
+\end{tabularx}
+\caption{Actividades de mantenimiento del SALP}
+\end{table}
+
+\subsection{Reposición de Activos vs. Inversión}
+
+Es importante distinguir entre reposición (incluida en AOM) e inversión:
+
+\subsubsection{Reposición (Incluida en AOM)}
+
+\begin{itemize}[leftmargin=*]
+    \item Reemplazo por activos de características similares
+    \item No aumenta significativamente el valor del activo
+    \item No extiende significativamente la vida útil
+    \item Mantiene las especificaciones técnicas originales
+    \item Se considera gasto operativo
+\end{itemize}
+
+\subsubsection{Inversión (No incluida en AOM)}
+
+\begin{itemize}[leftmargin=*]
+    \item Reemplazo por activos de mejores características
+    \item Aumenta significativamente el valor del activo
+    \item Extiende la vida útil del sistema
+    \item Mejora las especificaciones técnicas
+    \item Se considera inversión de capital
+\end{itemize}
+
+\subsection{Sistema de Información de Alumbrado Público (SIAP)}
+
+Los costos del SIAP están incluidos en el AOM y comprenden:
+
+\begin{itemize}[leftmargin=*]
+    \item Registro de peticiones, quejas y recursos (PQR)
+    \item Inventario georreferenciado de componentes
+    \item Registro de consumos y facturación
+    \item Control de recaudos y pagos
+    \item Fuentes y recursos para financiamiento
+    \item Indicadores de gestión y calidad
+    \item Reportes regulatorios automáticos
+\end{itemize}
+
+\section{Otros Costos (COTR)}
+
+Este componente incluye costos específicos que, aunque no están directamente relacionados con la inversión, suministro de energía o AOM, son necesarios para la prestación adecuada del servicio.
+
+\subsection{Costo de Interventoría}
+
+\subsubsection{Alcance de la Interventoría}
+
+La interventoría debe cubrir los siguientes aspectos según el Capítulo 7 del RETILAP:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Aspectos a Cubrir por la Interventoría}} \\
+\hline
+\rowcolor{azulclaro} 1. Supervisión técnica de la instalación y montaje \\
+\hline
+2. Verificación del cumplimiento de especificaciones técnicas \\
+\hline
+\rowcolor{azulclaro} 3. Control de calidad de materiales y equipos \\
+\hline
+4. Supervisión del cumplimiento de normas de seguridad \\
+\hline
+\rowcolor{azulclaro} 5. Verificación de certificaciones RETIE y RETILAP \\
+\hline
+6. Control de avance de obra y cronograma \\
+\hline
+\rowcolor{azulclaro} 7. Supervisión administrativa y financiera \\
+\hline
+8. Elaboración de informes técnicos y de gestión \\
+\hline
+\rowcolor{azulclaro} 9. Recepción técnica de obras y pruebas \\
+\hline
+10. Supervisión de garantías y período de estabilización \\
+\hline
+\end{tabularx}
+\caption{Alcance mínimo de la interventoría}
+\end{table}
+
+\subsubsection{Determinación del Costo de Interventoría}
+
+El costo debe ser establecido en el ETR considerando:
+
+\begin{itemize}[leftmargin=*]
+    \item Complejidad técnica del proyecto
+    \item Duración del contrato de prestación del servicio
+    \item Valor total de la inversión a supervisar
+    \item Riesgos técnicos y operativos involucrados
+    \item Requisitos específicos del municipio o distrito
+\end{itemize}
+
+\subsubsection{Perfil del Interventor}
+
+\begin{itemize}[leftmargin=*]
+    \item Ingeniero electricista o electrónico con especialización
+    \item Experiencia mínima de 5 años en sistemas de alumbrado público
+    \item Conocimiento especializado en RETIE y RETILAP
+    \item Capacitación en sistemas de gestión de calidad
+    \item Certificaciones en seguridad y salud en el trabajo
+\end{itemize}
+
+\subsection{Costos Ambientales}
+
+Los costos ambientales no pueden exceder el 5\% del CAOM y deben incluir:
+
+\subsubsection{Plan de Manejo Ambiental}
+
+\begin{itemize}[leftmargin=*]
+    \item Evaluación de impactos ambientales del proyecto
+    \item Medidas de prevención, mitigación y compensación
+    \item Programas de seguimiento y monitoreo ambiental
+    \item Capacitación en gestión ambiental al personal
+    \item Implementación de sistemas de gestión ambiental
+\end{itemize}
+
+\subsubsection{Gestión Integral de Residuos (RAEE)}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Estrategias de Gestión de RAEE}} \\
+\hline
+\rowcolor{azulclaro} 1. Reutilización de componentes en buen estado \\
+\hline
+2. Remanufacturación de equipos con vida útil remanente \\
+\hline
+\rowcolor{azulclaro} 3. Reacondicionamiento para usos alternativos \\
+\hline
+4. Devolución a fabricantes con sistemas de retoma \\
+\hline
+\rowcolor{azulclaro} 5. Recolección selectiva y clasificación especializada \\
+\hline
+6. Reciclaje de materiales recuperables \\
+\hline
+\rowcolor{azulclaro} 7. Disposición final ambientalmente segura \\
+\hline
+\end{tabularx}
+\caption{Estrategias para la gestión integral de RAEE}
+\end{table}
+
+\begin{notacaja}
+Está expresamente prohibida la disposición de RAEE en rellenos sanitarios. Debe realizarse a través de gestores autorizados por autoridades ambientales.
+\end{notacaja}
+
+\subsubsection{Reducción de Huella de Carbono}
+
+\begin{itemize}[leftmargin=*]
+    \item Medición de emisiones de CO$_2$ del sistema actual
+    \item Implementación de tecnologías más eficientes
+    \item Uso de fuentes de energía renovable cuando sea factible
+    \item Optimización de patrones de encendido y apagado
+    \item Programas de compensación de emisiones
+\end{itemize}
+
+\subsubsection{Reducción de Polución Lumínica}
+
+\begin{itemize}[leftmargin=*]
+    \item Diseño de iluminación direccional y controlada
+    \item Uso de luminarias con distribución fotométrica optimizada
+    \item Implementación de sistemas de atenuación nocturna
+    \item Protección de áreas ambientalmente sensibles
+    \item Cumplimiento de normativas internacionales sobre polución lumínica
+\end{itemize}
+
+\subsection{Sistema de Gestión de Activos}
+
+Para municipios de categorías especial, primera y segunda:
+
+\subsubsection{Requisitos de la Norma ISO 55001}
+
+\begin{itemize}[leftmargin=*]
+    \item Establecimiento de política de gestión de activos
+    \item Definición de objetivos y estrategia de gestión
+    \item Planificación del ciclo de vida de activos
+    \item Implementación de procesos de gestión
+    \item Evaluación del desempeño del sistema
+    \item Mejora continua de la gestión de activos
+\end{itemize}
+
+\subsubsection{Beneficios del Sistema de Gestión}
+
+\begin{itemize}[leftmargin=*]
+    \item Optimización del valor de los activos a lo largo de su vida útil
+    \item Reducción de costos totales de propiedad
+    \item Mejora en la toma de decisiones de inversión
+    \item Aumento de la confiabilidad y disponibilidad del servicio
+    \item Gestión proactiva de riesgos operativos
+    \item Cumplimiento mejorado de requisitos regulatorios
+\end{itemize}
+
+\subsubsection{Cronograma de Implementación}
+
+\begin{itemize}[leftmargin=*]
+    \item Plazo máximo: 5 años desde la entrada en vigor de la Resolución CREG 101 013/2022
+    \item Año 1: Diseño del sistema y capacitación
+    \item Año 2-3: Implementación gradual
+    \item Año 4: Preparación para certificación
+    \item Año 5: Obtención de la certificación ISO 55001
+\end{itemize}
+
+\subsection{Costos de Pólizas, Trámites e Impuestos}
+
+\subsubsection{Pólizas de Seguros}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tipo de Póliza}} & \textcolor{white}{\textbf{Cobertura}} \\
+\hline
+\rowcolor{azulclaro} Cumplimiento & Garantiza el cumplimiento de obligaciones contractuales \\
+\hline
+Responsabilidad Civil & Cubre daños a terceros por la prestación del servicio \\
+\hline
+\rowcolor{azulclaro} Todo Riesgo & Protege activos contra daños materiales \\
+\hline
+Responsabilidad Civil Profesional & Cubre errores u omisiones en el diseño o supervisión \\
+\hline
+\rowcolor{azulclaro} Manejo & Garantiza el adecuado manejo de recursos \\
+\hline
+\end{tabularx}
+\caption{Tipos de pólizas requeridas}
+\end{table}
+
+\subsubsection{Trámites Administrativos}
+
+\begin{itemize}[leftmargin=*]
+    \item Licencias y permisos municipales
+    \item Registros ante cámaras de comercio
+    \item Certificaciones ante organismos acreditados
+    \item Trámites ambientales cuando apliquen
+    \item Registros ante autoridades de control
+\end{itemize}
+
+\subsubsection{Impuestos Aplicables}
+
+\begin{itemize}[leftmargin=*]
+    \item Impuesto al Valor Agregado (IVA) sobre servicios
+    \item Impuestos municipales específicos
+    \item Contribuciones parafiscales cuando apliquen
+    \item Tasas por servicios administrativos
+    \item Impuestos sobre contratos (estampillas)
+\end{itemize}
+
+\section{Actualización de Costos}
+
+Para mantener el valor real de los costos a lo largo del tiempo, se establecen mecanismos de actualización periódica.
+
+\subsection{Índice de Actualización}
+
+Se utiliza el Índice de Precios al Productor (IPP) Total Nacional de oferta interna reportado por el DANE:
+
+\begin{itemize}[leftmargin=*]
+    \item Se publica mensualmente por el Departamento Administrativo Nacional de Estadística (DANE)
+    \item Refleja la variación de precios de los bienes producidos y consumidos en el país
+    \item Es el índice oficial para actualización de costos regulados
+    \item Se debe utilizar el valor del mes inmediatamente anterior al cálculo
+\end{itemize}
+
+\subsection{Actualización del Costo de Inversión}
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Actualización del CINV]
+\begin{equation}
+\text{CINV}_m = \text{CINV} \times \frac{\text{IPP}_{m-1}}{\text{IPP}_o}
+\end{equation}
+\end{tcolorbox}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$CINV_m$}: Costo de inversión actualizado al mes $m$.
+    \item \textbf{$CINV$}: Costo de inversión base calculado en la fecha de referencia.
+    \item \textbf{$IPP_{m-1}$}: IPP del mes anterior al mes de cálculo.
+    \item \textbf{$IPP_o$}: IPP de la fecha de referencia (mes base del cálculo).
+\end{itemize}
+
+\subsection{Actualización del Costo de AOM}
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Actualización del CAOM]
+\begin{equation}
+\text{CAOM}_m = \text{CAOM} \times \frac{\text{IPP}_{m-1}}{\text{IPP}_o}
+\end{equation}
+\end{tcolorbox}
+
+Donde las variables tienen el mismo significado que en la fórmula anterior.
+
+\subsection{Periodicidad de Actualización}
+
+\begin{itemize}[leftmargin=*]
+    \item La actualización puede realizarse mensualmente
+    \item Se recomienda actualización trimestral para efectos prácticos
+    \item Debe realizarse actualización anual como mínimo
+    \item Los contratos deben incluir cláusulas de ajuste automático
+\end{itemize}
+
+\subsection{Fecha de Referencia}
+
+La fecha de referencia corresponde al 31 de diciembre del año inmediatamente anterior al año de realización del Estudio Técnico de Referencia:
+
+\begin{itemize}[leftmargin=*]
+    \item Todos los costos deben expresarse en pesos de la fecha de referencia
+    \item Los precios de activos deben corresponder a cotizaciones vigentes en la fecha de referencia
+    \item Los índices económicos (IPP, tasas) deben corresponder a la fecha de referencia
+    \item Las actualizaciones posteriores utilizan esta fecha como base
+\end{itemize}
+
+\section{Estudio Técnico de Referencia (ETR)}
+
+\subsection{Objetivo y Alcance}
+
+El ETR es el documento fundamental que sustenta la aplicación de la metodología de costos y debe ser elaborado por todos los municipios y distritos responsables del servicio de alumbrado público.
+
+\subsubsection{Objetivos Específicos}
+
+\begin{itemize}[leftmargin=*]
+    \item Diagnosticar el estado actual del servicio de alumbrado público
+    \item Planificar las expansiones necesarias del sistema
+    \item Calcular los costos máximos de prestación del servicio
+    \item Establecer metas de calidad y cobertura del servicio
+    \item Definir estrategias de mejoramiento y modernización
+    \item Proporcionar información para la toma de decisiones
+\end{itemize}
+
+\subsection{Contenido Mínimo del ETR}
+
+\subsubsection{1. Diagnóstico del Estado Actual}
+
+\paragraph{Inventario de Infraestructura}
+
+\begin{itemize}[leftmargin=*]
+    \item Inventario completo y georreferenciado de todas las UCAP
+    \item Clasificación por tipo, nivel de tensión y clase de iluminación
+    \item Estado técnico y nivel de obsolescencia de cada activo
+    \item Fecha de instalación y vida útil remanente
+    \item Registro actualizado en el SIAP con fotografías y fichas técnicas
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{footnotesize}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Información Mínima por UCAP}} & \textcolor{white}{\textbf{Detalles Técnicos}} \\
+\hline
+\rowcolor{azulclaro} Código único de identificación & Coordenadas GPS precisas \\
+\hline
+Tipo y características técnicas & Potencia, flujo luminoso, eficacia \\
+\hline
+\rowcolor{azulclaro} Fabricante y modelo & Certificaciones RETIE/RETILAP \\
+\hline
+Fecha de instalación & Vida útil esperada y remanente \\
+\hline
+\rowcolor{azulclaro} Estado de funcionamiento & Historial de mantenimiento \\
+\hline
+Nivel de tensión de conexión & Transformador de alimentación \\
+\hline
+\rowcolor{azulclaro} Clase de iluminación & Vía o área que ilumina \\
+\hline
+\end{tabularx}
+\end{footnotesize}
+\caption{Información mínima requerida por UCAP}
+\end{table}
+
+\paragraph{Inventario de Espacios Públicos}
+
+\begin{itemize}[leftmargin=*]
+    \item Clasificación de espacios según destinación y uso
+    \item Medición de longitudes de vías vehiculares y peatonales
+    \item Cálculo de áreas de parques, plazas y espacios recreativos
+    \item Identificación de bienes de uso público que requieren iluminación
+    \item Priorización según criterios técnicos y sociales
+\end{itemize}
+
+\paragraph{Descripción Socioeconómica}
+
+\begin{itemize}[leftmargin=*]
+    \item Población total y distribución por veredas/comunas
+    \item Actividades económicas predominantes
+    \item Área total discriminada en urbana y rural
+    \item Indicadores socioeconómicos relevantes
+    \item Proyecciones demográficas oficiales
+\end{itemize}
+
+\paragraph{Cobertura del Servicio Eléctrico}
+
+\begin{itemize}[leftmargin=*]
+    \item Cobertura de energía eléctrica urbana y rural
+    \item Número y tipo de usuarios por sector
+    \item Clasificación socioeconómica y consumos promedio
+    \item Calidad del suministro eléctrico (indicadores DES, FES)
+    \item Proyectos de expansión eléctrica programados
+\end{itemize}
+
+\paragraph{Indicadores de Cobertura del Alumbrado Público}
+
+Deben calcularse como mínimo los siguientes indicadores:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Indicador}} & \textcolor{white}{\textbf{Fórmula de Cálculo}} \\
+\hline
+\rowcolor{azulclaro} Cobertura en vías & $\frac{\text{km de vías con alumbrado}}{\text{km total de vías}} \times 100$ \\
+\hline
+Cobertura en bienes públicos & $\frac{\text{Bienes públicos con alumbrado}}{\text{Total de bienes públicos}} \times 100$ \\
+\hline
+\rowcolor{azulclaro} Densidad de luminarias & $\frac{\text{Número de luminarias}}{\text{km² de área urbana}}$ \\
+\hline
+Potencia instalada per cápita & $\frac{\text{kW instalados}}{\text{Número de habitantes}}$ \\
+\hline
+\end{tabularx}
+\caption{Indicadores básicos de cobertura}
+\end{table}
+
+\paragraph{Evaluación de la Calidad del Servicio}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Disponibilidad}: Cálculo del índice de disponibilidad según Art. 30
+    \item \textbf{Tiempos de respuesta}: Estadísticas de atención a PQR
+    \item \textbf{Percepción ciudadana}: Encuestas de satisfacción
+    \item \textbf{Cumplimiento RETILAP}: Verificación de niveles fotométricos
+    \item \textbf{Uniformidad}: Medición de uniformidad de iluminación
+    \item \textbf{Deslumbramiento}: Evaluación de molestias por deslumbramiento
+\end{itemize}
+
+\subsubsection{2. Planificación de Expansiones}
+
+La planificación debe estar armonizada con:
+
+\begin{itemize}[leftmargin=*]
+    \item Plan de Ordenamiento Territorial (POT) vigente
+    \item Planes de expansión de otros servicios públicos
+    \item Planes de desarrollo urbano y rural
+    \item Proyectos de infraestructura vial
+    \item Planes maestros sectoriales
+\end{itemize}
+
+\paragraph{Criterios de Priorización}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Criterio}} & \textcolor{white}{\textbf{Peso (\%)}} \\
+\hline
+\rowcolor{azulclaro} Seguridad ciudadana y accidentalidad & 30 \\
+\hline
+Flujo vehicular y peatonal & 25 \\
+\hline
+\rowcolor{azulclaro} Desarrollo urbano planificado & 20 \\
+\hline
+Demanda social y peticiones ciudadanas & 15 \\
+\hline
+\rowcolor{azulclaro} Viabilidad técnica y económica & 10 \\
+\hline
+\textbf{Total} & \textbf{100} \\
+\hline
+\end{tabularx}
+\caption{Criterios sugeridos para priorización de expansiones}
+\end{table}
+
+\paragraph{Cronograma de Expansiones}
+
+\begin{itemize}[leftmargin=*]
+    \item Expansiones del primer año (corto plazo)
+    \item Expansiones a 2-4 años (mediano plazo)
+    \item Expansiones a más de 4 años (largo plazo)
+    \item Sincronización con obras de infraestructura
+    \item Identificación de fuentes de financiación
+\end{itemize}
+
+\subsubsection{3. Cálculo de Costos Desagregados}
+
+Debe incluir el cálculo detallado de todos los componentes:
+
+\paragraph{Costo del Suministro de Energía (CSEE)}
+
+\begin{itemize}[leftmargin=*]
+    \item Tarifas vigentes y proyectadas
+    \item Consumos medidos o aforados por nivel de tensión
+    \item Proyecciones de consumo por expansiones
+    \item Estrategias de eficiencia energética
+    \item Análisis de autogeneración cuando aplique
+\end{itemize}
+
+\paragraph{Costo de Inversión (CINV)}
+
+\begin{itemize}[leftmargin=*]
+    \item Inventario valorado de activos existentes
+    \item Costos de modernización tecnológica
+    \item Costos de expansión programada
+    \item Costos de reposición por obsolescencia
+    \item Evaluación económica de alternativas tecnológicas
+\end{itemize}
+
+\paragraph{Costo de AOM (CAOM)}
+
+\begin{itemize}[leftmargin=*]
+    \item Programas de mantenimiento preventivo y correctivo
+    \item Costos de administración del sistema
+    \item Gestión del SIAP y atención al usuario
+    \item Compensaciones por indisponibilidad
+    \item Estrategias de mejoramiento operativo
+\end{itemize}
+
+\paragraph{Otros Costos (COTR)}
+
+\begin{itemize}[leftmargin=*]
+    \item Costo de interventoría especializada
+    \item Plan de manejo ambiental
+    \item Pólizas y seguros requeridos
+    \item Trámites administrativos
+    \item Sistema de gestión de activos (cuando aplique)
+\end{itemize}
+
+\subsubsection{4. Plan de Revisión y Actualización}
+
+\paragraph{Periodicidad}
+
+\begin{itemize}[leftmargin=*]
+    \item Revisión máxima cada 4 años
+    \item Actualización anual de parámetros económicos
+    \item Revisión extraordinaria por cambios significativos
+    \item Actualización por cambios regulatorios
+\end{itemize}
+
+\paragraph{Triggers para Revisión Extraordinaria}
+
+\begin{itemize}[leftmargin=*]
+    \item Cambio de administración municipal/distrital
+    \item Modificaciones mayores al POT
+    \item Implementación de nuevas tecnologías
+    \item Cambios regulatorios significativos
+    \item Variaciones importantes en la demanda
+\end{itemize}
+
+\subsection{Metodología de Elaboración}
+
+\subsubsection{Equipo Técnico}
+
+El ETR debe ser elaborado por un equipo multidisciplinario:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Coordinador}: Ingeniero electricista con experiencia en alumbrado público
+    \item \textbf{Especialista fotométrico}: Para diseños de iluminación
+    \item \textbf{Especialista financiero}: Para evaluación económica
+    \item \textbf{Especialista ambiental}: Para gestión ambiental
+    \item \textbf{Especialista en sistemas}: Para SIAP y tecnologías de información
+\end{itemize}
+
+\subsubsection{Proceso de Elaboración}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Recopilación de información}: Inventarios, planos, contratos, facturas
+    \item \textbf{Trabajo de campo}: Verificación, mediciones, registros fotográficos
+    \item \textbf{Análisis técnico}: Diagnóstico, evaluaciones, proyecciones
+    \item \textbf{Cálculos económicos}: Aplicación de la metodología CREG
+    \item \textbf{Elaboración del documento}: Redacción, tablas, gráficos, anexos
+    \item \textbf{Revisión y validación}: Control de calidad técnica
+    \item \textbf{Socialización}: Presentación a stakeholders
+    \item \textbf{Aprobación y publicación}: Acto administrativo y publicación web
+\end{enumerate}
+
+\subsection{Publicación y Transparencia}
+
+\subsubsection{Requisitos de Publicación}
+
+\begin{itemize}[leftmargin=*]
+    \item Publicación completa en la página web oficial del municipio/distrito
+    \item Formato PDF descargable y accesible
+    \item Resumen ejecutivo en lenguaje ciudadano
+    \item Datos abiertos en formatos estándar (CSV, Excel)
+    \item Actualización de la información publicada
+\end{itemize}
+
+\subsubsection{Información de Acceso Público}
+
+\begin{itemize}[leftmargin=*]
+    \item Documento completo del ETR
+    \item Anexos técnicos y de cálculo
+    \item Inventario actualizado del SIAP
+    \item Indicadores de gestión
+    \item Informes de interventoría
+    \item Estados financieros del servicio
+\end{itemize}
+
+\section{Ejemplos Prácticos de Aplicación}
+
+Esta sección presenta ejemplos detallados para ilustrar la aplicación práctica de la metodología.
+
+\subsection{Ejemplo 1: Municipio de Tamaño Medio}
+
+\subsubsection{Datos del Municipio}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Población}: 50,000 habitantes
+    \item \textbf{Categoría}: Cuarta categoría
+    \item \textbf{Área urbana}: 15 km²
+    \item \textbf{Luminarias instaladas}: 2,500 unidades
+    \item \textbf{Longitud de vías}: 120 km
+    \item \textbf{Tecnología predominante}: LED (80\%), HID (20\%)
+\end{itemize}
+
+\subsubsection{Cálculo del CSEE}
+
+\paragraph{Datos de Consumo}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Nivel de Tensión}} & \textcolor{white}{\textbf{Luminarias}} & \textcolor{white}{\textbf{Potencia (kW)}} & \textcolor{white}{\textbf{Consumo (kWh/mes)}} \\
+\hline
+\rowcolor{azulclaro} Tensión 1 & 400 & 60 & 21,600 \\
+\hline
+Tensión 2 & 2,100 & 315 & 113,400 \\
+\hline
+\textbf{Total} & \textbf{2,500} & \textbf{375} & \textbf{135,000} \\
+\hline
+\end{tabular}
+\caption{Distribución del consumo por nivel de tensión}
+\end{table}
+
+\paragraph{Cálculo por Aforo}
+
+Para Tensión 2 (mayoría de luminarias):
+\begin{align}
+CEE_2 &= \sum_{i=1}^{3} (Q_{2,i} \times T_{2,i} \times DPF_2) \\
+&= (250 \times 12 \times 30) + (50 \times 12 \times 30) + (15 \times 8 \times 30) \\
+&= 90,000 + 18,000 + 3,600 = 111,600 \text{ kWh/mes}
+\end{align}
+
+\paragraph{Costo del Suministro}
+
+Con tarifas promedio de \$400/kWh para T1 y \$380/kWh para T2:
+
+\begin{align}
+CSEE &= (TEE_1 \times CEE_1) + (TEE_2 \times CEE_2) \\
+&= (400 \times 21,600) + (380 \times 113,400) \\
+&= \$8,640,000 + \$43,092,000 = \$51,732,000
+\end{align}
+
+\subsubsection{Cálculo del CINV}
+
+\paragraph{Inventario de Activos}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tipo de UCAP}} & \textcolor{white}{\textbf{Cantidad}} & \textcolor{white}{\textbf{Costo Unitario}} & \textcolor{white}{\textbf{Costo Total}} \\
+\hline
+\rowcolor{azulclaro} Luminarias LED & 2,000 & \$800,000 & \$1,600,000,000 \\
+\hline
+Luminarias HID & 500 & \$400,000 & \$200,000,000 \\
+\hline
+\rowcolor{azulclaro} Postes concreto & 1,800 & \$450,000 & \$810,000,000 \\
+\hline
+Postes metálicos & 700 & \$600,000 & \$420,000,000 \\
+\hline
+\rowcolor{azulclaro} Transformadores & 25 & \$8,000,000 & \$200,000,000 \\
+\hline
+Redes y accesorios & -- & -- & \$300,000,000 \\
+\hline
+\textbf{Total Activos Eléctricos} & & & \$3,530,000,000 \\
+\hline
+\end{tabular}
+\caption{Inventario valorado de activos}
+\end{table}
+
+\paragraph{Cálculo del CAAE}
+
+Para luminarias LED con vida útil de 15 años y tasa r = 11.8\%:
+
+\begin{align}
+\text{Factor de Anualización} &= \frac{r}{1-(1+r)^{-v}} = \frac{0.118}{1-(1.118)^{-15}} = 0.1436 \\
+CAAE &= \$3,530,000,000 \times 0.1436 = \$507,108,000
+\end{align}
+
+\paragraph{Índice de Disponibilidad}
+
+Con 50 luminarias reportadas con indisponibilidad promedio de 24 horas/mes:
+\begin{align}
+        ID &= 1 - \frac{50 \times 0.15 \times 24}{375 \times 360} = 1 - \frac{180}{135,000} = 0.9987
+\end{align}
+
+\paragraph{Cálculo Final del CINV}
+
+\begin{align}
+CINV &= CAAE \times ID = \$507,108,000 \times 0.9987 = \$506,448,000
+\end{align}
+
+\subsubsection{Cálculo del CAOM}
+
+\paragraph{Aplicación de Fracciones AOM (año 2025)}
+
+\begin{itemize}[leftmargin=*]
+    \item FAOM (activos no luminarias): 4\%
+    \item FAOML (luminarias): 8\%
+    \item FAOMS (ambiente marino): No aplica (0\%)
+\end{itemize}
+
+\begin{align}
+CAOM &= [(CRA \times 0.04) + (CRAL \times 0.08)] \times ID \\
+&= [(\$1,730,000,000 \times 0.04) + (\$1,800,000,000 \times 0.08)] \times 0.9987 \\
+&= [\$69,200,000 + \$144,000,000] \times 0.9987 \\
+&= \$213,200,000 \times 0.9987 = \$212,923,000
+\end{align}
+
+\subsubsection{Cálculo de COTR}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|r|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Concepto}} & \textcolor{white}{\textbf{Valor Anual}} \\
+\hline
+\rowcolor{azulclaro} Interventoría (2\% del CINV) & \$10,129,000 \\
+\hline
+Costos ambientales (5\% del CAOM) & \$10,646,000 \\
+\hline
+\rowcolor{azulclaro} Pólizas y seguros & \$8,500,000 \\
+\hline
+Trámites e impuestos & \$3,200,000 \\
+\hline
+\textbf{Total COTR} & \$32,475,000 \\
+\hline
+\end{tabular}
+\caption{Cálculo de otros costos}
+\end{table}
+
+\subsubsection{Costo Total del Servicio}
+
+\begin{align}
+CAP &= CSEE + CINV + CAOM + COTR \\
+&= \$51,732,000 + \$506,448,000 + \$212,923,000 + \$32,475,000 \\
+&= \$803,578,000 \text{ anuales}
+\end{align}
+
+\paragraph{Costo por Habitante y por Luminaria}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Costo por habitante}: $\frac{\$803,578,000}{50,000} = \$16,072$ por habitante/año
+    \item \textbf{Costo por luminaria}: $\frac{\$803,578,000}{2,500} = \$321,431$ por luminaria/año
+\end{itemize}
+
+\subsection{Ejemplo 2: Municipio Pequeño Rural}
+
+\subsubsection{Datos del Municipio}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Población}: 8,000 habitantes
+    \item \textbf{Categoría}: Sexta categoría
+    \item \textbf{Área urbana}: 2.5 km²
+    \item \textbf{Luminarias instaladas}: 300 unidades
+    \item \textbf{Longitud de vías}: 15 km
+    \item \textbf{Tecnología}: Mixta LED/HID
+    \item \textbf{Característica especial}: 60\% del municipio es rural
+\end{itemize}
+
+\subsubsection{Particularidades del Cálculo}
+
+\paragraph{Consumo por Aforo (mayor proporción)}
+
+El 90\% de las luminarias no tienen medición individual:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Clase de Iluminación}} & \textcolor{white}{\textbf{Luminarias}} & \textcolor{white}{\textbf{kW}} & \textcolor{white}{\textbf{kWh/mes}} \\
+\hline
+\rowcolor{azulclaro} Vías vehiculares & 150 & 22.5 & 8,100 \\
+\hline
+Vías peatonales & 100 & 12.0 & 4,320 \\
+\hline
+\rowcolor{azulclaro} Espacios públicos & 50 & 6.0 & 1,440 \\
+\hline
+\textbf{Total} & \textbf{300} & \textbf{40.5} & \textbf{13,860} \\
+\hline
+\end{tabular}
+\caption{Consumo aforado municipio pequeño}
+\end{table}
+
+\paragraph{Costos Simplificados}
+
+Dado el tamaño del municipio, algunos costos se simplifican:
+
+\begin{itemize}[leftmargin=*]
+    \item No requiere sistema de gestión de activos ISO 55001
+    \item Interventoría puede ser parcial
+    \item Costos ambientales menores por menor volumen de RAEE
+    \item Estructura tarifaria más simple
+\end{itemize}
+
+\subsection{Ejemplo 3: Ciudad Grande con Tecnología Avanzada}
+
+\subsubsection{Datos de la Ciudad}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Población}: 800,000 habitantes
+    \item \textbf{Categoría}: Especial
+    \item \textbf{Área urbana}: 180 km²
+    \item \textbf{Luminarias instaladas}: 45,000 unidades
+    \item \textbf{Tecnología}: 95\% LED con telegestión
+    \item \textbf{Características especiales}: Autogeneración solar, sistemas inteligentes
+\end{itemize}
+
+\subsubsection{Consideraciones Especiales}
+
+\paragraph{Autogeneración Solar}
+
+15\% de las luminarias tienen paneles solares integrados:
+
+\begin{itemize}[leftmargin=*]
+    \item Reducción del CSEE por energía solar generada
+    \item Cálculo de excedentes entregados a la red
+    \item Costos adicionales de inversión en tecnología solar
+    \item Sistemas de almacenamiento (baterías)
+\end{itemize}
+
+\paragraph{Sistemas de Telegestión}
+
+\begin{itemize}[leftmargin=*]
+    \item Medición remota en tiempo real
+    \item Control de encendido/apagado automático
+    \item Detección automática de fallas
+    \item Optimización del consumo energético
+    \item Mejores índices de disponibilidad (ID > 0.99)
+\end{itemize}
+
+\paragraph{Requisitos Adicionales}
+
+\begin{itemize}[leftmargin=*]
+    \item Sistema de gestión de activos ISO 55001 obligatorio
+    \item Interventoría especializada en sistemas inteligentes
+    \item Costos de ciberseguridad
+    \item Gestión avanzada de datos
+    \item Interoperabilidad con sistemas municipales
+\end{itemize}
+
+\section{Herramientas de Cálculo y Formatos}
+
+\subsection{Hoja de Cálculo para Aplicación de la Metodología}
+
+Se recomienda desarrollar una herramienta de cálculo que incluya las siguientes pestañas:
+
+\subsubsection{Estructura de la Herramienta}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Pestaña}} & \textcolor{white}{\textbf{Contenido}} \\
+\hline
+\rowcolor{azulclaro} Parámetros Generales & Datos del municipio, fecha de referencia, tasas, índices \\
+\hline
+Inventario UCAP & Listado detallado de activos con valoración \\
+\hline
+\rowcolor{azulclaro} Consumo Energía & Cálculo de CEE por medición o aforo \\
+\hline
+Cálculo CSEE & Aplicación de tarifas y cálculo del costo energético \\
+\hline
+\rowcolor{azulclaro} Cálculo CINV & CAA, ID y costo total de inversión \\
+\hline
+Cálculo CAOM & Fracciones AOM e índice de disponibilidad \\
+\hline
+\rowcolor{azulclaro} Cálculo COTR & Interventoría, costos ambientales, seguros \\
+\hline
+Resumen CAP & Consolidado de todos los componentes \\
+\hline
+\rowcolor{azulclaro} Actualización IPP & Mecanismo de actualización por inflación \\
+\hline
+Indicadores & KPIs de gestión y comparación \\
+\hline
+\end{tabularx}
+\caption{Estructura sugerida para herramienta de cálculo}
+\end{table}
+
+\subsubsection{Validaciones Automáticas}
+
+La herramienta debe incluir:
+
+\begin{itemize}[leftmargin=*]
+    \item Verificación de consistencia en datos de entrada
+    \item Validación de rangos de valores técnicos
+    \item Alertas por valores atípicos o inconsistentes
+    \item Verificación de sumas y cálculos intermedios
+    \item Comparación con benchmarks del sector
+\end{itemize}
+
+\subsection{Formatos Estándar para Reporte}
+
+\subsubsection{Formato de Inventario SIAP}
+
+\begin{table}[H]
+\centering
+\begin{footnotesize}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Campo}} & \textcolor{white}{\textbf{Tipo}} & \textcolor{white}{\textbf{Obligatorio}} & \textcolor{white}{\textbf{Formato}} & \textcolor{white}{\textbf{Ejemplo}} & \textcolor{white}{\textbf{Observaciones}} \\
+\hline
+\rowcolor{azulclaro} ID\_UCAP & Alfanumérico & Sí & XXX-YYYY-ZZ & MED-2023-01 & Código único \\
+\hline
+Coordenada\#\_\#X & Numérico & Sí & \#\#\#.\#\#\#\#\#\#\# & -75.5636789 & Longitud GPS \\
+\hline
+\rowcolor{azulclaro} Coordenada\_Y & Numérico & Sí & \#\#\#.\#\#\#\#\#\#\# & 6.2518400 & Latitud GPS \\
+\hline
+Tipo\_UCAP & Lista & Sí & Texto & Luminaria LED & Según clasificación \\
+\hline
+\rowcolor{azulclaro} Potencia\_W & Numérico & Sí & \#\#\# & 150 & Watts totales \\
+\hline
+Flujo\_Lumenes & Numérico & Sí & \#\#\#\#\# & 15000 & Lúmenes iniciales \\
+\hline
+\rowcolor{azulclaro} Fecha\_Instalacion & Fecha & Sí & DD/MM/AAAA & 15/03/2023 & Puesta en servicio \\
+\hline
+Estado & Lista & Sí & Texto & Funcionando & Operativo/Dañado \\
+\hline
+\end{tabular}
+\end{footnotesize}
+\caption{Campos mínimos del inventario SIAP}
+\end{table}
+
+\subsubsection{Formato de Reporte de Costos}
+
+El reporte debe seguir la siguiente estructura estándar:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Carátula}: Identificación del municipio, período, responsables
+    \item \textbf{Resumen Ejecutivo}: CAP total y principales componentes
+    \item \textbf{Metodología}: Referencia normativa y procedimientos aplicados
+    \item \textbf{Datos de Entrada}: Inventarios, consumos, tarifas utilizadas
+    \item \textbf{Cálculos Detallados}: Desarrollo paso a paso de cada componente
+    \item \textbf{Resultados}: Costos finales y análisis de sensibilidad
+    \item \textbf{Conclusiones}: Hallazgos principales y recomendaciones
+    \item \textbf{Anexos}: Documentos soporte y evidencias técnicas
+\end{itemize}
+
+\section{Casos Especiales y Situaciones Particulares}
+
+\subsection{Zonas No Interconectadas (ZNI)}
+
+\subsubsection{Particularidades del Cálculo}
+
+En las ZNI se presentan condiciones especiales que afectan la aplicación de la metodología:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Suministro energético}: Generación diesel, solar o híbrida
+    \item \textbf{Costos de combustible}: Variables y con subsidios
+    \item \textbf{Horarios de operación}: Limitados por disponibilidad de generación
+    \item \textbf{Mantenimiento}: Costos elevados por difícil acceso
+    \item \textbf{Tecnología}: Preferencia por sistemas autónomos
+\end{itemize}
+
+\subsubsection{Adaptaciones Metodológicas}
+
+\paragraph{Cálculo del CSEE en ZNI}
+
+\begin{itemize}[leftmargin=*]
+    \item Aplicar tarifas específicas para ZNI
+    \item Considerar costos reales de generación local
+    \item Incluir costos de transporte de combustible
+    \item Evaluar subsidios gubernamentales aplicables
+\end{itemize}
+
+\paragraph{Consideraciones de Inversión}
+
+\begin{itemize}[leftmargin=*]
+    \item Priorizar tecnologías de bajo mantenimiento
+    \item Evaluar sistemas solares autónomos
+    \item Considerar almacenamiento energético
+    \item Incluir costos de transporte de equipos
+\end{itemize}
+
+\subsection{Municipios Costeros}
+
+\subsubsection{Condiciones Ambientales Especiales}
+
+Los municipios ubicados a menos de 30 km de la costa requieren consideraciones adicionales:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Corrosión acelerada}: Por salinidad del ambiente
+    \item \textbf{Mantenimiento intensivo}: Limpieza frecuente de luminarias
+    \item \textbf{Materiales especiales}: Resistentes a la corrosión
+    \item \textbf{Protecciones adicionales}: Recubrimientos anticorrosivos
+\end{itemize}
+
+\subsubsection{Aplicación del Factor FAOMS}
+
+El factor FAOMS = 0.005 (0.5\%) se aplica sobre el costo total de reposición:
+
+\begin{align}
+\text{Costo AOM Adicional} &= CRTA_n \times FAOMS \times ID \\
+&= CRTA_n \times 0.005 \times ID
+\end{align}
+
+\subsection{Proyectos de Modernización LED}
+
+\subsubsection{Evaluación Económica}
+
+Para proyectos de reemplazo masivo de tecnología HID por LED:
+
+\paragraph{Análisis Costo-Beneficio}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Concepto}} & \textcolor{white}{\textbf{Tecnología HID}} & \textcolor{white}{\textbf{Tecnología LED}} \\
+\hline
+\rowcolor{azulclaro} Costo inicial unitario & \$400,000 & \$800,000 \\
+\hline
+Potencia promedio (W) & 150 & 100 \\
+\hline
+\rowcolor{azulclaro} Vida útil (años) & 12 & 18 \\
+\hline
+Eficacia (lm/W) & 80 & 140 \\
+\hline
+\rowcolor{azulclaro} Mantenimiento anual & \$40,000 & \$25,000 \\
+\hline
+Consumo anual (kWh) & 657 & 438 \\
+\hline
+\end{tabular}
+\caption{Comparación tecnológica HID vs LED}
+\end{table}
+
+\paragraph{Cálculo del Valor Presente Neto}
+
+Para 1,000 luminarias con tasa de descuento del 11.8\%:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Inversión inicial LED}: \$800,000,000 - \$400,000,000 = \$400,000,000
+    \item \textbf{Ahorro energético anual}: (657-438) × 1,000 × \$380 = \$83,220,000
+    \item \textbf{Ahorro mantenimiento anual}: (\$40,000-\$25,000) × 1,000 = \$15,000,000
+    \item \textbf{Ahorro total anual}: \$98,220,000
+\end{itemize}
+
+\begin{align}
+VPN &= -\$400,000,000 + \sum_{t=1}^{18} \frac{\$98,220,000}{(1.118)^t} \\
+&= -\$400,000,000 + \$98,220,000 \times 7.334 \\
+&= -\$400,000,000 + \$720,257,000 = \$320,257,000
+\end{align}
+
+El VPN positivo justifica económicamente la modernización.
+
+\subsection{Sistemas de Telegestión}
+
+\subsubsection{Componentes del Sistema}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Hardware}: Controladores, sensores, comunicaciones
+    \item \textbf{Software}: Plataforma de gestión, aplicaciones móviles
+    \item \textbf{Comunicaciones}: Redes de datos, conectividad
+    \item \textbf{Ciberseguridad}: Protección contra ataques informáticos
+    \item \textbf{Interoperabilidad}: Integración con sistemas municipales
+\end{itemize}
+
+\subsubsection{Beneficios Cuantificables}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Beneficio}} & \textcolor{white}{\textbf{Impacto}} & \textcolor{white}{\textbf{Medición}} \\
+\hline
+\rowcolor{azulclaro} Reducción consumo & 15-25\% & Menor CSEE \\
+\hline
+Detección automática fallas & 50\% más rápida & Mejor ID \\
+\hline
+\rowcolor{azulclaro} Reducción mantenimiento & 30\% & Menor CAOM \\
+\hline
+Atención PQR & 70\% automatizada & Menores costos admin \\
+\hline
+\rowcolor{azulclaro} Vida útil luminarias & +20\% extensión & Menor reposición \\
+\hline
+\end{tabular}
+\caption{Beneficios cuantificables de telegestión}
+\end{table}
+
+\section{Preguntas Frecuentes}
+
+\subsection{Sobre la Aplicación de la Metodología}
+
+\subsubsection{¿Cada cuánto se debe actualizar el ETR?}
+
+\begin{notacaja}
+El ETR debe actualizarse máximo cada 4 años. Sin embargo, se debe revisar anualmente para actualizar parámetros económicos (IPP, tarifas) y cuando ocurran cambios significativos como modificaciones al POT, cambio de administración, o implementación de nuevas tecnologías.
+\end{notacaja}
+
+\subsubsection{¿Cómo se maneja la transición entre tecnologías?}
+
+Durante períodos de transición (por ejemplo, de HID a LED), se debe:
+
+\begin{itemize}[leftmargin=*]
+    \item Mantener inventario actualizado por tecnología
+    \item Calcular costos separadamente para cada tecnología
+    \item Aplicar vidas útiles específicas a cada tipo de activo
+    \item Considerar planes de reemplazo programado
+    \item Evaluar económicamente el momento óptimo de reemplazo
+\end{itemize}
+
+\subsubsection{¿Qué hacer cuando no se tiene información completa?}
+
+En caso de información incompleta:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Priorizar}: Levantar la información faltante más crítica
+    \item \textbf{Estimar}: Usar valores conservadores basados en benchmarks
+    \item \textbf{Documentar}: Registrar las limitaciones y supuestos utilizados
+    \item \textbf{Planificar}: Establecer cronograma para completar información
+    \item \textbf{Actualizar}: Revisar cálculos cuando se obtenga información completa
+\end{enumerate}
+
+\subsection{Sobre Aspectos Técnicos}
+
+\subsubsection{¿Cómo calcular el consumo en sistemas mixtos medidos/aforados?}
+
+Para sistemas con medición parcial:
+
+\begin{align}
+CEE_n = CEE_{medido} + CEE_{aforado}
+\end{align}
+
+Donde:
+\begin{itemize}[leftmargin=*]
+    \item $CEE_{medido}$: Consumo de luminarias con medidor individual o grupal
+    \item $CEE_{aforado}$: Consumo calculado por aforo para luminarias sin medición
+\end{itemize}
+
+\subsubsection{¿Cómo incluir sistemas de iluminación ornamental?}
+
+La iluminación ornamental se incluye en la clase 3 (otras áreas del espacio público):
+
+\begin{itemize}[leftmargin=*]
+    \item Inventariar separadamente del alumbrado vial
+    \item Considerar horarios de operación específicos
+    \item Aplicar criterios de eficiencia energética
+    \item Incluir en cálculos de CINV y CAOM según corresponda
+\end{itemize}
+
+\subsection{Sobre Aspectos Económicos}
+
+\subsubsection{¿Cómo manejar la inflación en contratos plurianuales?}
+
+\begin{itemize}[leftmargin=*]
+    \item Incluir cláusulas de ajuste automático por IPP
+    \item Definir periodicidad de actualización (mensual, trimestral, anual)
+    \item Establecer topes máximos de variación
+    \item Considerar índices específicos para componentes particulares
+    \item Documentar metodología de actualización en el contrato
+\end{itemize}
+
+\subsubsection{¿Qué tasa de descuento usar para evaluaciones económicas?}
+
+Se debe utilizar la tasa de retorno establecida por la CREG para distribución:
+
+\begin{itemize}[leftmargin=*]
+    \item Actualmente definida en Resolución CREG 015 de 2018
+    \item Se actualiza automáticamente cuando la CREG la modifique
+    \item Para evaluaciones internas, puede usarse la tasa de oportunidad del municipio
+    \item Documentar la tasa utilizada y su justificación
+\end{itemize}
+
+\section{Recomendaciones de Mejores Prácticas}
+
+\subsection{Gestión del Inventario}
+
+\subsubsection{Implementación del SIAP}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Georreferenciación precisa}: Usar GPS de alta precisión
+    \item \textbf{Códigos únicos}: Implementar sistema de codificación consistente
+    \item \textbf{Fotografías}: Incluir registro fotográfico de cada activo
+    \item \textbf{Actualización continua}: Establecer rutinas de verificación
+    \item \textbf{Integración}: Conectar con otros sistemas municipales
+\end{itemize}
+
+\subsubsection{Control de Calidad de Datos}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Aspecto}} & \textcolor{white}{\textbf{Recomendación}} \\
+\hline
+\rowcolor{azulclaro} Consistencia & Verificación cruzada entre fuentes de información \\
+\hline
+Completitud & Auditorías periódicas para identificar faltantes \\
+\hline
+\rowcolor{azulclaro} Exactitud & Validación en campo de datos críticos \\
+\hline
+Actualidad & Procedimientos para actualización oportuna \\
+\hline
+\rowcolor{azulclaro} Accesibilidad & Formatos estándar y acceso controlado \\
+\hline
+\end{tabularx}
+\caption{Aspectos clave del control de calidad}
+\end{table}
+
+\subsection{Planificación Estratégica}
+
+\subsubsection{Visión de Largo Plazo}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Horizonte de 20 años}: Planificar considerando la vida útil de activos
+    \item \textbf{Escenarios múltiples}: Evaluar diferentes escenarios de crecimiento
+    \item \textbf{Flexibilidad tecnológica}: Preparar infraestructura para futuras tecnologías
+    \item \textbf{Integración urbana}: Coordinar con otros planes sectoriales
+    \item \textbf{Sostenibilidad}: Incorporar criterios ambientales y sociales
+\end{itemize}
+
+\subsubsection{Fases de Implementación}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Fase 1 - Diagnóstico}: Levantamiento completo de información
+    \item \textbf{Fase 2 - Estabilización}: Corrección de deficiencias críticas
+    \item \textbf{Fase 3 - Modernización}: Implementación de nuevas tecnologías
+    \item \textbf{Fase 4 - Optimización}: Ajuste fino y mejora continua
+    \item \textbf{Fase 5 - Innovación}: Incorporación de tecnologías emergentes
+\end{enumerate}
+
+\subsection{Gestión Contractual}
+
+\subsubsection{Estructura de Contratos}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Contratos integrales}: Que incluyan inversión, AOM y suministro energético
+    \item \textbf{Incentivos al desempeño}: Bonificaciones por superación de metas
+    \item \textbf{Risk sharing}: Distribución equilibrada de riesgos
+    \item \textbf{Flexibilidad}: Mecanismos para adaptarse a cambios
+    \item \textbf{Transparencia}: Reportes periódicos y auditorías
+\end{itemize}
+
+\subsubsection{Indicadores de Gestión}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Indicador}} & \textcolor{white}{\textbf{Meta}} & \textcolor{white}{\textbf{Frecuencia}} \\
+\hline
+\rowcolor{azulclaro} Índice de Disponibilidad & $\geq$ 98\% & Mensual \\
+\hline
+Tiempo respuesta PQR & $\leq$ 48 horas & Mensual \\
+\hline
+\rowcolor{azulclaro} Eficiencia energética & Mejora 5\%/año & Anual \\
+\hline
+Costo por luminaria & Benchmarking & Anual \\
+\hline
+\rowcolor{azulclaro} Satisfacción ciudadana & $\geq$ 80\% & Semestral \\
+\hline
+Cumplimiento ambiental & 100\% & Trimestral \\
+\hline
+\end{tabular}
+\caption{Indicadores clave de gestión}
+\end{table}
+
+\subsection{Sostenibilidad Ambiental}
+
+\subsubsection{Estrategias de Eficiencia}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tecnología LED}: Migración completa con cronograma definido
+    \item \textbf{Sistemas de control}: Implementación de atenuación y control adaptativos
+    \item \textbf{Energías renovables}: Evaluación de viabilidad para autogeneración
+    \item \textbf{Diseño eficiente}: Optimización fotométrica para minimizar potencia
+    \item \textbf{Gestión inteligente}: Horarios adaptativos según uso real
+\end{itemize}
+
+\subsubsection{Economía Circular}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reutilización}: Programas de reuso de componentes en buen estado
+    \item \textbf{Remanufactura}: Restauración de equipos para segunda vida útil
+    \item \textbf{Reciclaje}: Recuperación de materiales valiosos
+    \item \textbf{Diseño para desmontaje}: Especificar productos fácilmente reciclables
+    \item \textbf{Responsabilidad extendida}: Contratos con retoma por fabricantes
+\end{itemize}
+
+\section{Conclusiones y Recomendaciones Finales}
+
+\subsection{Síntesis de la Metodología}
+
+La Resolución CREG 101 013 de 2022 establece un marco metodológico completo y técnicamente sólido para la determinación de costos del servicio de alumbrado público en Colombia. Los elementos clave de esta metodología son:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Integralidad}: Considera todos los aspectos relevantes del servicio
+    \item \textbf{Precisión técnica}: Basada en parámetros técnicos verificables
+    \item \textbf{Flexibilidad}: Adaptable a diferentes contextos municipales
+    \item \textbf{Transparencia}: Requiere documentación detallada y publicación
+    \item \textbf{Sostenibilidad}: Incentiva la eficiencia y responsabilidad ambiental
+\end{itemize}
+
+\subsection{Beneficios de la Correcta Aplicación}
+
+\subsubsection{Para los Municipios y Distritos}
+
+\begin{itemize}[leftmargin=*]
+    \item Determinación objetiva y técnica de costos del servicio
+    \item Herramientas para una gestión eficiente del alumbrado público
+    \item Marco para la toma de decisiones de inversión informadas
+    \item Instrumentos para mejorar la calidad del servicio
+    \item Bases sólidas para la contratación del servicio
+\end{itemize}
+
+\subsubsection{Para los Prestadores del Servicio}
+
+\begin{itemize}[leftmargin=*]
+    \item Reglas claras y predecibles para la remuneración
+    \item Incentivos para la eficiencia operativa y tecnológica
+    \item Reconocimiento adecuado de las inversiones realizadas
+    \item Marco estable para la planificación empresarial
+    \item Estímulos para la innovación y mejora continua
+\end{itemize}
+
+\subsubsection{Para los Ciudadanos}
+
+\begin{itemize}[leftmargin=*]
+    \item Mejor calidad del servicio de alumbrado público
+    \item Mayor seguridad ciudadana y movilidad nocturna
+    \item Uso eficiente de los recursos públicos
+    \item Transparencia en la determinación de costos
+    \item Servicios ambientalmente sostenibles
+\end{itemize}
+
+\subsection{Recomendaciones Estratégicas}
+
+\subsubsection{Para una Implementación Exitosa}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Capacitación}: Formar equipos técnicos especializados en la metodología
+    
+    \item \textbf{Sistemas de información}: Implementar y mantener actualizado el SIAP
+    
+    \item \textbf{Planeación}: Desarrollar ETR completos y actualizarlos regularmente
+    
+    \item \textbf{Contratación}: Estructurar contratos que incentiven la eficiencia
+    
+    \item \textbf{Monitoreo}: Establecer sistemas de seguimiento y control
+    
+    \item \textbf{Mejora continua}: Implementar procesos de optimización permanente
+\end{enumerate}
+
+\subsubsection{Factores Críticos de Éxito}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Liderazgo institucional}: Compromiso de la alta dirección municipal
+    \item \textbf{Recursos adecuados}: Asignación suficiente de personal y presupuesto
+    \item \textbf{Cooperación interinstitucional}: Coordinación con entidades relacionadas
+    \item \textbf{Participación ciudadana}: Involucramiento de la comunidad
+    \item \textbf{Innovación tecnológica}: Apertura a nuevas tecnologías y soluciones
+\end{itemize}
+
+\subsection{Perspectivas Futuras}
+
+\subsubsection{Tendencias Tecnológicas}
+
+El sector del alumbrado público continuará evolucionando hacia:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Ciudades inteligentes}: Integración con plataformas de smart cities
+    \item \textbf{Internet de las cosas}: Conectividad y comunicación entre dispositivos
+    \item \textbf{Inteligencia artificial}: Optimización automática y predictiva
+    \item \textbf{Energías renovables}: Mayor adopción de soluciones solares y híbridas
+    \item \textbf{Eficiencia avanzada}: Tecnologías de ultra-alta eficiencia
+\end{itemize}
+
+\subsubsection{Evolución Regulatoria}
+
+Se espera que la regulación evolucione hacia:
+
+\begin{itemize}[leftmargin=*]
+    \item Mayor énfasis en criterios ambientales y de sostenibilidad
+    \item Incorporación de estándares de ciudades inteligentes
+    \item Regulación específica para nuevas tecnologías
+    \item Armonización con normativas internacionales
+    \item Simplificación de procesos para municipios pequeños
+\end{itemize}
+
+\subsection{Recomendación Final}
+
+Esta guía metodológica constituye una herramienta fundamental para la correcta aplicación de la Resolución CREG 101 013 de 2022. Su uso adecuado contribuirá significativamente al mejoramiento del servicio de alumbrado público en Colombia, beneficiando a municipios, prestadores y ciudadanos.
+
+La clave del éxito radica en la aplicación rigurosa y consistente de la metodología, respaldada por sistemas de información robustos, equipos técnicos capacitados y un compromiso firme con la excelencia en la prestación del servicio público.
+
+\begin{notacaja}
+Se recomienda a todos los usuarios de esta guía mantenerla actualizada según las modificaciones regulatorias que puedan presentarse y compartir experiencias y mejores prácticas para el beneficio común del sector.
+\end{notacaja}
+
+\newpage
+
+\section{Anexos}
+
+\subsection{Anexo A: Tablas de Referencia}
+
+\subsubsection{Vidas Útiles de Activos SALP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tipo de Activo}} & \textcolor{white}{\textbf{Vida Útil (años)}} & \textcolor{white}{\textbf{Observaciones}} \\
+\hline
+\rowcolor{azulclaro} Luminarias LED & 15-20 & Según certificación fabricante \\
+\hline
+Luminarias HID & 10-15 & En desuso progresivo \\
+\hline
+\rowcolor{azulclaro} Postes concreto & 30 & Condiciones normales \\
+\hline
+Postes metálicos & 25 & Con mantenimiento adecuado \\
+\hline
+\rowcolor{azulclaro} Postes ornamentales & 20-25 & Según material y diseño \\
+\hline
+Transformadores & 30 & Mantenimiento preventivo \\
+\hline
+\rowcolor{azulclaro} Conductores aéreos & 25 & Ambiente no agresivo \\
+\hline
+Conductores subterráneos & 30 & Instalación técnica correcta \\
+\hline
+\rowcolor{azulclaro} Sistemas control & 10-12 & Actualización tecnológica \\
+\hline
+Sistemas medición & 15 & Calibración periódica \\
+\hline
+\rowcolor{azulclaro} Sistemas telegestión & 8-10 & Evolución tecnológica rápida \\
+\hline
+\end{tabular}
+\caption{Vidas útiles típicas por tipo de activo}
+\end{table}
+
+\subsubsection{Eficacias Luminosas de Referencia}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Tecnología}} & \textcolor{white}{\textbf{Eficacia (lm/W)}} & \textcolor{white}{\textbf{Factor k}} \\
+\hline
+\rowcolor{azulclaro} Sodio Alta Presión & 80-120 & 0.62-0.92 \\
+\hline
+Halogenuro Metálico & 70-100 & 0.54-0.77 \\
+\hline
+\rowcolor{azulclaro} LED Estándar & 100-130 & 0.77-1.00 \\
+\hline
+LED Alta Eficiencia & 130-160 & 1.00-1.23 \\
+\hline
+\rowcolor{azulclaro} LED Premium & 160-200 & 1.23-1.54 \\
+\hline
+\end{tabular}
+\caption{Eficacias típicas y factores de ajuste}
+\end{table}
+
+\subsection{Anexo B: Fórmulas de Cálculo Resumidas}
+
+\subsubsection{Fórmulas Principales}
+
+\begin{tcolorbox}[colback=azulclaro, colframe=azultitulo, arc=5pt, title=Resumen de Fórmulas Clave]
+
+\textbf{Costo Total del Servicio:}
+$\text{CAP} = \text{CSEE} + \text{CINV} + \text{CAOM} + \text{COTR}$
+
+\textbf{Costo Suministro Energía:}
+$\text{CSEE} = \sum_{n=1}^{2} (\text{TEE}_n \times \text{CEE}_n)$
+
+\textbf{Consumo por Aforo:}
+$\text{CEE}_n = \sum_{i=1}^{3} (Q_{n,i} \times T_{n,i} \times \text{DPF}_n)$
+
+\textbf{Costo de Inversión:}
+$\text{CINV} = \sum_{n=1}^{2} (\text{CAA}_n \times \text{ID})$
+
+\textbf{Costo Anual Equivalente:}
+$\text{CAA}_n = \text{CAAE}_n + \text{CAT}_n + \text{CAANE}_n$
+
+\textbf{Factor de Anualización:}
+$\text{FA} = \frac{r}{1-(1+r)^{-v}}$
+
+\textbf{Ajuste por Eficacia:}
+$\text{CR}_{i,L} = \frac{\text{EF}}{130} \times \text{CR}_L$
+
+\textbf{Índice de Disponibilidad:}
+$\text{ID} = 1 - \sum_{i=1}^{m} \left( \frac{W_i \times HSS_i}{WT \times T} \right)$
+
+\textbf{Actualización por IPP:}
+$\text{Costo}_m = \text{Costo}_o \times \frac{\text{IPP}_{m-1}}{\text{IPP}_o}$
+
+\end{tcolorbox}
+
+\subsection{Anexo C: Lista de Verificación}
+
+\subsubsection{Checklist para Elaboración del ETR}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|c|}
+\hline
+\rowcolor{azultitulo} \textcolor{white}{\textbf{Hecho}} & \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Verificado}} \\
+\hline
+$\square$ & Inventario completo y actualizado en SIAP & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Georreferenciación de todas las UCAP & $\square$ \\
+\hline
+$\square$ & Clasificación por niveles de tensión & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Valoración de activos a precios actuales & $\square$ \\
+\hline
+$\square$ & Cálculo de consumos (medidos o aforados) & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Aplicación correcta de tarifas vigentes & $\square$ \\
+\hline
+$\square$ & Cálculo del índice de disponibilidad & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Aplicación de fracciones AOM por año & $\square$  \\
+\hline
+$\square$ & Inclusión de costos ambientales & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Documentación de supuestos y fuentes & $\square$ \\
+\hline
+$\square$ & Revisión de cálculos y consistencia & $\square$ \\
+\hline
+\rowcolor{azulclaro} $\square$ & Preparación para publicación & $\square$ \\
+\hline
+\end{tabular}
+\caption{Lista de verificación para ETR}
+\end{table}
+
+\subsection{Anexo D: Glosario de Términos}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{AOM}: Administración, Operación y Mantenimiento
+    \item \textbf{CAP}: Costos máximos por la prestación del Servicio de Alumbrado Público
+    \item \textbf{CINV}: Costo de la Inversión del Sistema de Alumbrado Público
+    \item \textbf{COTR}: Otros costos asociados a la prestación del servicio
+    \item \textbf{CREG}: Comisión de Regulación de Energía y Gas
+    \item \textbf{CSEE}: Costo del suministro de energía eléctrica
+    \item \textbf{ETR}: Estudio Técnico de Referencia
+    \item \textbf{HID}: High Intensity Discharge (Descarga de Alta Intensidad)
+    \item \textbf{ID}: Índice de Disponibilidad
+    \item \textbf{IPP}: Índice de Precios al Productor
+    \item \textbf{LED}: Light Emitting Diode (Diodo Emisor de Luz)
+    \item \textbf{PQR}: Peticiones, Quejas y Recursos
+    \item \textbf{RAEE}: Residuos de Aparatos Eléctricos y Electrónicos
+    \item \textbf{RETIE}: Reglamento Técnico de Instalaciones Eléctricas
+    \item \textbf{RETILAP}: Reglamento Técnico de Iluminación y Alumbrado Público
+    \item \textbf{SALP}: Sistema de Alumbrado Público
+    \item \textbf{SIAP}: Sistema de Información de Alumbrado Público
+    \item \textbf{SIN}: Sistema Interconectado Nacional
+    \item \textbf{UCAP}: Unidad Constructiva de Alumbrado Público
+    \item \textbf{ZNI}: Zonas No Interconectadas
+\end{itemize}
+
+
+\end{document}
