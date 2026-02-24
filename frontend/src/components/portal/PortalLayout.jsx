@@ -1,26 +1,26 @@
 import React from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { FiFileText, FiGrid, FiInbox, FiLogOut, FiSettings } from "react-icons/fi";
+import { FiFileText, FiGrid, FiHome, FiInbox, FiLogOut, FiSettings } from "react-icons/fi";
 import { usePortalSession } from "../../context/PortalSessionContext";
 
 const NAV_ITEMS = [
   {
     to: "/portal",
     label: "Resumen",
-    description: "Vista rápida de operación",
+    description: "Estado general",
     icon: FiGrid,
     end: true,
   },
   {
     to: "/portal/recibos",
     label: "Recibos",
-    description: "Generación y consulta",
+    description: "Generar y consultar",
     icon: FiFileText,
   },
   {
     to: "/portal/datos",
-    label: "Datos de entrada",
-    description: "Insumos y normalización",
+    label: "Datos",
+    description: "Insumos y seguimiento",
     icon: FiInbox,
   },
   {
@@ -47,11 +47,10 @@ const PortalLayout = () => {
             <div>
               <p className="text-xs uppercase tracking-wider text-indigo-100">Portal cliente</p>
               <h1 className="mt-1 text-2xl font-semibold md:text-3xl">
-                Gestión institucional de alumbrado público
+                Portal de gestión institucional
               </h1>
               <p className="mt-2 max-w-3xl text-sm text-indigo-100">
-                Navegación simplificada para consultar estado operativo, preparar información y
-                generar recibos con claridad.
+                Consulta estado, organiza información y genera recibos en un solo flujo.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs">
                 <span className="rounded-full bg-white/15 px-3 py-1">
@@ -75,13 +74,14 @@ const PortalLayout = () => {
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Link
-                to="/"
-                className="btn btn-outline border-white/40 bg-white/5 text-white hover:bg-white/10"
-              >
-                Sitio público
+              <Link to="/" className="btn bg-white text-indigo-800 hover:bg-indigo-50 focus:ring-white/70">
+                <FiHome className="mr-2 text-base" />
+                Volver al inicio
               </Link>
-              <button onClick={logout} className="btn bg-white text-indigo-700 hover:bg-indigo-50">
+              <button
+                onClick={logout}
+                className="btn border border-white/35 bg-indigo-900/40 text-white hover:bg-indigo-900/55"
+              >
                 <FiLogOut className="mr-2 text-base" />
                 Cerrar sesión
               </button>
@@ -90,10 +90,10 @@ const PortalLayout = () => {
         </div>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
-          <span className="font-medium text-slate-900">Sección actual:</span>{" "}
+          <span className="font-medium text-slate-900">Estás en:</span>{" "}
           {currentSection?.label || "Portal"} ·{" "}
           <span className="text-slate-500">
-            {currentSection?.description || "Operación central del cliente"}
+            {currentSection?.description || "Gestión central"}
           </span>
         </div>
 
@@ -101,7 +101,7 @@ const PortalLayout = () => {
           <aside className="space-y-4">
             <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
               <p className="px-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Navegación
+                Menú principal
               </p>
               <nav className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 {NAV_ITEMS.map((item) => (
@@ -113,9 +113,9 @@ const PortalLayout = () => {
             <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900">Recomendación de uso</h3>
               <ol className="mt-3 space-y-2 text-xs text-slate-600">
-                <li>1. Revisa el resumen para validar estado general.</li>
-                <li>2. Organiza insumos en Datos de entrada.</li>
-                <li>3. Genera el recibo y verifica histórico.</li>
+                <li>1. Revisa el resumen.</li>
+                <li>2. Organiza insumos.</li>
+                <li>3. Genera y valida recibos.</li>
               </ol>
             </div>
           </aside>
