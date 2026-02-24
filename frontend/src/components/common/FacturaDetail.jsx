@@ -125,12 +125,16 @@ const FacturaDetail = ({ factura, onPagar, onDownload }) => {
       </div>
 
       <div className="flex justify-between no-print">
-        <button
-          onClick={handlePrint}
-          className="btn btn-secondary"
-        >
-          Imprimir factura
-        </button>
+        <div className="flex gap-2">
+          <button onClick={handlePrint} className="btn btn-secondary">
+            Imprimir factura
+          </button>
+          {onDownload && (
+            <button onClick={onDownload} className="btn btn-outline">
+              Descargar PDF
+            </button>
+          )}
+        </div>
         {factura.estado !== "Pagada" && (
           <button onClick={onPagar} className="btn btn-primary">
             Pagar ahora

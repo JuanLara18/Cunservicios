@@ -1,0 +1,46 @@
+substitutions:
+  _REGION: us-central1
+  _REPOSITORY: cunservicios
+  _BACKEND_SERVICE: cunservicios-backend
+  _DATABASE_URL: sqlite:///./sql_app.db
+  _SECRET_KEY: change-me-in-production
+  _BACKEND_CORS_ORIGINS: https://app.example.com
+  _DEFAULT_TENANT_ID: public
+  _WEB_CONCURRENCY: "2"
+
+steps:
+  - id: Build backend image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/backend:$SHORT_SHA
+      - .
+    dir: backend
+
+  - id: Push backend image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/backend:$SHORT_SHA
+
+  - id: Deploy backend to Cloud Run
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_BACKEND_SERVICE}
+      - --image
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/backend:$SHORT_SHA
+      - --region
+      - ${_REGION}
+      - --platform
+      - managed
+      - --allow-unauthenticated
+      - --set-env-vars
+      - ENV=production,AUTO_CREATE_TABLES=false,ENABLE_SEED_DATA=false,DATABASE_URL=${_DATABASE_URL},SECRET_KEY=${_SECRET_KEY},BACKEND_CORS_ORIGINS=${_BACKEND_CORS_ORIGINS},DEFAULT_TENANT_ID=${_DEFAULT_TENANT_ID},WEB_CONCURRENCY=${_WEB_CONCURRENCY}
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/backend:$SHORT_SHA
+

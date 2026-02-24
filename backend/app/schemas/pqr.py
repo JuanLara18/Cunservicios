@@ -2,7 +2,7 @@ from datetime import date
 from typing import Optional
 
 from app.models.pqr import EstadoPQR, TipoPQR
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class PQRBase(BaseModel):
@@ -16,10 +16,10 @@ class PQRCreate(PQRBase):
 
 class PQR(PQRBase):
     id: int
+    tenant_id: str
     fecha_creacion: date
     fecha_respuesta: Optional[date] = None
     estado: EstadoPQR
     radicado: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

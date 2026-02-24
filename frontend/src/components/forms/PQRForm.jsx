@@ -53,11 +53,11 @@ const PQRForm = ({ onSubmit, isLoading }) => {
               className="form-input"
             >
               <option value="">Seleccione una opción</option>
-              <option value="PETICION">Petición</option>
-              <option value="QUEJA">Queja</option>
-              <option value="RECLAMO">Reclamo</option>
-              <option value="SUGERENCIA">Sugerencia</option>
-              <option value="DENUNCIA">Denuncia</option>
+              <option value="Petición">Petición</option>
+              <option value="Queja">Queja</option>
+              <option value="Reclamo">Reclamo</option>
+              <option value="Sugerencia">Sugerencia</option>
+              <option value="Denuncia">Denuncia</option>
             </Field>
             <ErrorMessage
               name="tipo"

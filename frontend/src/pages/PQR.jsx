@@ -10,6 +10,7 @@ const ConsultaPQRSchema = Yup.object().shape({
 
 const PQR = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [radicado, setRadicado] = useState("");
   const [consultaError, setConsultaError] = useState("");
   const [consultaResult, setConsultaResult] = useState(null);
@@ -19,6 +20,7 @@ const PQR = () => {
   const handleSubmitPQR = async (values) => {
     try {
       setIsSubmitting(true);
+      setSubmitError("");
       
       // Primero consultamos el cliente por número de cuenta
       const clienteResponse = await clienteService.getClientePorCuenta(values.numero_cuenta);
@@ -42,9 +44,11 @@ const PQR = () => {
       
       // Si el error es que no existe el cliente
       if (error.response && error.response.status === 404) {
-        alert("No se encontró un cliente con ese número de cuenta. Por favor, verifique su información.");
+        setSubmitError(
+          "No se encontró un cliente con ese número de cuenta. Por favor, verifique su información."
+        );
       } else {
-        alert("Ocurrió un error al enviar su solicitud. Por favor intente nuevamente.");
+        setSubmitError("Ocurrió un error al enviar su solicitud. Por favor intente nuevamente.");
       }
     } finally {
       setIsSubmitting(false);
@@ -244,6 +248,11 @@ const PQR = () => {
           ) : (
             <div className="card">
               <h2 className="text-2xl font-semibold mb-4">Radica tu PQR</h2>
+              {submitError && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  <p>{submitError}</p>
+                </div>
+              )}
               <PQRForm onSubmit={handleSubmitPQR} isLoading={isSubmitting} />
             </div>
           )}

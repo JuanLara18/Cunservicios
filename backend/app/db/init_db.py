@@ -2,6 +2,7 @@ import random
 import string
 from datetime import datetime, timedelta
 
+from app.core.config import settings
 from app.core.security import get_password_hash
 from app.models.cliente import Cliente
 from app.models.factura import ConceptoFactura, Factura
@@ -11,13 +12,18 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 
-def generate_radicado():
+def generate_radicado(tenant_id: str):
     """Genera un número de radicado aleatorio para PQRs"""
-    return f"PQR-{datetime.now().strftime('%Y%m%d')}-{''.join(random.choices(string.digits, k=4))}"
+    tenant_prefix = tenant_id[:6].upper()
+    return (
+        f"{tenant_prefix}-PQR-{datetime.now().strftime('%Y%m%d')}-"
+        f"{''.join(random.choices(string.digits, k=5))}"
+    )
 
 
 def init_db(db: Session) -> None:
     """Inicializa la base de datos con datos de prueba"""
+    tenant_id = settings.DEFAULT_TENANT_ID
     try:
         # Verificar si ya hay datos para evitar duplicados
         if db.query(User).count() > 0:
@@ -28,6 +34,7 @@ def init_db(db: Session) -> None:
         
         # Crear usuario administrador
         admin = User(
+            tenant_id=tenant_id,
             email="admin@cunservicios.com",
             hashed_password=get_password_hash("adminpass"),
             is_active=True,
@@ -38,6 +45,7 @@ def init_db(db: Session) -> None:
         # Crear algunos usuarios normales
         for i in range(1, 4):
             user = User(
+                tenant_id=tenant_id,
                 email=f"usuario{i}@example.com",
                 hashed_password=get_password_hash(f"password{i}"),
                 is_active=True,
@@ -77,7 +85,7 @@ def init_db(db: Session) -> None:
         ]
         
         for cliente_data in clientes_data:
-            cliente = Cliente(**cliente_data)
+            cliente = Cliente(**cliente_data, tenant_id=tenant_id)
             db.add(cliente)
             
         # Hacer otro commit parcial para obtener IDs de clientes
@@ -136,6 +144,7 @@ def init_db(db: Session) -> None:
                 
                 # Crear la factura
                 factura = Factura(
+                    tenant_id=tenant_id,
                     numero_factura=f"F-{fecha_emision.strftime('%Y%m')}-{cliente.numero_cuenta}",
                     fecha_emision=fecha_emision.date(),
                     fecha_vencimiento=fecha_vencimiento.date(),
@@ -179,12 +188,13 @@ def init_db(db: Session) -> None:
                 
                 # Crear la PQR
                 pqr = PQR(
+                    tenant_id=tenant_id,
                     tipo=tipo_pqr,
                     asunto=asunto_base[tipo_pqr],
                     descripcion=f"{descripcion_base[tipo_pqr]} Dirección: {cliente.direccion}.",
                     fecha_creacion=datetime.now().date() - timedelta(days=random.randint(1, 30)),
                     estado=random.choice(list(EstadoPQR)),
-                    radicado=generate_radicado(),
+                    radicado=generate_radicado(tenant_id),
                     cliente_id=cliente.id
                 )
                 

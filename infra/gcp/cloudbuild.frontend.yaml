@@ -1,0 +1,45 @@
+substitutions:
+  _REGION: us-central1
+  _REPOSITORY: cunservicios
+  _FRONTEND_SERVICE: cunservicios-frontend
+  _REACT_APP_API_URL: https://api.example.com
+  _REACT_APP_TENANT_ID: public
+
+steps:
+  - id: Build frontend image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/frontend:$SHORT_SHA
+      - --build-arg
+      - REACT_APP_API_URL=${_REACT_APP_API_URL}
+      - --build-arg
+      - REACT_APP_TENANT_ID=${_REACT_APP_TENANT_ID}
+      - .
+    dir: frontend
+
+  - id: Push frontend image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/frontend:$SHORT_SHA
+
+  - id: Deploy frontend to Cloud Run
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_FRONTEND_SERVICE}
+      - --image
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/frontend:$SHORT_SHA
+      - --region
+      - ${_REGION}
+      - --platform
+      - managed
+      - --allow-unauthenticated
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/frontend:$SHORT_SHA
+
