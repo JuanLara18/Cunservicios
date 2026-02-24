@@ -53,7 +53,12 @@ const Billing = () => {
       setFactura(mapFacturaFromApi(latestFactura));
     } catch (err) {
       console.error("Error al consultar factura:", err);
+      const statusCode = err?.response?.status;
       const apiDetail = err?.response?.data?.detail;
+      if (statusCode === 401 || statusCode === 403) {
+        setError("Debes ingresar al Portal clientes para consultar o pagar facturas.");
+        return;
+      }
       setError(
         typeof apiDetail === "string"
           ? apiDetail
@@ -91,7 +96,12 @@ const Billing = () => {
       setShowPaymentForm(false);
     } catch (err) {
       console.error("Error al procesar pago:", err);
+      const statusCode = err?.response?.status;
       const apiDetail = err?.response?.data?.detail;
+      if (statusCode === 401 || statusCode === 403) {
+        setError("Tu sesión no es válida. Ingresa al Portal clientes e intenta de nuevo.");
+        return;
+      }
       setError(
         typeof apiDetail === "string"
           ? apiDetail

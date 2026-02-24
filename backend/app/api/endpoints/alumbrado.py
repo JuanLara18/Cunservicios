@@ -1,3 +1,4 @@
+from app.api.dependencies import get_current_user
 from app.api.tenant import get_tenant_id
 from app.schemas import alumbrado as schemas
 from app.services.alumbrado_calculator import (
@@ -9,7 +10,11 @@ from app.services.alumbrado_calculator import (
 from app.services.alumbrado_receipt import build_simple_receipt
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-router = APIRouter(prefix="/alumbrado", tags=["alumbrado"])
+router = APIRouter(
+    prefix="/alumbrado",
+    tags=["alumbrado"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 @router.get("/parametros")

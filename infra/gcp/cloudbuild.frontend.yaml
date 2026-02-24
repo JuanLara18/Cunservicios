@@ -4,6 +4,10 @@ substitutions:
   _FRONTEND_SERVICE: cunservicios-frontend
   _REACT_APP_API_URL: https://api.example.com
   _REACT_APP_TENANT_ID: public
+  _MIN_INSTANCES: "0"
+  _MAX_INSTANCES: "10"
+  _CPU: "1"
+  _MEMORY: "512Mi"
 
 steps:
   - id: Build frontend image
@@ -38,6 +42,18 @@ steps:
       - ${_REGION}
       - --platform
       - managed
+      - --port
+      - "8080"
+      - --execution-environment
+      - gen2
+      - --cpu
+      - ${_CPU}
+      - --memory
+      - ${_MEMORY}
+      - --min-instances
+      - ${_MIN_INSTANCES}
+      - --max-instances
+      - ${_MAX_INSTANCES}
       - --allow-unauthenticated
 
 images:

@@ -10,7 +10,10 @@ const PortalLogin = () => {
     entidad: "",
     tenantId: "",
     email: "",
+    password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -20,17 +23,28 @@ const PortalLogin = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setError("");
     setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    login({
-      displayName: formData.entidad,
-      tenantId: formData.tenantId,
-      email: formData.email,
-    });
-    navigate(location.state?.from || "/portal", { replace: true });
+    setLoading(true);
+    setError("");
+    try {
+      await login({
+        displayName: formData.entidad,
+        tenantId: formData.tenantId,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate(location.state?.from || "/portal", { replace: true });
+    } catch (loginError) {
+      const detail = loginError?.response?.data?.detail;
+      setError(typeof detail === "string" ? detail : "No fue posible iniciar sesión.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,6 +60,11 @@ const PortalLogin = () => {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <form onSubmit={handleSubmit} className="card">
             <h2 className="mb-4 text-xl font-semibold">Acceso inicial</h2>
+            {error && (
+              <div className="alert alert-error">
+                <p>{error}</p>
+              </div>
+            )}
             <div className="space-y-4">
               <div className="form-group">
                 <label className="form-label" htmlFor="entidad">
@@ -77,7 +96,7 @@ const PortalLogin = () => {
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="email">
-                  Correo de contacto
+                  Correo de usuario
                 </label>
                 <input
                   id="email"
@@ -87,11 +106,27 @@ const PortalLogin = () => {
                   placeholder="contacto@entidad.gov.co"
                   value={formData.email}
                   onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="password">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  className="form-input"
+                  placeholder="Tu contraseña"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary mt-4">
-              Ingresar al portal
+            <button type="submit" className="btn btn-primary mt-4" disabled={loading}>
+              {loading ? "Validando..." : "Ingresar al portal"}
             </button>
           </form>
 

@@ -77,16 +77,16 @@ def build_payload():
     }
 
 
-def test_get_alumbrado_parameters(client):
-    response = client.get("/api/alumbrado/parametros?anno=2026")
+def test_get_alumbrado_parameters(client, admin_token_headers):
+    response = client.get("/api/alumbrado/parametros?anno=2026", headers=admin_token_headers)
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert data["metodologia"] == "CREG 101 013 de 2022"
     assert data["faoml"] == 0.074
 
 
-def test_calculate_alumbrado(client):
-    response = client.post("/api/alumbrado/calcular", json=build_payload())
+def test_calculate_alumbrado(client, admin_token_headers):
+    response = client.post("/api/alumbrado/calcular", json=build_payload(), headers=admin_token_headers)
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert data["metodologia"] == "CREG 101 013 de 2022"
@@ -96,23 +96,23 @@ def test_calculate_alumbrado(client):
     assert len(data["energia_niveles"]) == 2
 
 
-def test_calculate_alumbrado_environmental_limit(client):
+def test_calculate_alumbrado_environmental_limit(client, admin_token_headers):
     payload = build_payload()
     payload["cotr"]["costos_ambientales"] = 20
-    response = client.post("/api/alumbrado/calcular", json=payload)
+    response = client.post("/api/alumbrado/calcular", json=payload, headers=admin_token_headers)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "costos ambientales" in response.json()["detail"]
 
 
-def test_get_receipt_template(client):
-    response = client.get("/api/alumbrado/recibo/plantilla")
+def test_get_receipt_template(client, admin_token_headers):
+    response = client.get("/api/alumbrado/recibo/plantilla", headers=admin_token_headers)
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert "componentes" in data
     assert "metadata" in data
 
 
-def test_create_simple_receipt_from_template(client):
+def test_create_simple_receipt_from_template(client, admin_token_headers):
     payload = {
         "municipio": "Alcaldía de Prueba",
         "periodo": "2026-01",
@@ -128,7 +128,11 @@ def test_create_simple_receipt_from_template(client):
             "fuente_datos": "plantilla_manual_v1",
         },
     }
-    response = client.post("/api/alumbrado/recibo/simple/desde-plantilla", json=payload)
+    response = client.post(
+        "/api/alumbrado/recibo/simple/desde-plantilla",
+        json=payload,
+        headers=admin_token_headers,
+    )
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert data["metodologia"] == "CREG 101 013 de 2022"
@@ -137,7 +141,7 @@ def test_create_simple_receipt_from_template(client):
     assert "contenido_markdown" in data
 
 
-def test_create_simple_receipt_from_calculation(client):
+def test_create_simple_receipt_from_calculation(client, admin_token_headers):
     payload = {
         "calculo": build_payload(),
         "metadata": {
@@ -145,7 +149,11 @@ def test_create_simple_receipt_from_calculation(client):
             "fuente_datos": "normalizacion_pdf_v1",
         },
     }
-    response = client.post("/api/alumbrado/recibo/simple/desde-calculo", json=payload)
+    response = client.post(
+        "/api/alumbrado/recibo/simple/desde-calculo",
+        json=payload,
+        headers=admin_token_headers,
+    )
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert data["municipio"] == "Alcaldía de Prueba"

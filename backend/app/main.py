@@ -10,6 +10,8 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +50,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(
+    TrustedHostMiddleware,
+    allowed_hosts=settings.ALLOWED_HOSTS,
+)
+
+if settings.ENABLE_HTTPS_REDIRECT:
+    app.add_middleware(HTTPSRedirectMiddleware)
+
 
 @app.middleware("http")
 async def append_tenant_header(request: Request, call_next):
@@ -58,6 +68,28 @@ async def append_tenant_header(request: Request, call_next):
         )
     except Exception:
         response.headers[TENANT_HEADER_NAME] = settings.DEFAULT_TENANT_ID
+    return response
+
+
+@app.middleware("http")
+async def append_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    if not settings.ENABLE_SECURITY_HEADERS:
+        return response
+
+    security_headers = {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": settings.SECURITY_FRAME_OPTIONS,
+        "Referrer-Policy": settings.SECURITY_REFERRER_POLICY,
+        "Content-Security-Policy": settings.SECURITY_CONTENT_SECURITY_POLICY,
+    }
+    if settings.SECURITY_HSTS_SECONDS > 0:
+        security_headers["Strict-Transport-Security"] = (
+            f"max-age={settings.SECURITY_HSTS_SECONDS}; includeSubDomains"
+        )
+
+    for header, value in security_headers.items():
+        response.headers.setdefault(header, value)
     return response
 
 
@@ -81,9 +113,12 @@ app.include_router(alumbrado.router, prefix=settings.API_PREFIX)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    content = {"detail": exc.errors()}
+    if settings.DEBUG:
+        content["body"] = exc.body
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content={"detail": exc.errors(), "body": exc.body},
+        content=content,
     )
 
 

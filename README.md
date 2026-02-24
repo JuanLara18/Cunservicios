@@ -6,6 +6,7 @@ Repositorio principal del proyecto Cunservicios. Incluye frontend (React), backe
 
 - Portal web para consulta de facturas y radicación/seguimiento de PQR.
 - API multi-tenant con autenticación JWT.
+- Endpoints de datos protegidos y baseline de seguridad para producción.
 - Base preparada para despliegue productivo en Cloud Run + Cloud SQL.
 
 ## Arquitectura
@@ -53,6 +54,7 @@ npm start
 - Arquitectura: [docs/architecture.md](docs/architecture.md)
 - Despliegue en GCP: [docs/deployment-gcp.md](docs/deployment-gcp.md)
 - Roadmap técnico: [docs/roadmap.md](docs/roadmap.md)
+- Seguridad productiva: [docs/security-production.md](docs/security-production.md)
 - Backend: [backend/README.md](backend/README.md)
 - Frontend: [frontend/README.md](frontend/README.md)
 

@@ -3,15 +3,21 @@ import string
 from datetime import datetime
 from typing import List, Optional
 
+from app.api.dependencies import get_admin_user, get_current_user
 from app.api.tenant import get_tenant_id
 from app.db.database import get_db
 from app.models.cliente import Cliente
 from app.models.pqr import PQR, EstadoPQR, TipoPQR
+from app.models.user import User
 from app.schemas import pqr as schemas
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/pqrs", tags=["pqrs"])
+router = APIRouter(
+    prefix="/pqrs",
+    tags=["pqrs"],
+    dependencies=[Depends(get_current_user)],
+)
 
 def generate_radicado(tenant_id: str) -> str:
     """Genera un número de radicado con prefijo de tenant."""
@@ -127,6 +133,7 @@ def update_pqr_estado(
     estado: EstadoPQR,
     db: Session = Depends(get_db),
     tenant_id: str = Depends(get_tenant_id),
+    _: User = Depends(get_admin_user),
 ):
     """Actualiza el estado de un PQR"""
     pqr = (

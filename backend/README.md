@@ -37,16 +37,28 @@ Archivo base: `.env.example`
 Variables mínimas:
 
 - `ENV`
+- `DEBUG`
 - `DATABASE_URL`
 - `SECRET_KEY`
 - `BACKEND_CORS_ORIGINS`
+- `ALLOWED_HOSTS`
 - `DEFAULT_TENANT_ID`
+- `ENFORCE_AUTH_ON_DATA_ENDPOINTS`
+- `ENABLE_SECURITY_HEADERS`
+- `ENABLE_HTTPS_REDIRECT`
 
 ## Multi-tenant
 
 - Header requerido para contexto: `X-Tenant-ID`
 - Filtro por tenant aplicado en entidades principales.
 - Token JWT incluye contexto de tenant.
+
+## Seguridad API
+
+- Autenticación obligatoria en endpoints de datos y módulo de alumbrado.
+- Login con bloqueo temporal por intentos fallidos.
+- Headers de seguridad HTTP y validación de hosts confiables.
+- Configuración productiva recomendada en `docs/security-production.md`.
 
 ## Pruebas
 

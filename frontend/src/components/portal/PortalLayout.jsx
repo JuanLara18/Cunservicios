@@ -16,6 +16,9 @@ const PortalLayout = () => {
               <p className="text-sm text-slate-600">
                 Tenant activo: <span className="font-medium">{session?.tenantId}</span>
               </p>
+              <p className="text-sm text-slate-600">
+                Usuario: <span className="font-medium">{session?.email}</span>
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <Link to="/" className="btn btn-outline">

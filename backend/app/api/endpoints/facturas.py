@@ -1,14 +1,20 @@
 from typing import List, Optional
 
+from app.api.dependencies import get_admin_user, get_current_user
 from app.api.tenant import get_tenant_id
 from app.db.database import get_db
 from app.models.cliente import Cliente
 from app.models.factura import Factura
+from app.models.user import User
 from app.schemas import factura as schemas
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/facturas", tags=["facturas"])
+router = APIRouter(
+    prefix="/facturas",
+    tags=["facturas"],
+    dependencies=[Depends(get_current_user)],
+)
 
 @router.get("/", response_model=List[schemas.Factura])
 def read_facturas(
@@ -69,6 +75,7 @@ def create_factura(
     factura: schemas.FacturaCreate,
     db: Session = Depends(get_db),
     tenant_id: str = Depends(get_tenant_id),
+    _: User = Depends(get_admin_user),
 ):
     """Crea una nueva factura"""
     # Verificar que el cliente existe
@@ -100,6 +107,7 @@ def pagar_factura(
     numero_factura: str,
     db: Session = Depends(get_db),
     tenant_id: str = Depends(get_tenant_id),
+    _: User = Depends(get_admin_user),
 ):
     """Marca una factura como pagada"""
     factura = (

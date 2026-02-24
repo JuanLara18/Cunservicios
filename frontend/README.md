@@ -44,6 +44,7 @@ docker run --rm -p 3000:8080 cunservicios-frontend
 - La URL de API se inyecta por `REACT_APP_API_URL`.
 - El tenant por defecto se envía con `X-Tenant-ID`.
 - El tenant activo del portal puede cambiarse en tiempo de ejecución y se persiste en navegador.
+- El portal cliente usa autenticación real contra `POST /api/auth/login`.
 
 ## Portal cliente (base escalable)
 
@@ -56,6 +57,7 @@ Se añadió una estructura inicial de portal en `/portal` para clientes instituc
 - `/portal/configuracion`: ajustes base del tenant.
 
 Esta base está diseñada para crecer por módulos sin romper rutas existentes.
+Para producción, se recomienda revisar `docs/security-production.md`.
 
 ## Referencias
 

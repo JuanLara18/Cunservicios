@@ -157,7 +157,10 @@ def user_token_headers(client, test_user):
     }
     response = client.post("/api/auth/login", data=login_data)
     token = response.json().get("access_token")
-    return {"Authorization": f"Bearer {token}"}
+    return {
+        "Authorization": f"Bearer {token}",
+        "X-Tenant-ID": "public",
+    }
 
 @pytest.fixture(scope="function")
 def admin_token_headers(client, test_admin):
@@ -168,4 +171,7 @@ def admin_token_headers(client, test_admin):
     }
     response = client.post("/api/auth/login", data=login_data)
     token = response.json().get("access_token")
-    return {"Authorization": f"Bearer {token}"}
+    return {
+        "Authorization": f"Bearer {token}",
+        "X-Tenant-ID": "public",
+    }

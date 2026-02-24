@@ -41,6 +41,10 @@ const PQR = () => {
       setSubmitSuccess(true);
     } catch (error) {
       console.error("Error al enviar PQR:", error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        setSubmitError("Debes ingresar al Portal clientes para radicar PQR.");
+        return;
+      }
       
       // Si el error es que no existe el cliente
       if (error.response && error.response.status === 404) {
@@ -79,6 +83,10 @@ const PQR = () => {
       });
     } catch (error) {
       console.error("Error al consultar PQR:", error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        setConsultaError("Debes ingresar al Portal clientes para consultar PQR.");
+        return;
+      }
       if (error.response && error.response.status === 404) {
         setConsultaError("No se encontró ningún PQR con el radicado ingresado");
       } else {

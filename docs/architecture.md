@@ -56,6 +56,14 @@ flowchart LR
 
 - El portal usa una sesión inicial en frontend y permite seleccionar tenant activo.
 - Los módulos se diseñaron por rutas y componentes independientes para crecer por iteraciones.
+- La sesión del portal valida credenciales contra backend y aplica JWT por tenant.
+
+## Seguridad de aplicación
+
+- Endpoints de datos y regulación protegidos por autenticación JWT.
+- Validación estricta de `tenant` en token vs `X-Tenant-ID`.
+- Headers de seguridad HTTP en frontend y backend.
+- Lista de hosts confiables configurable para API.
 
 ## Multi-tenant
 

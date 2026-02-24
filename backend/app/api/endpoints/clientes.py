@@ -1,13 +1,19 @@
 from typing import List
 
+from app.api.dependencies import get_admin_user, get_current_user
 from app.api.tenant import get_tenant_id
 from app.db.database import get_db
 from app.models.cliente import Cliente
+from app.models.user import User
 from app.schemas import cliente as schemas
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/clientes", tags=["clientes"])
+router = APIRouter(
+    prefix="/clientes",
+    tags=["clientes"],
+    dependencies=[Depends(get_current_user)],
+)
 
 @router.get("/", response_model=List[schemas.Cliente])
 def read_clientes(
@@ -47,6 +53,7 @@ def create_cliente(
     cliente: schemas.ClienteCreate,
     db: Session = Depends(get_db),
     tenant_id: str = Depends(get_tenant_id),
+    _: User = Depends(get_admin_user),
 ):
     """Crea un nuevo cliente"""
     db_cliente = (

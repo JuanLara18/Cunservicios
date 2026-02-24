@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const DEFAULT_TENANT_ID = process.env.REACT_APP_TENANT_ID || "public";
 const TENANT_STORAGE_KEY = "portal.tenantId";
+const TOKEN_STORAGE_KEY = "token";
 
 const normalizeTenantId = (tenantId) => {
   if (!tenantId || typeof tenantId !== "string") return DEFAULT_TENANT_ID;
@@ -25,6 +26,23 @@ export const setActiveTenantId = (tenantId) => {
   localStorage.setItem(TENANT_STORAGE_KEY, normalizeTenantId(tenantId));
 };
 
+export const getAuthToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(TOKEN_STORAGE_KEY);
+};
+
+export const setAuthToken = (token) => {
+  if (typeof window === "undefined") return;
+  if (token) {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+  }
+};
+
+export const clearAuthToken = () => {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(TOKEN_STORAGE_KEY);
+};
+
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: {
@@ -36,7 +54,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     config.headers = config.headers || {};
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const token = getAuthToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -84,6 +102,21 @@ export const tarifaService = {
 
 export const apiContext = {
   tenantId: getActiveTenantId(),
+};
+
+export const authService = {
+  login: (email, password) => {
+    const body = new URLSearchParams();
+    body.append("username", (email || "").trim().toLowerCase());
+    body.append("password", password);
+    return apiClient.post("/api/auth/login", body, {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+  },
+  getCurrentUser: () => apiClient.get("/api/auth/me"),
+  logout: () => {
+    clearAuthToken();
+  },
 };
 
 export const alumbradoPortalService = {

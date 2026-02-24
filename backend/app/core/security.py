@@ -12,13 +12,20 @@ def create_access_token(
     tenant_id: str,
     expires_delta: timedelta | None = None,
 ) -> str:
+    now = datetime.now(timezone.utc)
     if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
+        expire = now + expires_delta
     else:
-        expire = datetime.now(timezone.utc) + timedelta(
+        expire = now + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
         )
-    to_encode = {"exp": expire, "sub": str(subject), "tenant": tenant_id}
+    to_encode = {
+        "exp": expire,
+        "iat": now,
+        "sub": str(subject),
+        "tenant": tenant_id,
+        "type": "access",
+    }
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
