@@ -113,7 +113,11 @@ const Header = () => {
               </Link>
             </div>
             <button
-              className="rounded-lg border border-slate-200 bg-white/95 p-2 text-slate-700 shadow-sm hover:bg-slate-100 md:hidden"
+              className={`rounded-lg border p-2 text-slate-700 shadow-sm transition-colors md:hidden ${
+                scrolled
+                  ? "border-slate-300 bg-slate-100 hover:bg-slate-200"
+                  : "border-slate-200 bg-white/95 hover:bg-slate-100"
+              }`}
               onClick={toggleMenu}
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
