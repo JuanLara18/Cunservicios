@@ -98,13 +98,18 @@ const PQR = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Peticiones, Quejas y Reclamos (PQR)</h1>
+    <div className="page-shell space-y-6">
+      <section className="page-hero">
+        <h1 className="page-title">Peticiones, quejas y reclamos (PQR)</h1>
+        <p className="page-subtitle">
+          Radica solicitudes y consulta su estado con trazabilidad por número de radicado.
+        </p>
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="lg:order-2">
-          <div className="card mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Consulta el estado de tu PQR</h2>
+          <div className="card mb-6">
+            <h2 className="page-section-title mb-4">Consulta el estado de tu PQR</h2>
             <Formik
               initialValues={{ radicado: "" }}
               validationSchema={ConsultaPQRSchema}
@@ -131,7 +136,7 @@ const PQR = () => {
                   </div>
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-mobile-full"
                     disabled={isSubmitting || isConsulting}
                   >
                     {isConsulting ? "Consultando..." : "Consultar"}
@@ -142,26 +147,26 @@ const PQR = () => {
           </div>
 
           {consultaError && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-8">
+            <div className="alert alert-error mb-6">
               <p>{consultaError}</p>
             </div>
           )}
 
           {consultaResult && (
-            <div className="card bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="card mb-6">
               <h3 className="text-xl font-semibold mb-4">
                 Detalles de la solicitud
               </h3>
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <p className="text-gray-600">Radicado:</p>
                   <p className="font-medium">{consultaResult.radicado}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <p className="text-gray-600">Tipo:</p>
                   <p className="font-medium">{consultaResult.tipo}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <p className="text-gray-600">Estado:</p>
                   <p className="font-medium">
                     <span
@@ -177,11 +182,11 @@ const PQR = () => {
                     </span>
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <p className="text-gray-600">Fecha de creación:</p>
                   <p className="font-medium">{consultaResult.fechaCreacion}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <p className="text-gray-600">Fecha estimada de respuesta:</p>
                   <p className="font-medium">
                     {consultaResult.fechaEstimadaRespuesta}
@@ -199,9 +204,9 @@ const PQR = () => {
             </div>
           )}
 
-          <div className="card bg-blue-50">
+          <div className="card">
             <h2 className="text-xl font-semibold mb-4">Información importante</h2>
-            <ul className="list-disc pl-6 space-y-2">
+            <ul className="list-disc space-y-2 pl-6 text-slate-700">
               <li>El tiempo de respuesta para PQR es de 15 días hábiles.</li>
               <li>Puedes adjuntar documentos de soporte a tu solicitud.</li>
               <li>Recuerda anotar el número de radicado para consultas futuras.</li>
@@ -247,7 +252,7 @@ const PQR = () => {
               <div className="mt-6 text-center">
                 <button
                   onClick={() => setSubmitSuccess(false)}
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-mobile-full"
                 >
                   Radicar otra solicitud
                 </button>
@@ -255,9 +260,9 @@ const PQR = () => {
             </div>
           ) : (
             <div className="card">
-              <h2 className="text-2xl font-semibold mb-4">Radica tu PQR</h2>
+              <h2 className="page-section-title mb-4">Radica tu PQR</h2>
               {submitError && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <div className="alert alert-error mb-4">
                   <p>{submitError}</p>
                 </div>
               )}

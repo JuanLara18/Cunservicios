@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+
+const NAV_ITEMS = [
+  { to: "/", label: "Inicio", end: true },
+  { to: "/servicios", label: "Servicios" },
+  { to: "/facturacion", label: "Facturación" },
+  { to: "/pqr", label: "PQR" },
+  { to: "/contacto", label: "Contacto" },
+  { to: "/portal", label: "Portal clientes" },
+];
 
 const Header = () => {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Detectar scroll para cambiar el estilo del header
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 50) {
+      if (offset > 16) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -22,174 +31,203 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onEscape);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", onEscape);
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <header
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white shadow-lg py-2"
-          : "bg-white bg-opacity-95 py-3"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "backdrop-blur-xl" : ""
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
-        <Link to="/" className="flex items-center">
-          <div className="flex items-center">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-600 to-teal-500 flex items-center justify-center mr-3">
+      <div
+        className={`border-b transition-colors duration-300 ${
+          scrolled
+            ? "border-slate-200/80 bg-white/95 shadow-sm"
+            : "border-transparent bg-white/90"
+        }`}
+      >
+        <div className="container">
+          <div className="flex items-center justify-between py-3">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 to-teal-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className="text-base font-bold leading-none text-indigo-700 md:text-lg">
+                  CUNSERVICIOS
+                </p>
+                <p className="hidden text-xs text-slate-500 md:block">Servicios públicos y portal cliente</p>
+              </div>
+            </Link>
+
+            <nav className="hidden items-center gap-1 md:flex">
+              {NAV_ITEMS.map((item) => (
+                <NavItem key={item.to} to={item.to} label={item.label} end={item.end} />
+              ))}
+            </nav>
+
+            <div className="hidden items-center gap-2 lg:flex">
+              <a href="tel:+6011234567" className="btn btn-outline btn-sm">
+                Emergencias 116
+              </a>
+              <Link to="/portal" className="btn btn-primary btn-sm">
+                Portal clientes
+              </Link>
+            </div>
+            <button
+              className="rounded-lg border border-slate-300 p-2 text-slate-700 hover:bg-slate-100 md:hidden"
+              onClick={toggleMenu}
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isMenuOpen}
+            >
               <svg
+                className="h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
               </svg>
-            </div>
-            <span className="text-indigo-600 font-bold text-2xl">CUNSERVICIOS</span>
+            </button>
           </div>
-        </Link>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-          >
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
-
-          {/* Desktop navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            <NavItem to="/" label="Inicio" />
-            <NavItem to="/servicios" label="Servicios" />
-            <NavItem to="/facturacion" label="Facturación" />
-            <NavItem to="/pqr" label="PQR" />
-            <NavItem to="/contacto" label="Contacto" />
-            <NavItem to="/portal" label="Portal clientes" />
-            
-            <div className="ml-4 pl-4 border-l border-gray-200">
-              <a
-                href="tel:+6011234567"
-                className="flex items-center text-gray-600 hover:text-blue-600 font-medium"
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 mr-2" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
-                  />
-                </svg>
-                <span className="hidden lg:inline">Emergencias:</span>
-                <span className="ml-1">116</span>
-              </a>
-            </div>
-          </nav>
         </div>
+      </div>
 
-        {/* Mobile navigation */}
-        {isMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-gray-200 bg-white">
-            <div className="flex flex-col space-y-3">
-              <MobileNavItem to="/" label="Inicio" onClick={toggleMenu} />
-              <MobileNavItem to="/servicios" label="Servicios" onClick={toggleMenu} />
-              <MobileNavItem to="/facturacion" label="Facturación" onClick={toggleMenu} />
-              <MobileNavItem to="/pqr" label="PQR" onClick={toggleMenu} />
-              <MobileNavItem to="/contacto" label="Contacto" onClick={toggleMenu} />
-              <MobileNavItem to="/portal" label="Portal clientes" onClick={toggleMenu} />
-              
-              <a
-                href="tel:+6011234567"
-                className="flex items-center text-gray-700 py-2 px-2 rounded-md hover:bg-gray-100"
-                onClick={toggleMenu}
+      {isMenuOpen && (
+        <>
+          <button
+            className="fixed inset-0 z-40 bg-slate-900/40 md:hidden"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Cerrar menú de navegación"
+          />
+          <aside className="fixed right-0 top-0 z-50 h-full w-[86%] max-w-sm border-l border-slate-200 bg-white p-5 shadow-2xl md:hidden">
+            <div className="mb-6 flex items-center justify-between">
+              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Menú</p>
+              <button
+                className="rounded-md p-2 text-slate-600 hover:bg-slate-100"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Cerrar menú"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 mr-3 text-blue-600" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-                Emergencias: 116
-              </a>
+              </button>
             </div>
-          </nav>
-        )}
-      </div>
+            <nav className="space-y-2">
+              {NAV_ITEMS.map((item) => (
+                <MobileNavItem
+                  key={item.to}
+                  to={item.to}
+                  label={item.label}
+                  onClick={() => setIsMenuOpen(false)}
+                  end={item.end}
+                />
+              ))}
+            </nav>
+
+            <div className="mt-6 space-y-2 border-t border-slate-200 pt-4">
+              <a href="tel:+6011234567" className="btn btn-outline btn-mobile-full">
+                Emergencias 116
+              </a>
+              <Link to="/portal" className="btn btn-primary btn-mobile-full">
+                Ingresar al portal
+              </Link>
+            </div>
+          </aside>
+        </>
+      )}
     </header>
   );
 };
 
-// Componente NavItem para Desktop
-const NavItem = ({ to, label }) => (
+const NavItem = ({ to, label, end = false }) => (
   <NavLink
     to={to}
+    end={end}
     className={({ isActive }) =>
       isActive
-        ? "relative px-3 py-2 text-indigo-600 font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-indigo-600 after:rounded-t-md"
-        : "px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-transparent hover:after:bg-indigo-200 after:rounded-t-md after:transition-colors"
+        ? "rounded-lg bg-indigo-50 px-3 py-2 text-sm font-medium text-indigo-700"
+        : "rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-indigo-700"
     }
-    end={to === "/"}
   >
     {label}
   </NavLink>
 );
 
-// Componente MobileNavItem para Mobile
-const MobileNavItem = ({ to, label, onClick }) => (
+const MobileNavItem = ({ to, label, onClick, end = false }) => (
   <NavLink
     to={to}
+    end={end}
     className={({ isActive }) =>
       isActive
-        ? "text-indigo-600 font-medium py-2 px-2 bg-indigo-50 rounded-md"
-        : "text-gray-700 hover:text-indigo-600 py-2 px-2 hover:bg-gray-100 rounded-md"
+        ? "block rounded-lg bg-indigo-50 px-3 py-2 font-medium text-indigo-700"
+        : "block rounded-lg px-3 py-2 font-medium text-slate-700 hover:bg-slate-100"
     }
     onClick={onClick}
-    end={to === "/"}
   >
     {label}
   </NavLink>

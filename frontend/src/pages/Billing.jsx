@@ -125,22 +125,28 @@ const Billing = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 fade-in">
+    <div className="page-shell fade-in space-y-6">
       <Helmet>
         <title>Facturación | Cunservicios</title>
         <meta name="description" content="Consulta y paga tus facturas de acueducto y alcantarillado" />
       </Helmet>
 
-      <h1 className="text-3xl font-bold mb-6">Facturación</h1>
+      <section className="page-hero">
+        <h1 className="page-title">Facturación</h1>
+        <p className="page-subtitle">
+          Consulta el estado de tu cuenta, revisa conceptos y realiza pagos desde un flujo simple
+          y seguro.
+        </p>
+      </section>
 
-      <div className="card mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Consulta tu factura</h2>
+      <div className="card">
+        <h2 className="page-section-title mb-4">Consulta tu factura</h2>
         <BillingForm onSubmit={handleSubmit} isLoading={loading} />
       </div>
 
       {/* Mensajes de éxito */}
       {successMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-8 fade-in">
+        <div className="alert alert-success fade-in">
           <div className="flex items-center">
             <svg 
               className="h-5 w-5 mr-2" 
@@ -156,7 +162,7 @@ const Billing = () => {
 
       {/* Mensajes de error */}
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-8 fade-in">
+        <div className="alert alert-error fade-in">
           <div className="flex items-center">
             <svg 
               className="h-5 w-5 mr-2" 
@@ -181,9 +187,9 @@ const Billing = () => {
 
       {/* Formulario de pago */}
       {showPaymentForm && factura && (
-        <div className="card bg-white p-6 rounded-lg shadow-md mb-8 fade-in">
-          <h2 className="text-2xl font-semibold mb-4">Realizar pago</h2>
-          <div className="mb-4 p-4 bg-blue-50 rounded-lg">
+        <div className="card fade-in">
+          <h2 className="page-section-title mb-4">Realizar pago</h2>
+          <div className="surface-soft mb-4">
             <p className="font-medium">Resumen de factura</p>
             <p>Número: {factura.numeroFactura}</p>
             <p>Total a pagar: ${factura.valorTotal.toLocaleString()}</p>
@@ -232,7 +238,7 @@ const Billing = () => {
                     placeholder="0000 0000 0000 0000"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                       Fecha expiración
@@ -334,10 +340,10 @@ const Billing = () => {
               </>
             )}
 
-            <div className="flex justify-between mt-6">
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-between">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-secondary btn-mobile-full"
                 onClick={() => setShowPaymentForm(false)}
                 disabled={isPaying}
               >
@@ -345,7 +351,7 @@ const Billing = () => {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary btn-mobile-full"
                 disabled={isPaying}
               >
                 {isPaying ? (
@@ -366,9 +372,9 @@ const Billing = () => {
       )}
 
       {/* Sección de información adicional */}
-      <div className="card bg-blue-50">
-        <h2 className="text-2xl font-semibold mb-4">Información importante</h2>
-        <ul className="list-disc pl-6 space-y-2">
+      <div className="card">
+        <h2 className="page-section-title mb-4">Información importante</h2>
+        <ul className="list-disc pl-6 space-y-2 text-slate-700">
           <li>El pago de tu factura se puede realizar hasta la fecha de vencimiento sin recargos.</li>
           <li>Puedes pagar en línea a través de nuestra plataforma o en los puntos de pago autorizados.</li>
           <li>Si tienes alguna duda sobre tu factura, puedes radicar una PQR desde la sección correspondiente.</li>
@@ -378,8 +384,8 @@ const Billing = () => {
       </div>
 
       {/* Sección de preguntas frecuentes sobre facturación */}
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Preguntas frecuentes</h2>
+      <div>
+        <h2 className="page-section-title mb-4">Preguntas frecuentes</h2>
         <div className="space-y-4">
           <div className="card">
             <h3 className="font-semibold text-lg mb-2">¿Cómo interpretar mi factura?</h3>

@@ -67,6 +67,14 @@ Mejoras recientes de componentes del portal:
 - Bandeja de datos con estado/prioridad, filtros y acciones de seguimiento.
 - Configuración con cambio de contraseña conectado al backend.
 
+## UX/UI (mejoras recientes)
+
+- Header responsive con navegación mejorada y menú móvil tipo drawer.
+- Footer simplificado con accesos clave y bloque de emergencias.
+- Estructura visual consistente (`page-shell`, `page-hero`, tarjetas y formularios unificados).
+- Mejoras mobile en tablas, botones y formularios críticos (facturación y PQR).
+- Páginas legales y de error con diseño más claro y legible.
+
 ## Referencias
 
 - Arquitectura general: `../docs/architecture.md`

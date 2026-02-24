@@ -45,7 +45,7 @@ const FacturaDetail = ({ factura, onPagar, onDownload }) => {
   };
 
   return (
-    <div className="card bg-white p-6 rounded-lg shadow-md factura-imprimir">
+    <div className="card factura-imprimir">
       <div className="header-print" style={{ display: 'none' }}>
         <h1>CUNSERVICIOS E.S.P.</h1>
         <p>NIT: 900.000.000-0</p>
@@ -54,8 +54,8 @@ const FacturaDetail = ({ factura, onPagar, onDownload }) => {
         <p>Factura de Servicios Públicos</p>
       </div>
       
-      <h2 className="text-2xl font-semibold mb-4">Detalles de factura</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <h2 className="page-section-title mb-4">Detalles de factura</h2>
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <p className="text-gray-600 mb-1">Número de factura:</p>
           <p className="font-medium">{factura.numeroFactura}</p>
@@ -87,36 +87,36 @@ const FacturaDetail = ({ factura, onPagar, onDownload }) => {
       </div>
 
       <h3 className="text-lg font-semibold mb-2">Conceptos</h3>
-      <div className="border rounded-lg overflow-hidden mb-6">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="table-responsive mb-6">
+        <table className="table">
+          <thead>
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th>
                 Concepto
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="text-right">
                 Valor
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody>
             {factura.conceptos && factura.conceptos.map((item, index) => (
               <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="text-slate-900">
                   {item.concepto}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
+                <td className="text-right text-slate-900">
                   ${item.valor.toLocaleString()}
                 </td>
               </tr>
             ))}
           </tbody>
-          <tfoot className="bg-gray-50">
+          <tfoot className="bg-slate-50">
             <tr>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <td className="font-medium text-slate-900">
                 Total a pagar
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
+              <td className="text-right font-medium text-slate-900">
                 ${factura.valorTotal.toLocaleString()}
               </td>
             </tr>
@@ -124,19 +124,19 @@ const FacturaDetail = ({ factura, onPagar, onDownload }) => {
         </table>
       </div>
 
-      <div className="flex justify-between no-print">
-        <div className="flex gap-2">
-          <button onClick={handlePrint} className="btn btn-secondary">
+      <div className="no-print flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button onClick={handlePrint} className="btn btn-secondary btn-mobile-full">
             Imprimir factura
           </button>
           {onDownload && (
-            <button onClick={onDownload} className="btn btn-outline">
+            <button onClick={onDownload} className="btn btn-outline btn-mobile-full">
               Descargar PDF
             </button>
           )}
         </div>
         {factura.estado !== "Pagada" && (
-          <button onClick={onPagar} className="btn btn-primary">
+          <button onClick={onPagar} className="btn btn-primary btn-mobile-full">
             Pagar ahora
           </button>
         )}

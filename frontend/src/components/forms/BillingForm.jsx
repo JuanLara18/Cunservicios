@@ -18,31 +18,33 @@ const BillingForm = ({ onSubmit, isLoading }) => {
       onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
-        <Form className="max-w-md">
-          <div className="form-group">
-            <label htmlFor="numeroCuenta" className="form-label">
-              Número de cuenta
-            </label>
-            <Field
-              type="text"
-              id="numeroCuenta"
-              name="numeroCuenta"
-              className="form-input"
-              placeholder="Ingresa tu número de cuenta"
-            />
-            <ErrorMessage
-              name="numeroCuenta"
-              component="div"
-              className="form-error"
-            />
+        <Form className="w-full max-w-2xl">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+            <div className="form-group mb-0">
+              <label htmlFor="numeroCuenta" className="form-label">
+                Número de cuenta
+              </label>
+              <Field
+                type="text"
+                id="numeroCuenta"
+                name="numeroCuenta"
+                className="form-input"
+                placeholder="Ingresa tu número de cuenta"
+              />
+              <ErrorMessage
+                name="numeroCuenta"
+                component="div"
+                className="form-error"
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary btn-mobile-full"
+              disabled={isSubmitting || isLoading}
+            >
+              {isLoading ? "Consultando..." : "Consultar factura"}
+            </button>
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isSubmitting || isLoading}
-          >
-            {isLoading ? "Consultando..." : "Consultar factura"}
-          </button>
         </Form>
       )}
     </Formik>
