@@ -38,6 +38,10 @@ class Settings(BaseSettings):
     DEFAULT_TENANT_ID: str = "public"
     AUTO_CREATE_TABLES: bool = True
     ENABLE_SEED_DATA: bool = False
+    DEV_SEED_ADMIN_EMAIL: str = "admin.dev@cunservicios.local"
+    DEV_SEED_ADMIN_PASSWORD: str | None = None
+    DEV_SEED_PORTAL_EMAIL: str = "portal.dev@cunservicios.local"
+    DEV_SEED_PORTAL_PASSWORD: str | None = None
     ENFORCE_AUTH_ON_DATA_ENDPOINTS: bool = True
     ENABLE_HTTPS_REDIRECT: bool = False
     ENABLE_SECURITY_HEADERS: bool = True
@@ -131,8 +135,46 @@ class Settings(BaseSettings):
             raise ValueError("DEFAULT_TENANT_ID inválido")
         return tenant
 
+    @field_validator("DEV_SEED_ADMIN_EMAIL", "DEV_SEED_PORTAL_EMAIL")
+    @classmethod
+    def normalize_seed_emails(cls, value: str) -> str:
+        normalized = value.strip().lower()
+        if not normalized:
+            raise ValueError("Los correos de seed no pueden ser vacíos")
+        return normalized
+
+    @field_validator("DEV_SEED_ADMIN_PASSWORD", "DEV_SEED_PORTAL_PASSWORD")
+    @classmethod
+    def validate_seed_passwords(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        trimmed = value.strip()
+        if not trimmed:
+            return None
+
+        has_upper = any(char.isupper() for char in trimmed)
+        has_lower = any(char.islower() for char in trimmed)
+        has_digit = any(char.isdigit() for char in trimmed)
+        has_symbol = any(not char.isalnum() for char in trimmed)
+        if len(trimmed) < 12 or not (has_upper and has_lower and has_digit and has_symbol):
+            raise ValueError(
+                "Las contraseñas de seed deben tener mínimo 12 caracteres e incluir mayúsculas, "
+                "minúsculas, números y símbolos."
+            )
+        return trimmed
+
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
+        if self.ENABLE_SEED_DATA and self.ENV == "production":
+            raise ValueError("ENABLE_SEED_DATA no puede estar activo en producción")
+
+        if self.ENABLE_SEED_DATA and self.ENV != "production":
+            if not self.DEV_SEED_ADMIN_PASSWORD or not self.DEV_SEED_PORTAL_PASSWORD:
+                raise ValueError(
+                    "Configura DEV_SEED_ADMIN_PASSWORD y DEV_SEED_PORTAL_PASSWORD "
+                    "para habilitar ENABLE_SEED_DATA en desarrollo."
+                )
+
         if self.ENV == "production":
             if self.SECRET_KEY in {"your-secret-key-here", "change-me-in-production"}:
                 raise ValueError("Configura un SECRET_KEY seguro en producción")

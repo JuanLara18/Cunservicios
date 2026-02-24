@@ -26,6 +26,10 @@ Variables mínimas:
 - `REACT_APP_API_URL`
 - `REACT_APP_TENANT_ID`
 
+Perfil recomendado para pruebas del portal en local:
+
+- `frontend/.env.dev.portal.example`
+
 ## Build
 
 ```bash
@@ -58,6 +62,7 @@ Se añadió una estructura inicial de portal en `/portal` para clientes instituc
 
 Esta base está diseñada para crecer por módulos sin romper rutas existentes.
 Para producción, se recomienda revisar `docs/security-production.md`.
+Para pruebas locales end-to-end del portal, revisa `../docs/dev-portal-local.md`.
 
 Mejoras recientes de componentes del portal:
 

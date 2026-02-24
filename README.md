@@ -55,6 +55,7 @@ npm start
 - Despliegue en GCP: [docs/deployment-gcp.md](docs/deployment-gcp.md)
 - Roadmap técnico: [docs/roadmap.md](docs/roadmap.md)
 - Seguridad productiva: [docs/security-production.md](docs/security-production.md)
+- Prueba local del portal: [docs/dev-portal-local.md](docs/dev-portal-local.md)
 - Backend: [backend/README.md](backend/README.md)
 - Frontend: [frontend/README.md](frontend/README.md)
 

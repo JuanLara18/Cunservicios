@@ -43,6 +43,11 @@ Variables mínimas:
 - `BACKEND_CORS_ORIGINS`
 - `ALLOWED_HOSTS`
 - `DEFAULT_TENANT_ID`
+- `ENABLE_SEED_DATA` (solo desarrollo)
+- `DEV_SEED_ADMIN_EMAIL`
+- `DEV_SEED_ADMIN_PASSWORD`
+- `DEV_SEED_PORTAL_EMAIL`
+- `DEV_SEED_PORTAL_PASSWORD`
 - `ENFORCE_AUTH_ON_DATA_ENDPOINTS`
 - `ENABLE_SECURITY_HEADERS`
 - `ENABLE_HTTPS_REDIRECT`
@@ -52,6 +57,13 @@ Variables mínimas:
 - Header requerido para contexto: `X-Tenant-ID`
 - Filtro por tenant aplicado en entidades principales.
 - Token JWT incluye contexto de tenant.
+
+## Entorno local de prueba del portal
+
+Para levantar un escenario local seguro con credenciales de desarrollo y seed controlado:
+
+- Usa `backend/.env.dev.portal.example` como base de `.env`.
+- Consulta la guia completa en `../docs/dev-portal-local.md`.
 
 ## Seguridad API
 
