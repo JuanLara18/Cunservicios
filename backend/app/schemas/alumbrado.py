@@ -176,3 +176,46 @@ class AlumbradoCalculoResultado(BaseModel):
     actualizacion_ipp: Optional[ActualizacionIPPResultado] = None
     alertas: list[str] = Field(default_factory=list)
 
+
+class ReciboSimpleMetadataEntrada(BaseModel):
+    entidad_facturadora: str = Field(default="Cunservicios", min_length=2)
+    nit: Optional[str] = None
+    direccion: Optional[str] = None
+    contacto: Optional[str] = None
+    fuente_datos: str = Field(default="plantilla_manual_v1", min_length=2)
+    observaciones: Optional[str] = None
+
+
+class ReciboComponentesEntrada(BaseModel):
+    csee: float = Field(..., ge=0)
+    cinv: float = Field(..., ge=0)
+    caom: float = Field(..., ge=0)
+    cotr: float = Field(default=0, ge=0)
+
+
+class ReciboSimpleDesdePlantillaEntrada(BaseModel):
+    municipio: str = Field(..., min_length=2)
+    periodo: str = Field(..., min_length=3)
+    metodologia: str = Field(default="CREG 101 013 de 2022", min_length=2)
+    componentes: ReciboComponentesEntrada
+    metadata: ReciboSimpleMetadataEntrada = Field(default_factory=ReciboSimpleMetadataEntrada)
+
+
+class ReciboSimpleDesdeCalculoEntrada(BaseModel):
+    calculo: AlumbradoCalculoEntrada
+    metadata: ReciboSimpleMetadataEntrada = Field(default_factory=ReciboSimpleMetadataEntrada)
+
+
+class ReciboSimpleResultado(BaseModel):
+    numero_recibo: str
+    tenant_id: str
+    metodologia: str
+    municipio: str
+    periodo: str
+    entidad_facturadora: str
+    fuente_datos: str
+    componentes: ReciboComponentesEntrada
+    total: float
+    contenido_texto: str
+    contenido_markdown: str
+

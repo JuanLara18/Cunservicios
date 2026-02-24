@@ -26,6 +26,9 @@ Endpoint regulatorio (CREG 101 013 de 2022):
 
 - `POST /api/alumbrado/calcular`
 - `GET /api/alumbrado/parametros?anno=2026`
+- `GET /api/alumbrado/recibo/plantilla`
+- `POST /api/alumbrado/recibo/simple/desde-plantilla`
+- `POST /api/alumbrado/recibo/simple/desde-calculo`
 
 ## Variables de entorno
 
@@ -62,3 +65,4 @@ docker run --rm -p 8000:8080 --env-file .env.example cunservicios-backend
 
 - Arquitectura general: `../docs/architecture.md`
 - Despliegue GCP: `../docs/deployment-gcp.md`
+- Plantillas de recibo: `../docs/plantillas/`

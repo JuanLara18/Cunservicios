@@ -103,3 +103,52 @@ def test_calculate_alumbrado_environmental_limit(client):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "costos ambientales" in response.json()["detail"]
 
+
+def test_get_receipt_template(client):
+    response = client.get("/api/alumbrado/recibo/plantilla")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert "componentes" in data
+    assert "metadata" in data
+
+
+def test_create_simple_receipt_from_template(client):
+    payload = {
+        "municipio": "Alcaldía de Prueba",
+        "periodo": "2026-01",
+        "metodologia": "CREG 101 013 de 2022",
+        "componentes": {
+            "csee": 1000,
+            "cinv": 2000,
+            "caom": 3000,
+            "cotr": 400,
+        },
+        "metadata": {
+            "entidad_facturadora": "Cunservicios",
+            "fuente_datos": "plantilla_manual_v1",
+        },
+    }
+    response = client.post("/api/alumbrado/recibo/simple/desde-plantilla", json=payload)
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert data["metodologia"] == "CREG 101 013 de 2022"
+    assert data["total"] == 6400
+    assert "contenido_texto" in data
+    assert "contenido_markdown" in data
+
+
+def test_create_simple_receipt_from_calculation(client):
+    payload = {
+        "calculo": build_payload(),
+        "metadata": {
+            "entidad_facturadora": "Cunservicios",
+            "fuente_datos": "normalizacion_pdf_v1",
+        },
+    }
+    response = client.post("/api/alumbrado/recibo/simple/desde-calculo", json=payload)
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert data["municipio"] == "Alcaldía de Prueba"
+    assert data["total"] > 0
+    assert data["fuente_datos"] == "normalizacion_pdf_v1"
+

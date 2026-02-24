@@ -6,6 +6,7 @@ from app.services.alumbrado_calculator import (
     calculate_alumbrado_costs,
     get_faoml_for_year,
 )
+from app.services.alumbrado_receipt import build_simple_receipt
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 router = APIRouter(prefix="/alumbrado", tags=["alumbrado"])
@@ -37,4 +38,74 @@ def calculate_alumbrado(
         return calculate_alumbrado_costs(payload=payload, tenant_id=tenant_id)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.get("/recibo/plantilla")
+def get_simple_receipt_template():
+    return {
+        "municipio": "Nombre del municipio",
+        "periodo": "2026-01",
+        "metodologia": "CREG 101 013 de 2022",
+        "componentes": {
+            "csee": 0,
+            "cinv": 0,
+            "caom": 0,
+            "cotr": 0,
+        },
+        "metadata": {
+            "entidad_facturadora": "Cunservicios",
+            "nit": "900000000-0",
+            "direccion": "Dirección",
+            "contacto": "correo@empresa.com",
+            "fuente_datos": "plantilla_manual_v1",
+            "observaciones": "Opcional",
+        },
+    }
+
+
+@router.post(
+    "/recibo/simple/desde-plantilla",
+    response_model=schemas.ReciboSimpleResultado,
+)
+def create_simple_receipt_from_template(
+    payload: schemas.ReciboSimpleDesdePlantillaEntrada,
+    tenant_id: str = Depends(get_tenant_id),
+):
+    return build_simple_receipt(
+        tenant_id=tenant_id,
+        municipio=payload.municipio,
+        periodo=payload.periodo,
+        metodologia=payload.metodologia,
+        metadata=payload.metadata,
+        componentes=payload.componentes,
+    )
+
+
+@router.post(
+    "/recibo/simple/desde-calculo",
+    response_model=schemas.ReciboSimpleResultado,
+)
+def create_simple_receipt_from_calculation(
+    payload: schemas.ReciboSimpleDesdeCalculoEntrada,
+    tenant_id: str = Depends(get_tenant_id),
+):
+    try:
+        result = calculate_alumbrado_costs(payload=payload.calculo, tenant_id=tenant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    components = schemas.ReciboComponentesEntrada(
+        csee=result.csee,
+        cinv=result.cinv,
+        caom=result.caom,
+        cotr=result.cotr,
+    )
+    return build_simple_receipt(
+        tenant_id=tenant_id,
+        municipio=result.municipio,
+        periodo=result.periodo,
+        metodologia=result.metodologia,
+        metadata=payload.metadata,
+        componentes=components,
+    )
 

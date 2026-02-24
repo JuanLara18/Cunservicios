@@ -1,0 +1,19 @@
+{
+  "municipio": "Alcaldia Ejemplo",
+  "periodo": "2026-01",
+  "metodologia": "CREG 101 013 de 2022",
+  "componentes": {
+    "csee": 51732000,
+    "cinv": 506448000,
+    "caom": 212923000,
+    "cotr": 32475000
+  },
+  "metadata": {
+    "entidad_facturadora": "Cunservicios",
+    "nit": "900000000-0",
+    "direccion": "Direccion de la entidad",
+    "contacto": "soporte@empresa.com",
+    "fuente_datos": "plantilla_manual_v1",
+    "observaciones": "Datos normalizados desde archivo externo"
+  }
+}
