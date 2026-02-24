@@ -38,9 +38,9 @@ class Settings(BaseSettings):
     DEFAULT_TENANT_ID: str = "public"
     AUTO_CREATE_TABLES: bool = True
     ENABLE_SEED_DATA: bool = False
-    DEV_SEED_ADMIN_EMAIL: str = "admin.dev@cunservicios.local"
+    DEV_SEED_ADMIN_EMAIL: str = "admin.dev@cunservicios-demo.com"
     DEV_SEED_ADMIN_PASSWORD: str | None = None
-    DEV_SEED_PORTAL_EMAIL: str = "portal.dev@cunservicios.local"
+    DEV_SEED_PORTAL_EMAIL: str = "portal.dev@cunservicios-demo.com"
     DEV_SEED_PORTAL_PASSWORD: str | None = None
     ENFORCE_AUTH_ON_DATA_ENDPOINTS: bool = True
     ENABLE_HTTPS_REDIRECT: bool = False

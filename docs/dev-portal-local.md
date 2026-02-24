@@ -92,12 +92,12 @@ Tenant:
 
 Usuario portal (no administrador):
 
-- Email: `portal.dev@cunservicios.local`
+- Email: `portal.dev@cunservicios-demo.com`
 - Password: `DevPortal#Recibo2026!`
 
 Usuario administrador:
 
-- Email: `admin.dev@cunservicios.local`
+- Email: `admin.dev@cunservicios-demo.com`
 - Password: `DevAdmin#Portal2026!`
 
 ## 4) Generar un recibo de prueba

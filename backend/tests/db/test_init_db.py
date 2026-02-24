@@ -7,9 +7,9 @@ from app.models.user import User
 
 def _configure_seed_settings(monkeypatch) -> None:
     monkeypatch.setattr(settings, "DEFAULT_TENANT_ID", "alcaldia-demo")
-    monkeypatch.setattr(settings, "DEV_SEED_ADMIN_EMAIL", "admin.dev@cunservicios.local")
+    monkeypatch.setattr(settings, "DEV_SEED_ADMIN_EMAIL", "admin.dev@cunservicios-demo.com")
     monkeypatch.setattr(settings, "DEV_SEED_ADMIN_PASSWORD", "DevAdmin#Portal2026!")
-    monkeypatch.setattr(settings, "DEV_SEED_PORTAL_EMAIL", "portal.dev@cunservicios.local")
+    monkeypatch.setattr(settings, "DEV_SEED_PORTAL_EMAIL", "portal.dev@cunservicios-demo.com")
     monkeypatch.setattr(settings, "DEV_SEED_PORTAL_PASSWORD", "DevPortal#Recibo2026!")
 
 
@@ -20,12 +20,12 @@ def test_init_db_creates_seed_users_and_sample_data(db, monkeypatch):
 
     admin = (
         db.query(User)
-        .filter(User.tenant_id == "alcaldia-demo", User.email == "admin.dev@cunservicios.local")
+        .filter(User.tenant_id == "alcaldia-demo", User.email == "admin.dev@cunservicios-demo.com")
         .first()
     )
     portal_user = (
         db.query(User)
-        .filter(User.tenant_id == "alcaldia-demo", User.email == "portal.dev@cunservicios.local")
+        .filter(User.tenant_id == "alcaldia-demo", User.email == "portal.dev@cunservicios-demo.com")
         .first()
     )
 
@@ -66,7 +66,7 @@ def test_init_db_is_idempotent_for_seed_users(db, monkeypatch):
     )
     portal_user = (
         db.query(User)
-        .filter(User.tenant_id == "alcaldia-demo", User.email == "portal.dev@cunservicios.local")
+        .filter(User.tenant_id == "alcaldia-demo", User.email == "portal.dev@cunservicios-demo.com")
         .first()
     )
 
