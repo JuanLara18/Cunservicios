@@ -91,8 +91,8 @@ const PortalLogin = () => {
 
   return (
     <div className="portal-shell">
-      <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 lg:py-8">
-        <div className="mb-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 md:px-6 lg:py-8">
+        <div className="mb-4 shrink-0">
           <Link
             to="/"
             className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
@@ -101,7 +101,7 @@ const PortalLogin = () => {
           </Link>
         </div>
 
-        <div className="grid min-h-[calc(100vh-6rem)] grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+        <div className="grid flex-1 grid-cols-1 gap-6 lg:min-h-0 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <section className="space-y-4">
             <div className="portal-header-card">
               <p className="text-xs uppercase tracking-wide text-indigo-100">CUNSERVICIOS · Portal cliente</p>
