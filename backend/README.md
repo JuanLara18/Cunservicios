@@ -22,6 +22,11 @@ API local:
 - `http://localhost:8000`
 - `http://localhost:8000/docs`
 
+Endpoint regulatorio (CREG 101 013 de 2022):
+
+- `POST /api/alumbrado/calcular`
+- `GET /api/alumbrado/parametros?anno=2026`
+
 ## Variables de entorno
 
 Archivo base: `.env.example`

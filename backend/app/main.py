@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 import logging
 
 import app.models  # noqa: F401
-from app.api.endpoints import auth, clientes, facturas, pqrs, users
+from app.api.endpoints import alumbrado, auth, clientes, facturas, pqrs, users
 from app.api.tenant import TENANT_HEADER_NAME, normalize_tenant_id
 from app.core.config import settings
 from app.db.database import Base, engine, get_db
@@ -76,6 +76,7 @@ app.include_router(users.router, prefix=settings.API_PREFIX)
 app.include_router(clientes.router, prefix=settings.API_PREFIX)
 app.include_router(facturas.router, prefix=settings.API_PREFIX)
 app.include_router(pqrs.router, prefix=settings.API_PREFIX)
+app.include_router(alumbrado.router, prefix=settings.API_PREFIX)
 
 
 @app.exception_handler(RequestValidationError)
