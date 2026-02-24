@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePortalSession } from "../../context/PortalSessionContext";
 import { getActiveTenantId } from "../../services/api";
 import { isValidTenantId, TENANT_VALIDATION_HINT } from "../../utils/tenant";
@@ -91,134 +91,154 @@ const PortalLogin = () => {
 
   return (
     <div className="portal-shell">
-      <div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-6 px-4 py-8 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-12">
-        <section className="space-y-4">
-          <div className="portal-header-card">
-            <p className="text-xs uppercase tracking-wide text-indigo-100">CUNSERVICIOS · Portal cliente</p>
-            <h1 className="mt-2 text-3xl font-semibold md:text-4xl">
-              Acceso seguro para alcaldias y equipos operativos
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm text-teal-50">
-              Diseñado para que el equipo pueda trabajar con claridad: organizar insumos, revisar
-              estado y emitir recibos de forma sencilla.
-            </p>
-          </div>
+      <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 lg:py-8">
+        <div className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+          >
+            ← Volver al inicio
+          </Link>
+        </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <InfoCard
-              title="Experiencia guiada"
-              description="Las secciones del portal priorizan tareas esenciales, evitando sobrecarga de informacion."
-            />
-            <InfoCard
-              title="Trazabilidad local"
-              description="Cada tenant conserva historicos de recibos e insumos para pruebas y validaciones."
-            />
-          </div>
-
-          {isLocalEnvironment && (
-            <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
-              <p className="font-semibold">Entorno local detectado</p>
-              <p className="mt-1">
-                Si usas datos semilla, revisa que el correo de portal termine en{" "}
-                <code className="rounded bg-blue-100 px-1 py-0.5">cunservicios-demo.com</code>.
+        <div className="grid min-h-[calc(100vh-6rem)] grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+          <section className="space-y-4">
+            <div className="portal-header-card">
+              <p className="text-xs uppercase tracking-wide text-indigo-100">CUNSERVICIOS · Portal cliente</p>
+              <h1 className="mt-2 text-3xl font-semibold md:text-4xl">
+                Acceso seguro para alcaldias y equipos operativos
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm text-teal-50">
+                Diseñado para que el equipo pueda trabajar con claridad: organizar insumos, revisar
+                estado y emitir recibos de forma sencilla.
               </p>
             </div>
-          )}
-        </section>
 
-        <form onSubmit={handleSubmit} className="card border-slate-200 shadow-md">
-          <h2 className="text-2xl font-semibold text-slate-900">Acceso al portal</h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Ingresa con credenciales institucionales para continuar.
-          </p>
-
-          {authNotice && (
-            <div className="alert alert-warning mt-4">
-              <p>{authNotice}</p>
-            </div>
-          )}
-          {error && (
-            <div className="alert alert-error mt-4">
-              <p>{error}</p>
-            </div>
-          )}
-
-          <div className="mt-4 space-y-4">
-            <div className="form-group">
-              <label className="form-label" htmlFor="entidad">
-                Entidad (opcional)
-              </label>
-              <input
-                id="entidad"
-                name="entidad"
-                className="form-input"
-                placeholder="Ej: Alcaldia Demo"
-                value={formData.entidad}
-                onChange={handleChange}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <InfoCard
+                title="Experiencia guiada"
+                description="Las secciones del portal priorizan tareas esenciales, evitando sobrecarga de informacion."
+              />
+              <InfoCard
+                title="Trazabilidad local"
+                description="Cada tenant conserva historicos de recibos e insumos para pruebas y validaciones."
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="tenantId">
-                Identificador (tenant)
-              </label>
-              <input
-                id="tenantId"
-                name="tenantId"
-                className="form-input"
-                placeholder="ej: alcaldia-demo"
-                value={formData.tenantId}
-                onChange={handleChange}
-                required
-              />
-              <p className="form-hint">{TENANT_VALIDATION_HINT}</p>
-            </div>
+            {isLocalEnvironment && (
+              <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+                <p className="font-semibold">Entorno local detectado</p>
+                <p className="mt-1">
+                  Si usas datos semilla, revisa que el correo de portal termine en{" "}
+                  <code className="rounded bg-blue-100 px-1 py-0.5">cunservicios-demo.com</code>.
+                </p>
+              </div>
+            )}
+          </section>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="email">
-                Correo de usuario
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className="form-input"
-                placeholder="usuario@entidad.gov.co"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="card border-slate-200 shadow-md">
+            <h2 className="text-2xl font-semibold text-slate-900">Acceso al portal</h2>
+            <p className="mt-1 text-sm text-slate-600">
+              Ingresa con credenciales institucionales para continuar.
+            </p>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="password">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                className="form-input"
-                placeholder="Tu contraseña"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <label className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+            {authNotice && (
+              <div className="alert alert-warning mt-4">
+                <p>{authNotice}</p>
+              </div>
+            )}
+            {error && (
+              <div className="alert alert-error mt-4">
+                <p>{error}</p>
+              </div>
+            )}
+
+            <div className="mt-4 space-y-4">
+              <div className="form-group">
+                <label className="form-label" htmlFor="entidad">
+                  Entidad (opcional)
+                </label>
                 <input
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={(event) => setShowPassword(event.target.checked)}
+                  id="entidad"
+                  name="entidad"
+                  className="form-input"
+                  placeholder="Ej: Alcaldia Demo"
+                  value={formData.entidad}
+                  onChange={handleChange}
                 />
-                Mostrar contraseña
-              </label>
-            </div>
-          </div>
+              </div>
 
-          <button type="submit" className="btn btn-primary mt-4 w-full sm:w-auto" disabled={loading}>
-            {loading ? "Validando..." : "Ingresar al portal"}
-          </button>
-        </form>
+              <div className="form-group">
+                <label className="form-label" htmlFor="tenantId">
+                  Identificador (tenant)
+                </label>
+                <input
+                  id="tenantId"
+                  name="tenantId"
+                  className="form-input"
+                  placeholder="ej: alcaldia-demo"
+                  value={formData.tenantId}
+                  onChange={handleChange}
+                  required
+                />
+                <p className="form-hint">{TENANT_VALIDATION_HINT}</p>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="email">
+                  Correo de usuario
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="form-input"
+                  placeholder="usuario@entidad.gov.co"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="password">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className="form-input"
+                  placeholder="Tu contraseña"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <label className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={(event) => setShowPassword(event.target.checked)}
+                  />
+                  Mostrar contraseña
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" className="btn btn-primary mt-4 w-full sm:w-auto" disabled={loading}>
+              {loading ? "Validando..." : "Ingresar al portal"}
+            </button>
+
+            <div className="mt-4 border-t border-slate-200 pt-4">
+              <p className="text-sm text-slate-600">
+                ¿No deseas ingresar ahora?{" "}
+                <Link to="/" className="font-medium text-indigo-600 hover:text-indigo-700 hover:underline">
+                  Regresar a inicio
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
